@@ -1,0 +1,263 @@
+:root {
+  --beige: #FFEEDB;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 16px;
+}
+
+.login-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem;
+}
+
+.login-card {
+  display: flex;
+  width: 100%;
+  max-width: 56.25rem;
+  border-radius: 25px;
+  overflow: hidden;
+  flex-direction: row;
+  min-height: 37.5rem;
+  flex-wrap: wrap;
+}
+
+.login-left,
+.login-right {
+  flex: 1;
+  padding: 3rem;
+}
+
+.login-left {
+  background-color: var(--beige);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+.logo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.logo-section img {
+  max-width: 300px;
+}
+
+.register-section {
+  margin-top: auto;
+  text-align: center;
+}
+
+.register-section p,
+.register-link {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: black;
+}
+
+.register-link {
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.register-link:hover {
+  color: #c94b4b;
+}
+
+.login-right {
+  background-color: #c94b4b;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.welcome-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.welcome-section h2 {
+  font-size: 2.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.welcome-section p {
+  font-size: 1.25rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group input {
+  height: 3.5rem;
+  padding: 0 1.5rem;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--beige);
+  color: black;
+  font-size: 1.2rem;
+  font-family: "Cormorant Garamond", serif;
+  outline: none;
+  transition: box-shadow 0.2s ease;
+}
+
+.form-group input:focus {
+  box-shadow: 0 0 0 0.1875rem rgba(249, 234, 221, 0.3);
+}
+
+.form-group input::placeholder {
+  color: #666;
+  font-family: "Cormorant Garamond", serif;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.remember-me input[type="checkbox"] {
+  width: 1.125rem;
+  height: 1.125rem;
+  accent-color: white;
+}
+
+.remember-me label {
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.forgot-password {
+  color: white;
+  text-decoration: underline;
+  font-size: 1.1rem;
+  transition: opacity 0.2s ease;
+}
+
+.forgot-password:hover {
+  opacity: 0.8;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.login-btn,
+.google-btn {
+  height: 3rem;
+  border: none;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.login-btn {
+  background-color: var(--beige);
+  color: black;
+  transition: background-color 0.2s ease;
+}
+
+.login-btn:hover {
+  background-color: #f0dbc9;
+}
+
+.google-btn {
+  background-color: white;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.google-btn:hover {
+  background-color: #f5f5f5;
+}
+
+@media (max-width: 768px) {
+  .login-card {
+    flex-direction: column;
+    max-width: 25rem;
+  }
+
+  .login-left,
+  .login-right {
+    padding: 2rem;
+  }
+
+  .welcome-section h2 {
+    font-size: 1.75rem;
+  }
+
+  .welcome-section p,
+  .form-group label {
+    font-size: 1.125rem;
+  }
+
+  .form-group input {
+    height: 3.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-left,
+  .login-right {
+    padding: 1.5rem;
+  }
+
+  .logo-section img {
+    max-width: 70%;
+  }
+
+  .form-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .register-link {
+    font-size: 1rem;
+  }
+}

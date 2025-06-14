@@ -1,0 +1,110 @@
+:root {
+  --beige: #FFEEDB;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 16px;
+}
+
+/* Shared Input Styling */
+.custom-select, .custom-phone-input {
+  height: 3.5rem;
+  padding: 0 1.5rem;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--beige);
+  color: black;
+  font-size: 1rem;
+  font-family: 'Cormorant Garamond', serif;
+  outline: none;
+  transition: box-shadow 0.2s ease;
+  width: 100%;
+}
+
+input.custom-input:focus, .custom-select:focus, .custom-phone-input:focus {
+  box-shadow: 0 0 0 0.1875rem rgba(249, 234, 221, 0.3);
+}
+
+input.custom-input::placeholder, .custom-phone-input::placeholder {
+  color: #666;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* Custom select with dropdown icon */
+select.custom-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 2.5rem;
+  background-position: right 1rem center;
+  background-repeat: no-repeat;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+}
+
+.custom-select option {
+  color: black;
+  background-color: var(--beige);
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.custom-city-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Phone input container */
+.custom-phone-container {
+  width: 100% !important;
+}
+
+.custom-phone-button {
+  background: var(--beige) !important;
+  border: none !important;
+  border-radius: 20px 0 0 20px !important;
+}
+
+.react-tel-input .country-list {
+  background-color: var(--beige) !important;
+  font-family: 'Cormorant Garamond', serif !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000 !important;
+}
+
+.react-tel-input .country-list .country {
+  font-size: 1rem;
+  color: black !important;
+  background-color: var(--beige) !important;
+  font-family: 'Cormorant Garamond', serif !important;
+}
+
+.react-tel-input .selected-flag {
+  outline: none;
+  height: 100%;
+  border-radius: 20px 0 0 20px !important;
+  padding: 0 15px !important;
+}
+
+.react-tel-input .selected-flag:hover,
+.react-tel-input .selected-flag.open {
+  background-color: var(--beige) !important;
+}
+
+.react-tel-input .country-list .country:hover {
+  background-color: #f0dbc9 !important;
+  color: black !important;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  input.custom-input, .custom-select, .custom-phone-input {
+    height: 3.25rem;
+    font-size: 0.95rem;
+  }
+}

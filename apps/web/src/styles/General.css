@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    background: url('../images/background_dark.svg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    overflow-x: hidden;
+}
+
+:root {
+  --font-heading: 'Cormorant Garamond', serif;
+  --font-base: 'Cormorant Garamond', serif;
+  --color-beige: #FFEEDB;
+  --color-red: #BA3B46;
+  --color-black: #000;
+  --color-white: #FFF;
+}
+
+/* Font colors */
+.text-beige  { color: var(--color-beige); }
+.text-red    { color: var(--color-red); }
+.text-black  { color: var(--color-black); }
+.text-white  { color: var(--color-white); }
+
+/* Reset margin and set default font */
+body, h1, h2, h3, h4, h5, h6, p, span, label, a, small, strong, blockquote, li {
+  font-family: var(--font-base);
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+}
+
+/* HEADINGS - desktop */
+h1 { font-size: 2.5rem; font-weight: 700; }
+h2 { font-size: 2rem; font-weight: 600; }
+h3 { font-size: 1.75rem; font-weight: 600; }
+h4 { font-size: 1.5rem; font-weight: 500; }
+h5 { font-size: 1.25rem; font-weight: 500; }
+h6 { font-size: 1rem; font-weight: 500; }
+
+/* PARAGRAPH AND COMMON TEXT */
+p       { font-size: 1.125rem; }
+span    { font-size: 1rem; }
+label   { font-size: 1.25rem; font-weight: 500; }
+a       { font-size: 1rem; text-decoration: none; color: inherit; }
+small   { font-size: 0.875rem; }
+strong  { font-weight: 700; }
+blockquote { font-size: 1.25rem; font-style: italic; margin: 1rem 0; padding-left: 1rem; border-left: 3px solid #ccc; }
+li      { font-size: 1rem; line-height: 1.6; }
+
+/* TABLET ≤768px */
+@media (max-width: 768px) {
+  h1 { font-size: 2.25rem; }
+  h2 { font-size: 1.875rem; }
+  h3 { font-size: 1.625rem; }
+  h4 { font-size: 1.375rem; }
+  h5 { font-size: 1.125rem; }
+  h6 { font-size: 0.95rem; }
+
+  p, span, label, a, li { font-size: 1rem; }
+  small { font-size: 0.8125rem; }
+  blockquote { font-size: 1.125rem; }
+}
+
+/* MOBILE ≤480px */
+@media (max-width: 480px) {
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.625rem; }
+  h3 { font-size: 1.5rem; }
+  h4 { font-size: 1.25rem; }
+  h5 { font-size: 1rem; }
+  h6 { font-size: 0.875rem; }
+
+  p, span, label, a, li { font-size: 0.95rem; }
+  small { font-size: 0.75rem; }
+  blockquote { font-size: 1rem; }
+}

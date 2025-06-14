@@ -1,0 +1,23 @@
+.popup {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  color: #FFEEDB;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  z-index: 9999;
+}
+
+.popup-close {
+  background: none;
+  border: none;
+  color: #FFEEDB;
+  font-size: 1.5rem;
+  cursor: pointer;
+}

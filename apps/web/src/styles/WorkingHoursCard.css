@@ -1,0 +1,44 @@
+.working-hours-card {
+    background-color: var(--beige);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    text-align: center;
+}
+
+.working-hours-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.working-hours-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+    font-family: 'Cormorant SC', serif;
+}
+
+.working-hours-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.working-hours-table td {
+    padding: 5px 0;
+    font-size: 1.3rem;
+    color: #333;
+}
+
+.working-hours-table td:first-child {
+    font-weight: 700;
+    text-align: left;
+}
+
+.working-hours-table td:last-child {
+    text-align: right;
+}

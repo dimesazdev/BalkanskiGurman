@@ -1,0 +1,30 @@
+.alert-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+}
+
+.alert-box {
+    background: #FFEEDB;
+    border-radius: 16px;
+    padding: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    color: black;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    gap: 5px;
+}
+
+.alert-box p {
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+}
+
+.button-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}

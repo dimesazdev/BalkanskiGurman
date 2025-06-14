@@ -1,0 +1,85 @@
+.review-card {
+    background-color: var(--beige);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.review-user-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.review-user-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.review-user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.review-user-name {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #000;
+    font-family: 'Cormorant SC', serif;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.review-user-meta {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.review-stars {
+    display: flex;
+}
+
+.review-text {
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.6;
+}
+
+.review-images {
+    display: flex;
+    gap: 8px;
+    margin-top: 0.5rem;
+}
+
+.review-images img {
+    width: 120px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #f5d2a8;
+}
+
+.review-date {
+    font-size: 0.95rem;
+    color: #555;
+    margin-top: 0.5rem;
+}
+
+.review-user-avatar-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff4eb;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+}

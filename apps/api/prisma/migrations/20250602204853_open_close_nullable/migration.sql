@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "WorkingHours" ALTER COLUMN "OpenTime" DROP NOT NULL,
+ALTER COLUMN "CloseTime" DROP NOT NULL;

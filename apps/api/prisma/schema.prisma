@@ -1,0 +1,202 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  UserId               String    @id @default(uuid())
+  Email                String    @unique
+  EmailConfirmed       Boolean
+  PasswordHash         String
+  PhoneNumber          String?
+  Name                 String
+  Surname              String
+  City                 String
+  Country              String
+  ProfilePictureUrl    String?
+  StatusId             Int
+  BadgeLevel           Int
+  CreatedAt            DateTime  @default(now())
+  UpdatedAt            DateTime  @updatedAt
+  SuspendedUntil       DateTime?
+
+  status             Status       @relation(fields: [StatusId], references: [StatusId])
+  reviews            Review[]
+  issues             Issue[]
+  favorites          Favorite[]
+  userRoles          UserRole[]
+  restaurantsClaimed Restaurant[] @relation("ClaimedRestaurants")
+}
+
+model Role {
+  RoleId         String     @id @default(uuid())
+  Name           String
+  NormalizedName String
+  userRoles      UserRole[]
+}
+
+model UserRole {
+  UserId String
+  RoleId String
+
+  user User @relation(fields: [UserId], references: [UserId])
+  role Role @relation(fields: [RoleId], references: [RoleId])
+
+  @@id([UserId, RoleId])
+}
+
+model Issue {
+  IssueId      Int      @id @default(autoincrement())
+  UserId       String
+  ReviewId     Int?
+  RestaurantId Int?
+  IssueType    String
+  Explanation  String
+  PhotoUrl1    String
+  PhotoUrl2    String
+  PhotoUrl3    String
+  CreatedAt    DateTime @default(now())
+  StatusId     Int
+
+  user   User   @relation(fields: [UserId], references: [UserId])
+  status Status @relation(fields: [StatusId], references: [StatusId])
+}
+
+model Status {
+  StatusId Int    @id @default(autoincrement())
+  Name     String
+
+  users   User[]
+  issues  Issue[]
+  reviews Review[]
+}
+
+model Restaurant {
+  RestaurantId    Int       @id @default(autoincrement())
+  Name            String
+  PriceRange      Int
+  Details         String
+  PhoneNumber     String
+  Website         String
+  MenuUrl         String
+  AddressId       Int
+  AverageRating   Float
+  IsClaimed       Boolean
+  ClaimedByUserId String?
+  ClaimedAt       DateTime?
+  CreatedAt       DateTime  @default(now())
+  UpdatedAt       DateTime  @updatedAt
+
+  address      Address             @relation(fields: [AddressId], references: [AddressId])
+  claimedBy    User?               @relation("ClaimedRestaurants", fields: [ClaimedByUserId], references: [UserId])
+  cuisines     RestaurantCuisine[]
+  images       Image[]
+  workingHours WorkingHours[]
+  amenities    RestaurantAmenity[]
+  reviews      Review[]
+  favorites    Favorite[]
+}
+
+model Address {
+  AddressId  Int    @id @default(autoincrement())
+  Street     String
+  PostalCode String
+  City       String
+  Country    String
+
+  restaurants Restaurant[]
+}
+
+model Cuisine {
+  CuisineId Int    @id @default(autoincrement())
+  Code      String
+  Name      String
+
+  restaurantCuisines RestaurantCuisine[]
+}
+
+model RestaurantCuisine {
+  RestaurantId Int
+  CuisineId    Int
+  CreatedAt    DateTime @default(now())
+
+  restaurant Restaurant @relation(fields: [RestaurantId], references: [RestaurantId])
+  cuisine    Cuisine    @relation(fields: [CuisineId], references: [CuisineId])
+
+  @@id([RestaurantId, CuisineId])
+}
+
+model Image {
+  ImageId      Int      @id @default(autoincrement())
+  RestaurantId Int
+  Url          String
+  CreatedAt    DateTime @default(now())
+
+  restaurant Restaurant @relation(fields: [RestaurantId], references: [RestaurantId])
+}
+
+model WorkingHours {
+  WorkingHoursId Int      @id @default(autoincrement())
+  RestaurantId   Int
+  DayOfWeek      Int
+  OpenTime       DateTime?
+  CloseTime      DateTime?
+  IsClosed       Boolean
+  CreatedAt      DateTime @default(now())
+  UpdatedAt      DateTime @updatedAt
+
+  restaurant Restaurant @relation(fields: [RestaurantId], references: [RestaurantId])
+}
+
+model Amenity {
+  AmenityId Int    @id @default(autoincrement())
+  Code      String
+  Name      String
+
+  restaurantAmenities RestaurantAmenity[]
+}
+
+model RestaurantAmenity {
+  RestaurantId Int
+  AmenityId    Int
+  CreatedAt    DateTime @default(now())
+
+  restaurant Restaurant @relation(fields: [RestaurantId], references: [RestaurantId])
+  amenity    Amenity    @relation(fields: [AmenityId], references: [AmenityId])
+
+  @@id([RestaurantId, AmenityId])
+}
+
+model Review {
+  ReviewId     Int       @id @default(autoincrement())
+  RestaurantId Int
+  UserId       String
+  Rating       Int
+  Comment      String
+  CreatedAt    DateTime  @default(now())
+  UpdatedAt    DateTime  @updatedAt
+  IsEdited     Boolean
+  EditedAt     DateTime?
+  StatusId     Int
+  PhotoUrl1    String?
+  PhotoUrl2    String?
+  PhotoUrl3    String?
+
+  restaurant Restaurant @relation(fields: [RestaurantId], references: [RestaurantId])
+  user       User       @relation(fields: [UserId], references: [UserId])
+  status     Status     @relation(fields: [StatusId], references: [StatusId])
+}
+
+model Favorite {
+  FavoriteId   Int      @id @default(autoincrement())
+  UserId       String
+  RestaurantId Int
+  CreatedAt    DateTime @default(now())
+
+  user       User       @relation(fields: [UserId], references: [UserId])
+  restaurant Restaurant @relation(fields: [RestaurantId], references: [RestaurantId])
+}

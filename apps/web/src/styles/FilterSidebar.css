@@ -1,0 +1,152 @@
+.filter-sidebar {
+    max-width: 500px;
+    background-color: var(--beige);
+    color: black;
+    padding: 1rem;
+    border-radius: 20px;
+    font-family: 'Cormorant Garamond', serif;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 5%;
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    gap: 1rem;
+}
+
+.filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.filter-section > label {
+    font-weight: bold;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-row {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.filter-row input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: #FFEEDB;
+    border: 1px solid black;
+    border-radius: 4px;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    margin-right: 0.5rem;
+}
+
+.filter-row input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 8px;
+    width: 4px;
+    height: 8px;
+    border: solid #BA3B46;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.filter-icon {
+    max-width: 25px;
+    max-height: 25px;
+    object-fit: contain;
+    margin-right: 0.5rem;
+}
+
+.stars-inline {
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.filter-toggle-btn {
+    background-color: #BA3B46;
+    color: #FFEEDB;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    margin: 1rem auto;
+    display: none;
+}
+
+.filter-close-btn {
+    background: none;
+    border: none;
+    color: black;
+    font-size: 2rem;
+    cursor: pointer;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: none;
+}
+
+.amenity-icon {
+    margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .filter-toggle-btn {
+        display: block;
+    }
+
+    .filter-sidebar {
+        display: none;
+    }
+
+    input#filter-toggle:checked ~ .filter-sidebar {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: var(--beige);
+        padding: 2rem;
+        padding-top: 15%;
+        border-radius: 0;
+        z-index: 2000;
+        flex-direction: column;
+    }
+
+    input#filter-toggle:checked ~ .filter-close-btn {
+        display: block;
+    }
+
+    input#filter-toggle {
+        display: none;
+    }
+
+    .filter-close-btn {
+        display: none;
+    }
+}

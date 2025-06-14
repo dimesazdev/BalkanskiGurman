@@ -1,0 +1,124 @@
+.manage-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-size: 1.8rem;
+  margin: 2rem 0 1rem;
+  text-align: center;
+  color: var(--beige);
+  font-family: 'Cormorant SC', serif;
+}
+
+.section-title::before,
+.section-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--beige);
+}
+
+.section-title::before {
+  margin-right: 20px;
+}
+
+.section-title::after {
+  margin-left: 20px;
+}
+
+.photo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.photo-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--beige);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.photo-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-icon {
+  color: var(--red);
+  font-size: 2rem;
+}
+
+.medals {
+  display: flex;
+  gap: 10px;
+  margin-top: 0.5rem;
+}
+
+.review-count {
+  color: var(--beige);
+  font-family: "Cormorant SC", serif;
+  font-size: 1.1rem;
+}
+
+.photo-upload-btn {
+  cursor: pointer;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  max-width: 800px;
+  align-items: center;
+  justify-content: center;
+}
+
+.change-password-link {
+  margin-top: 1rem;
+  font-family: "Cormorant SC", serif;
+  font-size: 1rem;
+}
+
+.change-password-link a {
+  color: var(--beige);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.custom-phone-container {
+  width: 100% !important;
+}
+
+.custom-phone-input {
+  width: 100% !important;
+  height: 3.5rem !important;
+  border-radius: 20px !important;
+  background-color: var(--beige) !important;
+  color: black !important;
+  font-size: 1.2rem !important;
+  font-family: 'Cormorant Garamond', sans-serif !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.custom-phone-button {
+  background: var(--beige) !important;
+  border: none !important;
+  border-radius: 20px 0 0 20px !important;
+}
