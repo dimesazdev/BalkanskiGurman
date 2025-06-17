@@ -1,12 +1,12 @@
 .btn-base {
-  height: 3.5rem;
+  height: 3rem;
   border: none;
   border-radius: 20px;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   padding: 0 1.5rem;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Cormorant SC", serif;
   transition: background-color 0.2s ease;
   display: flex;
   align-items: center;

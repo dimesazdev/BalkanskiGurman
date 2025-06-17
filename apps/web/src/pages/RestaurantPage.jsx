@@ -22,10 +22,14 @@ import {
   mdiStarHalfFull,
   mdiStarOutline,
   mdiHeart,
-  mdiHeartOutline
+  mdiHeartOutline,
+  mdiMagnify
 } from "@mdi/js";
 import "../styles/RestaurantPage.css";
 import { useAuth } from "../context/AuthContext";
+import Title from "../components/Title";
+import { useAzureTranslation } from '../hooks/useAzureTranslation';
+import TranslatedReviewCard from "../components/TranslatedReviewCard";
 
 function RestaurantPage() {
   const { t } = useTranslation();
@@ -37,6 +41,9 @@ function RestaurantPage() {
   const [reviews, setReviews] = useState([]);
   const [popup, setPopup] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showSortDropdown, setShowSortDropdown] = useState(false);
+  const [sortOption, setSortOption] = useState("rating");
 
   const allAmenityCodes = [
     "DELIV", "PARK", "PET", "CARD", "KIDS",
@@ -92,13 +99,11 @@ function RestaurantPage() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
-        body: JSON.stringify({ restaurantId: Number(id) }),
+        body: JSON.stringify({ RestaurantId: Number(id) }),
       });
       setIsFavorite(true);
       setPopup({ message: t("alerts.favoriteAdded"), variant: "success" });
     }
-
-    setTimeout(() => setPopup(null), 3000);
   };
 
   const getDayName = (dayNum) => {
@@ -149,7 +154,28 @@ function RestaurantPage() {
     return stars;
   };
 
+  const { translatedText: translatedDetailsText } = useAzureTranslation(restaurant?.Details ?? "");
+  
   if (!restaurant) return <div>Loading...</div>;
+
+  const getSortedReviews = () => {
+    const filtered = reviews.filter(r =>
+      r.Comment.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    switch (sortOption) {
+      case "highestRating":
+        return filtered.sort((a, b) => b.Rating - a.Rating);
+      case "lowestRating":
+        return filtered.sort((a, b) => a.Rating - b.Rating);
+      case "latest":
+        return filtered.sort(
+          (a, b) => new Date(b.CreatedAt) - new Date(a.CreatedAt)
+        );
+      default:
+        return filtered;
+    }
+  };
 
   return (
     <div className="restaurant-page">
@@ -166,7 +192,7 @@ function RestaurantPage() {
           <div className="restaurant-rating-stars">
             {renderStars(restaurant.AverageRating)}
             <span className="restaurant-rating-value">
-              {restaurant.AverageRating.toFixed(1)} ({t("labels.reviewCount", { count: restaurant.reviews?.length || 0 })})
+              {restaurant.AverageRating.toFixed(2)} ({t("labels.reviewCount", { count: restaurant.reviews?.length || 0 })})
             </span>
           </div>
         </div>
@@ -189,8 +215,8 @@ function RestaurantPage() {
 
       <ImageGallery images={restaurant.images} />
 
-      <h2 className="section-title">{t("restaurant.details")}</h2>
-      <p className="restaurant-details">{restaurant.Details}</p>
+      <Title>{t("restaurant.details")}</Title>
+      <p className="restaurant-details">{translatedDetailsText}</p>
 
       <div className="info-cards">
         <InfoCard
@@ -219,9 +245,10 @@ function RestaurantPage() {
             icon={mdiPhone}
             label={t("restaurant.phone")}
             value={restaurant.PhoneNumber ? restaurant.PhoneNumber : t("labels.notAvailable")}
-            style={{ opacity: restaurant.PhoneNumber ? 1 : 0.5,
-                     cursor: restaurant.PhoneNumber ? "pointer" : "default"
-             }}
+            style={{
+              opacity: restaurant.PhoneNumber ? 1 : 0.5,
+              cursor: restaurant.PhoneNumber ? "pointer" : "default"
+            }}
           />
         </a>
 
@@ -235,9 +262,10 @@ function RestaurantPage() {
             icon={mdiWeb}
             label={t("restaurant.website")}
             value={restaurant.Website ? restaurant.Website : t("labels.notAvailable")}
-            style={{ opacity: restaurant.Website ? 1 : 0.5,
-                     cursor: restaurant.Website ? "pointer" : "default"
-                  }}
+            style={{
+              opacity: restaurant.Website ? 1 : 0.5,
+              cursor: restaurant.Website ? "pointer" : "default"
+            }}
           />
         </a>
 
@@ -251,14 +279,15 @@ function RestaurantPage() {
             icon={mdiFileDocument}
             label={t("restaurant.menu")}
             value={restaurant.MenuUrl ? t("labels.clickToView") : t("labels.notAvailable")}
-            style={{ opacity: restaurant.MenuUrl ? 1 : 0.5,
-                     cursor: restaurant.MenuUrl ? "pointer" : "default"
-             }}
+            style={{
+              opacity: restaurant.MenuUrl ? 1 : 0.5,
+              cursor: restaurant.MenuUrl ? "pointer" : "default"
+            }}
           />
         </a>
       </div>
 
-      <h2 className="section-title">{t("restaurant.locationHours")}</h2>
+      <Title>{t("restaurant.locationHours")}</Title>
       <div className="location-hours-grid">
         <LocationCard
           address={restaurant.address}
@@ -274,7 +303,7 @@ function RestaurantPage() {
         />
       </div>
 
-      <h2 className="section-title">{t("restaurant.amenities")}</h2>
+      <Title>{t("restaurant.amenities")}</Title>
       <div className="restaurant-amenities">
         {allAmenityCodes.map((code) => {
           const amenity = restaurant.amenities?.find((a) => a.amenity.Code === code);
@@ -290,14 +319,70 @@ function RestaurantPage() {
         })}
       </div>
 
-      <h2 className="section-title">{t("restaurant.reviews")}</h2>
-      {reviews.length === 0 ? (
-        <p>{t("restaurant.noReviews")}</p>
+      <Title>{t("restaurant.reviews")}</Title>
+
+      <div className="settings-bar">
+        {/* Sort Control */}
+        <div className="sort-group">
+          <label className="sort-label">{t("sort.label")}</label>
+          <div
+            className={`sort-select ${showSortDropdown ? "open" : ""}`}
+            onClick={() => setShowSortDropdown(!showSortDropdown)}
+          >
+            {t(`sort.${sortOption}`)} {showSortDropdown ? "▾" : "▸"}
+            {showSortDropdown && (
+              <ul className="sort-dropdown">
+                <li onClick={() => setSortOption("highestRating")}>{t("sort.highestRating")}</li>
+                <li onClick={() => setSortOption("lowestRating")}>{t("sort.lowestRating")}</li>
+                <li onClick={() => setSortOption("latest")}>{t("sort.latest")}</li>
+              </ul>
+            )}
+          </div>
+        </div>
+
+        {/* Write Review Button */}
+        <Button variant="red" onClick={() => navigate(`/restaurants/${id}/reviews`)}>
+          {t("buttons.writeReview")}
+        </Button>
+
+        {/* Search Bar */}
+        <div className="search-group">
+          <div className="search-bar">
+            <input
+              type="text"
+              placeholder={t("labels.searchByKeyword")}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <button type="submit">
+              <Icon path={mdiMagnify} size={1} color="#2f2f2f" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {getSortedReviews().length === 0 ? (
+        <p style={{ color: "var(--beige)" }}>
+          {reviews.length === 0
+            ? t("restaurant.noReviews")
+            : t("restaurant.noSearchResults")}
+        </p>
       ) : (
-        <div className="reviews-list">
-          {reviews.map((r) => (
-            <ReviewCard key={r.ReviewId} review={r} />
-          ))}
+        <div className="reviews-columns">
+          <div className="reviews-column">
+            {getSortedReviews()
+              .filter((_, i) => i % 2 === 0)
+              .map((r) => (
+                <TranslatedReviewCard key={r.ReviewId} review={r} />
+              ))}
+          </div>
+          <div className="reviews-column">
+            {getSortedReviews()
+              .filter((_, i) => i % 2 !== 0)
+              .map((r) => (
+                <TranslatedReviewCard key={r.ReviewId} review={r} />
+              ))}
+          </div>
         </div>
       )}
 

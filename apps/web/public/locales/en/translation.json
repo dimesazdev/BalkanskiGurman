@@ -61,7 +61,10 @@
         "clickToView": "Click to view",
         "available": "Available",
         "notAvailable": "Not available",
-        "reviews": "reviews"
+        "reviews": "reviews",
+        "searchByKeyword": "Search by keyword:",
+        "aiTranslated": "This review was translated by AI"
+
     },
     "days": {
         "mon": "Monday",
@@ -76,7 +79,10 @@
         "label": "Sort by:",
         "rating": "Highest Rating",
         "priceLow": "Price (ascending)",
-        "priceHigh": "Price (descending)"
+        "priceHigh": "Price (descending)",
+        "highestRating": "Highest Rating",
+        "lowestRating": "Lowest Rating",
+        "latest": "Latest"
     },
     "search": "Search...",
     "login": {
@@ -131,7 +137,9 @@
         "removeFromFavorites": "Remove from favorites",
         "goBack": "Go back",
         "choosePhoto": "Choose new photo",
-        "saveChanges": "Save changes"
+        "saveChanges": "Save changes",
+        "saving": "Saving...",
+        "writeReview": "Write a review"
     },
     "restaurant": {
         "details": "Details",
@@ -143,12 +151,13 @@
         "noReviews": "No reviews yet.",
         "goToLocation": "Go to location",
         "about": "About",
-        "cuisines": "Cuisines",
+        "cuisines": "Cuisine",
         "phone": "Phone",
         "website": "Website",
         "menu": "Menu",
         "price": "Price",
-        "suggestEdit": "Wrong info?"
+        "suggestEdit": "Wrong info?",
+        "noSearchResults": "No reviews match your search."
     },
     "amenities": {
         "DELIV": "Delivery",
@@ -174,5 +183,27 @@
     "profile": {
         "accountInfo": "Account info",
         "changePassword": "Change password"
+    },
+    "manageProfile": {
+        "loadingUser": "Loading user...",
+        "fetchError": "Failed to load profile data",
+        "saveError": "Something went wrong while saving.",
+        "saveSuccess": "Profile saved successfully!",
+        "photoUploadSuccess": "Photo uploaded successfully!",
+        "invalidFileType": "Only image files are allowed",
+        "fileTooLarge": "Image must be under 2MB",
+        "saving": "Saving your profile... Please wait.",
+        "forceClose": "Force Close"
+    },
+    "medals": {
+        "bronzeEarned": "You earned the Bronze medal after posting {{count}} review.",
+        "bronzeMissing": "Post at least {{count}} review to earn the Bronze medal.",
+        "silverEarned": "You earned the Silver medal after posting {{count}} reviews.",
+        "silverMissing": "Post at least {{count}} reviews to earn the Silver medal.",
+        "goldEarned": "You earned the Gold medal after posting {{count}} reviews.",
+        "goldMissing": "Post at least {{count}} reviews to earn the Gold medal.",
+        "diamondEarned": "You earned the Diamond medal after posting {{count}} reviews.",
+        "diamondMissing": "Post at least {{count}} reviews to earn the Diamond.",
+        "noReviews": "You haven't posted any reviews yet."
     }
 }

@@ -151,10 +151,10 @@ function RestaurantCard({ restaurant, isFavorite, onToggleFavorite }) {
 
                 <div className="restaurant-info-line rating-row">
                     <strong>{t("labels.rating")}:</strong>
-                    <span className="stars-red">{renderStars()}<span className="rating-value"> {AverageRating.toFixed(1)}</span></span>
+                    <span className="stars-red">{renderStars()}<span className="rating-value"> {AverageRating.toFixed(2)}</span></span>
                     {restaurant.reviews && (
-                        <span className="review-count">
-                            ({t("labels.reviewCount", { count: restaurant.reviews.length })})
+                        <span className="review-count-card" style={{ color: "ba3b46" }}>
+                            ({t("labels.reviewCount", { count: restaurant.reviews.length })}) 
                         </span>
                     )}
                 </div>

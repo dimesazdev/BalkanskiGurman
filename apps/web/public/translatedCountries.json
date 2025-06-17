@@ -1,0 +1,2502 @@
+[
+  {
+    "name": "Afghanistan",
+    "isoCode": "AF",
+    "translations": {
+      "en": "Afghanistan",
+      "mk": "Авганистан",
+      "sr": "Avganistan",
+      "sl": "Afganistan"
+    }
+  },
+  {
+    "name": "Aland Islands",
+    "isoCode": "AX",
+    "translations": {
+      "en": "Aland Islands",
+      "mk": "Аландски Острови",
+      "sr": "Alandska ostrva",
+      "sl": "Alandski otoki"
+    }
+  },
+  {
+    "name": "Albania",
+    "isoCode": "AL",
+    "translations": {
+      "en": "Albania",
+      "mk": "Албанија",
+      "sr": "Albanija",
+      "sl": "Albanija"
+    }
+  },
+  {
+    "name": "Algeria",
+    "isoCode": "DZ",
+    "translations": {
+      "en": "Algeria",
+      "mk": "Алжир",
+      "sr": "Alžir",
+      "sl": "Alžirija"
+    }
+  },
+  {
+    "name": "American Samoa",
+    "isoCode": "AS",
+    "translations": {
+      "en": "American Samoa",
+      "mk": "Американска Самоа",
+      "sr": "Američka Samoa",
+      "sl": "Ameriška Samoa"
+    }
+  },
+  {
+    "name": "Andorra",
+    "isoCode": "AD",
+    "translations": {
+      "en": "Andorra",
+      "mk": "Андора",
+      "sr": "Andora",
+      "sl": "Andora"
+    }
+  },
+  {
+    "name": "Angola",
+    "isoCode": "AO",
+    "translations": {
+      "en": "Angola",
+      "mk": "Ангола",
+      "sr": "Angoli",
+      "sl": "Angola"
+    }
+  },
+  {
+    "name": "Anguilla",
+    "isoCode": "AI",
+    "translations": {
+      "en": "Anguilla",
+      "mk": "Ангилја",
+      "sr": "San-Tome i Prinsipi",
+      "sl": "Angvila"
+    }
+  },
+  {
+    "name": "Antarctica",
+    "isoCode": "AQ",
+    "translations": {
+      "en": "Antarctica",
+      "mk": "Антарктик",
+      "sr": "Antarktik",
+      "sl": "Antarktika"
+    }
+  },
+  {
+    "name": "Antigua And Barbuda",
+    "isoCode": "AG",
+    "translations": {
+      "en": "Antigua And Barbuda",
+      "mk": "Антигва и Барбуда",
+      "sr": "Santa-Ana-San-Francisko",
+      "sl": "Antigva in Barbuda"
+    }
+  },
+  {
+    "name": "Argentina",
+    "isoCode": "AR",
+    "translations": {
+      "en": "Argentina",
+      "mk": "Аргентина",
+      "sr": "Argentina",
+      "sl": "Argentina"
+    }
+  },
+  {
+    "name": "Armenia",
+    "isoCode": "AM",
+    "translations": {
+      "en": "Armenia",
+      "mk": "Ерменија",
+      "sr": "Jermenija",
+      "sl": "Armenija"
+    }
+  },
+  {
+    "name": "Aruba",
+    "isoCode": "AW",
+    "translations": {
+      "en": "Aruba",
+      "mk": "Аруба",
+      "sr": "Arubu",
+      "sl": "Aruba"
+    }
+  },
+  {
+    "name": "Australia",
+    "isoCode": "AU",
+    "translations": {
+      "en": "Australia",
+      "mk": "Австралија",
+      "sr": "Australija",
+      "sl": "Avstralija"
+    }
+  },
+  {
+    "name": "Austria",
+    "isoCode": "AT",
+    "translations": {
+      "en": "Austria",
+      "mk": "Австрија",
+      "sr": "Austrija",
+      "sl": "Avstrija"
+    }
+  },
+  {
+    "name": "Azerbaijan",
+    "isoCode": "AZ",
+    "translations": {
+      "en": "Azerbaijan",
+      "mk": "Азербејџан",
+      "sr": "Azerbejdžan",
+      "sl": "Azerbajdžan"
+    }
+  },
+  {
+    "name": "The Bahamas",
+    "isoCode": "BS",
+    "translations": {
+      "en": "The Bahamas",
+      "mk": "Бахамите",
+      "sr": "Bahami",
+      "sl": "Bahami"
+    }
+  },
+  {
+    "name": "Bahrain",
+    "isoCode": "BH",
+    "translations": {
+      "en": "Bahrain",
+      "mk": "Бахреин",
+      "sr": "Bahrein",
+      "sl": "Bahrajn"
+    }
+  },
+  {
+    "name": "Bangladesh",
+    "isoCode": "BD",
+    "translations": {
+      "en": "Bangladesh",
+      "mk": "Бангладеш",
+      "sr": "Bangladeš",
+      "sl": "Bangladeš"
+    }
+  },
+  {
+    "name": "Barbados",
+    "isoCode": "BB",
+    "translations": {
+      "en": "Barbados",
+      "mk": "Барбадос",
+      "sr": "Barbadosu",
+      "sl": "Barbados"
+    }
+  },
+  {
+    "name": "Belarus",
+    "isoCode": "BY",
+    "translations": {
+      "en": "Belarus",
+      "mk": "Белорусија",
+      "sr": "Belorusija",
+      "sl": "Belorusija"
+    }
+  },
+  {
+    "name": "Belgium",
+    "isoCode": "BE",
+    "translations": {
+      "en": "Belgium",
+      "mk": "Белгија",
+      "sr": "Belgija",
+      "sl": "Belgija"
+    }
+  },
+  {
+    "name": "Belize",
+    "isoCode": "BZ",
+    "translations": {
+      "en": "Belize",
+      "mk": "Белизе",
+      "sr": "Beliz",
+      "sl": "Belize"
+    }
+  },
+  {
+    "name": "Benin",
+    "isoCode": "BJ",
+    "translations": {
+      "en": "Benin",
+      "mk": "Бенин",
+      "sr": "Benin",
+      "sl": "Benin"
+    }
+  },
+  {
+    "name": "Bermuda",
+    "isoCode": "BM",
+    "translations": {
+      "en": "Bermuda",
+      "mk": "Бермуда",
+      "sr": "Bermudski",
+      "sl": "Bermudi"
+    }
+  },
+  {
+    "name": "Bhutan",
+    "isoCode": "BT",
+    "translations": {
+      "en": "Bhutan",
+      "mk": "Бутан",
+      "sr": "Butan",
+      "sl": "Butan"
+    }
+  },
+  {
+    "name": "Bolivia",
+    "isoCode": "BO",
+    "translations": {
+      "en": "Bolivia",
+      "mk": "Боливија",
+      "sr": "Bolivija",
+      "sl": "Bolivija"
+    }
+  },
+  {
+    "name": "Bosnia and Herzegovina",
+    "isoCode": "BA",
+    "translations": {
+      "en": "Bosnia and Herzegovina",
+      "mk": "Босна и Херцеговина",
+      "sr": "Bosna i Hercegovina",
+      "sl": "Bosna in Hercegovina"
+    }
+  },
+  {
+    "name": "Botswana",
+    "isoCode": "BW",
+    "translations": {
+      "en": "Botswana",
+      "mk": "Боцвана",
+      "sr": "Bocvana",
+      "sl": "Bocvana"
+    }
+  },
+  {
+    "name": "Bouvet Island",
+    "isoCode": "BV",
+    "translations": {
+      "en": "Bouvet Island",
+      "mk": "Островот Буве",
+      "sr": "Ostrvo Bouvet",
+      "sl": "Otok Bouvet"
+    }
+  },
+  {
+    "name": "Brazil",
+    "isoCode": "BR",
+    "translations": {
+      "en": "Brazil",
+      "mk": "Бразил",
+      "sr": "Brazil",
+      "sl": "Brazilija"
+    }
+  },
+  {
+    "name": "British Indian Ocean Territory",
+    "isoCode": "IO",
+    "translations": {
+      "en": "British Indian Ocean Territory",
+      "mk": "Британска Индоокеанска Територија",
+      "sr": "Britanska teritorija Indijskog okeana",
+      "sl": "Britansko ozemlje Indijskega oceana"
+    }
+  },
+  {
+    "name": "Brunei",
+    "isoCode": "BN",
+    "translations": {
+      "en": "Brunei",
+      "mk": "Брунеј",
+      "sr": "Brunej",
+      "sl": "Brunej"
+    }
+  },
+  {
+    "name": "Bulgaria",
+    "isoCode": "BG",
+    "translations": {
+      "en": "Bulgaria",
+      "mk": "Бугарија",
+      "sr": "Bugarska",
+      "sl": "Bolgarija"
+    }
+  },
+  {
+    "name": "Burkina Faso",
+    "isoCode": "BF",
+    "translations": {
+      "en": "Burkina Faso",
+      "mk": "Буркина Фасо",
+      "sr": "San-Tome i Prinsipi",
+      "sl": "Burkina Faso"
+    }
+  },
+  {
+    "name": "Burundi",
+    "isoCode": "BI",
+    "translations": {
+      "en": "Burundi",
+      "mk": "Бурунди",
+      "sr": "Burundi",
+      "sl": "Burundi"
+    }
+  },
+  {
+    "name": "Cambodia",
+    "isoCode": "KH",
+    "translations": {
+      "en": "Cambodia",
+      "mk": "Камбоџа",
+      "sr": "Kambodža",
+      "sl": "Kambodža"
+    }
+  },
+  {
+    "name": "Cameroon",
+    "isoCode": "CM",
+    "translations": {
+      "en": "Cameroon",
+      "mk": "Камерун",
+      "sr": "Kamerun",
+      "sl": "Kamerun"
+    }
+  },
+  {
+    "name": "Canada",
+    "isoCode": "CA",
+    "translations": {
+      "en": "Canada",
+      "mk": "Канада",
+      "sr": "Kanada",
+      "sl": "Kanada"
+    }
+  },
+  {
+    "name": "Cape Verde",
+    "isoCode": "CV",
+    "translations": {
+      "en": "Cape Verde",
+      "mk": "Зелено'ртски 'ртови",
+      "sr": "Zelenortska Ostrva",
+      "sl": "Zelenortski otoki"
+    }
+  },
+  {
+    "name": "Cayman Islands",
+    "isoCode": "KY",
+    "translations": {
+      "en": "Cayman Islands",
+      "mk": "Кајмански Острови",
+      "sr": "Kajmanska ostrva",
+      "sl": "Kajmanski otoki"
+    }
+  },
+  {
+    "name": "Central African Republic",
+    "isoCode": "CF",
+    "translations": {
+      "en": "Central African Republic",
+      "mk": "Централноафриканска Република",
+      "sr": "Centralnoafrička Republika",
+      "sl": "Srednjeafriška republika"
+    }
+  },
+  {
+    "name": "Chad",
+    "isoCode": "TD",
+    "translations": {
+      "en": "Chad",
+      "mk": "Чад",
+      "sr": "Čad",
+      "sl": "Čad"
+    }
+  },
+  {
+    "name": "Chile",
+    "isoCode": "CL",
+    "translations": {
+      "en": "Chile",
+      "mk": "Чиле",
+      "sr": "Čile",
+      "sl": "Čile"
+    }
+  },
+  {
+    "name": "China",
+    "isoCode": "CN",
+    "translations": {
+      "en": "China",
+      "mk": "Кина",
+      "sr": "Kina",
+      "sl": "Kitajska"
+    }
+  },
+  {
+    "name": "Christmas Island",
+    "isoCode": "CX",
+    "translations": {
+      "en": "Christmas Island",
+      "mk": "Божиќен Остров",
+      "sr": "Božićno ostrvo",
+      "sl": "Božični otok"
+    }
+  },
+  {
+    "name": "Cocos (Keeling) Islands",
+    "isoCode": "CC",
+    "translations": {
+      "en": "Cocos (Keeling) Islands",
+      "mk": "Кокосови Острови",
+      "sr": "Kokosova ostrva (Keeling)",
+      "sl": "Kokosovi otoki"
+    }
+  },
+  {
+    "name": "Colombia",
+    "isoCode": "CO",
+    "translations": {
+      "en": "Colombia",
+      "mk": "Колумбија",
+      "sr": "Kolumbija",
+      "sl": "Kolumbija"
+    }
+  },
+  {
+    "name": "Comoros",
+    "isoCode": "KM",
+    "translations": {
+      "en": "Comoros",
+      "mk": "Комори",
+      "sr": "Komori",
+      "sl": "Komori"
+    }
+  },
+  {
+    "name": "Congo",
+    "isoCode": "CG",
+    "translations": {
+      "en": "Congo",
+      "mk": "Конго",
+      "sr": "Kongo",
+      "sl": "Kongo"
+    }
+  },
+  {
+    "name": "Democratic Republic of the Congo",
+    "isoCode": "CD",
+    "translations": {
+      "en": "Democratic Republic of the Congo",
+      "mk": "Демократска Република Конго",
+      "sr": "Demokratska Republika Kongo",
+      "sl": "Demokratična republika Kongo"
+    }
+  },
+  {
+    "name": "Cook Islands",
+    "isoCode": "CK",
+    "translations": {
+      "en": "Cook Islands",
+      "mk": "Кукови Острови",
+      "sr": "Kukova ostrva",
+      "sl": "Cookovi otoki"
+    }
+  },
+  {
+    "name": "Costa Rica",
+    "isoCode": "CR",
+    "translations": {
+      "en": "Costa Rica",
+      "mk": "Костарика",
+      "sr": "Kosta Rika",
+      "sl": "Kostarika"
+    }
+  },
+  {
+    "name": "Cote D'Ivoire (Ivory Coast)",
+    "isoCode": "CI",
+    "translations": {
+      "en": "Cote D'Ivoire (Ivory Coast)",
+      "mk": "Брегот на Слоновата Коска (Брегот на Слоновата Коска)",
+      "sr": "Obala Slonovače (Obala Slonovače)",
+      "sl": "Slonokoščena obala (Slonokoščena obala)"
+    }
+  },
+  {
+    "name": "Croatia",
+    "isoCode": "HR",
+    "translations": {
+      "en": "Croatia",
+      "mk": "Хрватска",
+      "sr": "Hrvatska",
+      "sl": "Hrvaška"
+    }
+  },
+  {
+    "name": "Cuba",
+    "isoCode": "CU",
+    "translations": {
+      "en": "Cuba",
+      "mk": "Куба",
+      "sr": "Kuba",
+      "sl": "Kuba"
+    }
+  },
+  {
+    "name": "Cyprus",
+    "isoCode": "CY",
+    "translations": {
+      "en": "Cyprus",
+      "mk": "Кипар",
+      "sr": "Kipar",
+      "sl": "Ciper"
+    }
+  },
+  {
+    "name": "Czech Republic",
+    "isoCode": "CZ",
+    "translations": {
+      "en": "Czech Republic",
+      "mk": "Република Чешка",
+      "sr": "Republika Češka",
+      "sl": "Češka"
+    }
+  },
+  {
+    "name": "Denmark",
+    "isoCode": "DK",
+    "translations": {
+      "en": "Denmark",
+      "mk": "Данска",
+      "sr": "Danska",
+      "sl": "Danska"
+    }
+  },
+  {
+    "name": "Djibouti",
+    "isoCode": "DJ",
+    "translations": {
+      "en": "Djibouti",
+      "mk": "Џибути",
+      "sr": "Džibuti",
+      "sl": "Džibuti"
+    }
+  },
+  {
+    "name": "Dominica",
+    "isoCode": "DM",
+    "translations": {
+      "en": "Dominica",
+      "mk": "Доминика",
+      "sr": "Dominiцa",
+      "sl": "Dominika"
+    }
+  },
+  {
+    "name": "Dominican Republic",
+    "isoCode": "DO",
+    "translations": {
+      "en": "Dominican Republic",
+      "mk": "Доминиканска Република",
+      "sr": "Dominikanska Republika",
+      "sl": "Dominikanska republika"
+    }
+  },
+  {
+    "name": "East Timor",
+    "isoCode": "TL",
+    "translations": {
+      "en": "East Timor",
+      "mk": "Источен Тимор",
+      "sr": "Istočni Timor",
+      "sl": "Vzhodni Timor"
+    }
+  },
+  {
+    "name": "Ecuador",
+    "isoCode": "EC",
+    "translations": {
+      "en": "Ecuador",
+      "mk": "Еквадор",
+      "sr": "Ekvador",
+      "sl": "Ekvador"
+    }
+  },
+  {
+    "name": "Egypt",
+    "isoCode": "EG",
+    "translations": {
+      "en": "Egypt",
+      "mk": "Египет",
+      "sr": "Egipat",
+      "sl": "Egipt"
+    }
+  },
+  {
+    "name": "El Salvador",
+    "isoCode": "SV",
+    "translations": {
+      "en": "El Salvador",
+      "mk": "Ел Салвадор",
+      "sr": "El Salvador",
+      "sl": "Salvador"
+    }
+  },
+  {
+    "name": "Equatorial Guinea",
+    "isoCode": "GQ",
+    "translations": {
+      "en": "Equatorial Guinea",
+      "mk": "Екваторијална Гвинеја",
+      "sr": "Ekvatorijalna Gvineja",
+      "sl": "Ekvatorialna Gvineja"
+    }
+  },
+  {
+    "name": "Eritrea",
+    "isoCode": "ER",
+    "translations": {
+      "en": "Eritrea",
+      "mk": "Еритреја",
+      "sr": "Santa-Ana-San-Francisko",
+      "sl": "Eritreja"
+    }
+  },
+  {
+    "name": "Estonia",
+    "isoCode": "EE",
+    "translations": {
+      "en": "Estonia",
+      "mk": "Естонија",
+      "sr": "Estonija",
+      "sl": "Estonija"
+    }
+  },
+  {
+    "name": "Ethiopia",
+    "isoCode": "ET",
+    "translations": {
+      "en": "Ethiopia",
+      "mk": "Етиопија",
+      "sr": "Etiopija",
+      "sl": "Etiopija"
+    }
+  },
+  {
+    "name": "Falkland Islands",
+    "isoCode": "FK",
+    "translations": {
+      "en": "Falkland Islands",
+      "mk": "Фолкландски Острови",
+      "sr": "Foklandska ostrva",
+      "sl": "Falklandski otoki"
+    }
+  },
+  {
+    "name": "Faroe Islands",
+    "isoCode": "FO",
+    "translations": {
+      "en": "Faroe Islands",
+      "mk": "Фарски Острови",
+      "sr": "Farska Ostrva",
+      "sl": "Ferski otoki"
+    }
+  },
+  {
+    "name": "Fiji Islands",
+    "isoCode": "FJ",
+    "translations": {
+      "en": "Fiji Islands",
+      "mk": "Острови Фиџи",
+      "sr": "Fidži Ostrva",
+      "sl": "Fidžijski otoki"
+    }
+  },
+  {
+    "name": "Finland",
+    "isoCode": "FI",
+    "translations": {
+      "en": "Finland",
+      "mk": "Финска",
+      "sr": "Finska",
+      "sl": "Finska"
+    }
+  },
+  {
+    "name": "France",
+    "isoCode": "FR",
+    "translations": {
+      "en": "France",
+      "mk": "Франција",
+      "sr": "Francuska",
+      "sl": "Francija"
+    }
+  },
+  {
+    "name": "French Guiana",
+    "isoCode": "GF",
+    "translations": {
+      "en": "French Guiana",
+      "mk": "Француска Гвајана",
+      "sr": "Francuska Gvajana",
+      "sl": "Francoska Gvajana"
+    }
+  },
+  {
+    "name": "French Polynesia",
+    "isoCode": "PF",
+    "translations": {
+      "en": "French Polynesia",
+      "mk": "Француска Полинезија",
+      "sr": "Francuska Polinezija",
+      "sl": "Francoska Polinezija"
+    }
+  },
+  {
+    "name": "French Southern Territories",
+    "isoCode": "TF",
+    "translations": {
+      "en": "French Southern Territories",
+      "mk": "Француски Јужни Територии",
+      "sr": "Francuske južne teritorije",
+      "sl": "Francoska južna ozemlja"
+    }
+  },
+  {
+    "name": "Gabon",
+    "isoCode": "GA",
+    "translations": {
+      "en": "Gabon",
+      "mk": "Габон",
+      "sr": "El Salvador",
+      "sl": "Gabon"
+    }
+  },
+  {
+    "name": "The Gambia",
+    "isoCode": "GM",
+    "translations": {
+      "en": "The Gambia",
+      "mk": "Гамбија",
+      "sr": "Gambija",
+      "sl": "Gambija"
+    }
+  },
+  {
+    "name": "Georgia",
+    "isoCode": "GE",
+    "translations": {
+      "en": "Georgia",
+      "mk": "Грузија",
+      "sr": "Gruzija",
+      "sl": "Gruzija"
+    }
+  },
+  {
+    "name": "Germany",
+    "isoCode": "DE",
+    "translations": {
+      "en": "Germany",
+      "mk": "Германија",
+      "sr": "Nemačka",
+      "sl": "Nemčija"
+    }
+  },
+  {
+    "name": "Ghana",
+    "isoCode": "GH",
+    "translations": {
+      "en": "Ghana",
+      "mk": "Гана",
+      "sr": "Gana",
+      "sl": "Gana"
+    }
+  },
+  {
+    "name": "Gibraltar",
+    "isoCode": "GI",
+    "translations": {
+      "en": "Gibraltar",
+      "mk": "Гибралтар",
+      "sr": "Gibraltar",
+      "sl": "Gibraltar"
+    }
+  },
+  {
+    "name": "Greece",
+    "isoCode": "GR",
+    "translations": {
+      "en": "Greece",
+      "mk": "Грција",
+      "sr": "Grčka",
+      "sl": "Grčija"
+    }
+  },
+  {
+    "name": "Greenland",
+    "isoCode": "GL",
+    "translations": {
+      "en": "Greenland",
+      "mk": "Гренланд",
+      "sr": "Grenland",
+      "sl": "Grenlandija"
+    }
+  },
+  {
+    "name": "Grenada",
+    "isoCode": "GD",
+    "translations": {
+      "en": "Grenada",
+      "mk": "Гренада",
+      "sr": "Grenada",
+      "sl": "Grenada"
+    }
+  },
+  {
+    "name": "Guadeloupe",
+    "isoCode": "GP",
+    "translations": {
+      "en": "Guadeloupe",
+      "mk": "Гваделуп",
+      "sr": "Gvadalupe",
+      "sl": "Guadeloupe"
+    }
+  },
+  {
+    "name": "Guam",
+    "isoCode": "GU",
+    "translations": {
+      "en": "Guam",
+      "mk": "Гуам",
+      "sr": "Guam",
+      "sl": "Guam"
+    }
+  },
+  {
+    "name": "Guatemala",
+    "isoCode": "GT",
+    "translations": {
+      "en": "Guatemala",
+      "mk": "Гватемала",
+      "sr": "Gvatemala",
+      "sl": "Gvatemala"
+    }
+  },
+  {
+    "name": "Guernsey and Alderney",
+    "isoCode": "GG",
+    "translations": {
+      "en": "Guernsey and Alderney",
+      "mk": "Гернзи и Олдерни",
+      "sr": "Guernsei i Aldernei",
+      "sl": "Guernsey in Alderney"
+    }
+  },
+  {
+    "name": "Guinea",
+    "isoCode": "GN",
+    "translations": {
+      "en": "Guinea",
+      "mk": "Гвинеја",
+      "sr": "Gvineja",
+      "sl": "Gvineja"
+    }
+  },
+  {
+    "name": "Guinea-Bissau",
+    "isoCode": "GW",
+    "translations": {
+      "en": "Guinea-Bissau",
+      "mk": "Гвинеја-Бисао",
+      "sr": "San-Tome i Prinsipi",
+      "sl": "Gvineja Bissau"
+    }
+  },
+  {
+    "name": "Guyana",
+    "isoCode": "GY",
+    "translations": {
+      "en": "Guyana",
+      "mk": "Гвајана",
+      "sr": "Gvajana",
+      "sl": "Gvajana"
+    }
+  },
+  {
+    "name": "Haiti",
+    "isoCode": "HT",
+    "translations": {
+      "en": "Haiti",
+      "mk": "Хаити",
+      "sr": "Haiti",
+      "sl": "Haiti"
+    }
+  },
+  {
+    "name": "Heard Island and McDonald Islands",
+    "isoCode": "HM",
+    "translations": {
+      "en": "Heard Island and McDonald Islands",
+      "mk": "Островот Херд и Мекдоналд Островите",
+      "sr": "Ostrvo Heard i Mekdonald ostrva",
+      "sl": "Otok Heard in otoki McDonald"
+    }
+  },
+  {
+    "name": "Honduras",
+    "isoCode": "HN",
+    "translations": {
+      "en": "Honduras",
+      "mk": "Хондурас",
+      "sr": "Honduras",
+      "sl": "Honduras"
+    }
+  },
+  {
+    "name": "Hong Kong S.A.R.",
+    "isoCode": "HK",
+    "translations": {
+      "en": "Hong Kong S.A.R.",
+      "mk": "Хонгконг Специјален Административен Регион.",
+      "sr": "Hong Kong Poseban Administrativni Region.",
+      "sl": "Hongkong S.A.R."
+    }
+  },
+  {
+    "name": "Hungary",
+    "isoCode": "HU",
+    "translations": {
+      "en": "Hungary",
+      "mk": "Унгарија",
+      "sr": "Mađarska",
+      "sl": "Madžarska"
+    }
+  },
+  {
+    "name": "Iceland",
+    "isoCode": "IS",
+    "translations": {
+      "en": "Iceland",
+      "mk": "Исланд",
+      "sr": "Island",
+      "sl": "Islandija"
+    }
+  },
+  {
+    "name": "India",
+    "isoCode": "IN",
+    "translations": {
+      "en": "India",
+      "mk": "Индија",
+      "sr": "Indija",
+      "sl": "Indija"
+    }
+  },
+  {
+    "name": "Indonesia",
+    "isoCode": "ID",
+    "translations": {
+      "en": "Indonesia",
+      "mk": "Индонезија",
+      "sr": "Indonezija",
+      "sl": "Indonezija"
+    }
+  },
+  {
+    "name": "Iran",
+    "isoCode": "IR",
+    "translations": {
+      "en": "Iran",
+      "mk": "Иран",
+      "sr": "Iran",
+      "sl": "Iran"
+    }
+  },
+  {
+    "name": "Iraq",
+    "isoCode": "IQ",
+    "translations": {
+      "en": "Iraq",
+      "mk": "Ирак",
+      "sr": "Irak",
+      "sl": "Irak"
+    }
+  },
+  {
+    "name": "Ireland",
+    "isoCode": "IE",
+    "translations": {
+      "en": "Ireland",
+      "mk": "Ирска",
+      "sr": "Irska",
+      "sl": "Irska"
+    }
+  },
+  {
+    "name": "Israel",
+    "isoCode": "IL",
+    "translations": {
+      "en": "Israel",
+      "mk": "Израел",
+      "sr": "Izrael",
+      "sl": "Izrael"
+    }
+  },
+  {
+    "name": "Italy",
+    "isoCode": "IT",
+    "translations": {
+      "en": "Italy",
+      "mk": "Италија",
+      "sr": "Italija",
+      "sl": "Italija"
+    }
+  },
+  {
+    "name": "Jamaica",
+    "isoCode": "JM",
+    "translations": {
+      "en": "Jamaica",
+      "mk": "Јамајка",
+      "sr": "Jamajka",
+      "sl": "Jamajka"
+    }
+  },
+  {
+    "name": "Japan",
+    "isoCode": "JP",
+    "translations": {
+      "en": "Japan",
+      "mk": "Јапонија",
+      "sr": "Japan",
+      "sl": "Japonska"
+    }
+  },
+  {
+    "name": "Jersey",
+    "isoCode": "JE",
+    "translations": {
+      "en": "Jersey",
+      "mk": "Џерси",
+      "sr": "Jersey",
+      "sl": "Jersey"
+    }
+  },
+  {
+    "name": "Jordan",
+    "isoCode": "JO",
+    "translations": {
+      "en": "Jordan",
+      "mk": "Јордан",
+      "sr": "Jordan",
+      "sl": "Jordanija"
+    }
+  },
+  {
+    "name": "Kazakhstan",
+    "isoCode": "KZ",
+    "translations": {
+      "en": "Kazakhstan",
+      "mk": "Казахстан",
+      "sr": "Kazahstan",
+      "sl": "Kazahstan"
+    }
+  },
+  {
+    "name": "Kenya",
+    "isoCode": "KE",
+    "translations": {
+      "en": "Kenya",
+      "mk": "Кенија",
+      "sr": "Kenija",
+      "sl": "Kenija"
+    }
+  },
+  {
+    "name": "Kiribati",
+    "isoCode": "KI",
+    "translations": {
+      "en": "Kiribati",
+      "mk": "Кирибати",
+      "sr": "Kiribati",
+      "sl": "Kiribati"
+    }
+  },
+  {
+    "name": "North Korea",
+    "isoCode": "KP",
+    "translations": {
+      "en": "North Korea",
+      "mk": "Северна Кореја",
+      "sr": "Severna Koreja",
+      "sl": "Severna Koreja"
+    }
+  },
+  {
+    "name": "South Korea",
+    "isoCode": "KR",
+    "translations": {
+      "en": "South Korea",
+      "mk": "Јужна Кореја",
+      "sr": "Južna Koreja",
+      "sl": "Južna Koreja"
+    }
+  },
+  {
+    "name": "Kuwait",
+    "isoCode": "KW",
+    "translations": {
+      "en": "Kuwait",
+      "mk": "Кувајт",
+      "sr": "Kuvajt",
+      "sl": "Kuvajt"
+    }
+  },
+  {
+    "name": "Kyrgyzstan",
+    "isoCode": "KG",
+    "translations": {
+      "en": "Kyrgyzstan",
+      "mk": "Киргистан",
+      "sr": "Kirgistan",
+      "sl": "Kirgizija"
+    }
+  },
+  {
+    "name": "Laos",
+    "isoCode": "LA",
+    "translations": {
+      "en": "Laos",
+      "mk": "Лаос",
+      "sr": "Laos",
+      "sl": "Laos"
+    }
+  },
+  {
+    "name": "Latvia",
+    "isoCode": "LV",
+    "translations": {
+      "en": "Latvia",
+      "mk": "Латвија",
+      "sr": "Letonija",
+      "sl": "Latvija"
+    }
+  },
+  {
+    "name": "Lebanon",
+    "isoCode": "LB",
+    "translations": {
+      "en": "Lebanon",
+      "mk": "Либан",
+      "sr": "Liban",
+      "sl": "Libanon"
+    }
+  },
+  {
+    "name": "Lesotho",
+    "isoCode": "LS",
+    "translations": {
+      "en": "Lesotho",
+      "mk": "Лесото",
+      "sr": "Lesoto",
+      "sl": "Lesoto"
+    }
+  },
+  {
+    "name": "Liberia",
+    "isoCode": "LR",
+    "translations": {
+      "en": "Liberia",
+      "mk": "Либерија",
+      "sr": "Liberija",
+      "sl": "Liberija"
+    }
+  },
+  {
+    "name": "Libya",
+    "isoCode": "LY",
+    "translations": {
+      "en": "Libya",
+      "mk": "Либија",
+      "sr": "Libija",
+      "sl": "Libija"
+    }
+  },
+  {
+    "name": "Liechtenstein",
+    "isoCode": "LI",
+    "translations": {
+      "en": "Liechtenstein",
+      "mk": "Лихтенштајн",
+      "sr": "Lihtenšatajn",
+      "sl": "Liechtenstein"
+    }
+  },
+  {
+    "name": "Lithuania",
+    "isoCode": "LT",
+    "translations": {
+      "en": "Lithuania",
+      "mk": "Литванија",
+      "sr": "Litvanija",
+      "sl": "Litva"
+    }
+  },
+  {
+    "name": "Luxembourg",
+    "isoCode": "LU",
+    "translations": {
+      "en": "Luxembourg",
+      "mk": "Луксембург",
+      "sr": "Luksemburg",
+      "sl": "Luksemburg"
+    }
+  },
+  {
+    "name": "Macau S.A.R.",
+    "isoCode": "MO",
+    "translations": {
+      "en": "Macau S.A.R.",
+      "mk": "Макао Специјален Административен Регион.",
+      "sr": "Makao Poseban Administrativni Region.",
+      "sl": "Macao S.A.R."
+    }
+  },
+  {
+    "name": "Macedonia",
+    "isoCode": "MK",
+    "translations": {
+      "en": "Macedonia",
+      "mk": "Македонија",
+      "sr": "Makedonija",
+      "sl": "Makedonija"
+    }
+  },
+  {
+    "name": "Madagascar",
+    "isoCode": "MG",
+    "translations": {
+      "en": "Madagascar",
+      "mk": "Мадагаскар",
+      "sr": "Madagaskar",
+      "sl": "Madagaskar"
+    }
+  },
+  {
+    "name": "Malawi",
+    "isoCode": "MW",
+    "translations": {
+      "en": "Malawi",
+      "mk": "Малави",
+      "sr": "Malavi",
+      "sl": "Malavi"
+    }
+  },
+  {
+    "name": "Malaysia",
+    "isoCode": "MY",
+    "translations": {
+      "en": "Malaysia",
+      "mk": "Малезија",
+      "sr": "Malezija",
+      "sl": "Malezija"
+    }
+  },
+  {
+    "name": "Maldives",
+    "isoCode": "MV",
+    "translations": {
+      "en": "Maldives",
+      "mk": "Малдиви",
+      "sr": "Maldivi",
+      "sl": "Maldivi"
+    }
+  },
+  {
+    "name": "Mali",
+    "isoCode": "ML",
+    "translations": {
+      "en": "Mali",
+      "mk": "Мали",
+      "sr": "Mali Mali",
+      "sl": "Mali"
+    }
+  },
+  {
+    "name": "Malta",
+    "isoCode": "MT",
+    "translations": {
+      "en": "Malta",
+      "mk": "Малта",
+      "sr": "Malta",
+      "sl": "Malta"
+    }
+  },
+  {
+    "name": "Man (Isle of)",
+    "isoCode": "IM",
+    "translations": {
+      "en": "Man (Isle of)",
+      "mk": "Човек (Остров)",
+      "sr": "Čovek (Ostrvo)",
+      "sl": "Človek (otok)"
+    }
+  },
+  {
+    "name": "Marshall Islands",
+    "isoCode": "MH",
+    "translations": {
+      "en": "Marshall Islands",
+      "mk": "Маршалски Острови",
+      "sr": "Maršalska ostrva",
+      "sl": "Marshallovi otoki"
+    }
+  },
+  {
+    "name": "Martinique",
+    "isoCode": "MQ",
+    "translations": {
+      "en": "Martinique",
+      "mk": "Мартиник",
+      "sr": "Martinik",
+      "sl": "Martinik"
+    }
+  },
+  {
+    "name": "Mauritania",
+    "isoCode": "MR",
+    "translations": {
+      "en": "Mauritania",
+      "mk": "Мавританија",
+      "sr": "Mauritanija",
+      "sl": "Mavretanija"
+    }
+  },
+  {
+    "name": "Mauritius",
+    "isoCode": "MU",
+    "translations": {
+      "en": "Mauritius",
+      "mk": "Маврициус",
+      "sr": "Mauricijus",
+      "sl": "Mauritius"
+    }
+  },
+  {
+    "name": "Mayotte",
+    "isoCode": "YT",
+    "translations": {
+      "en": "Mayotte",
+      "mk": "Мајот",
+      "sr": "Majot",
+      "sl": "Mayotte"
+    }
+  },
+  {
+    "name": "Mexico",
+    "isoCode": "MX",
+    "translations": {
+      "en": "Mexico",
+      "mk": "Мексико",
+      "sr": "Meksiko",
+      "sl": "Mehika"
+    }
+  },
+  {
+    "name": "Micronesia",
+    "isoCode": "FM",
+    "translations": {
+      "en": "Micronesia",
+      "mk": "Микронезија",
+      "sr": "Mikronezija",
+      "sl": "Mikronezija"
+    }
+  },
+  {
+    "name": "Moldova",
+    "isoCode": "MD",
+    "translations": {
+      "en": "Moldova",
+      "mk": "Молдавија",
+      "sr": "Moldavija",
+      "sl": "Moldavija"
+    }
+  },
+  {
+    "name": "Monaco",
+    "isoCode": "MC",
+    "translations": {
+      "en": "Monaco",
+      "mk": "Монако",
+      "sr": "Monako",
+      "sl": "Monako"
+    }
+  },
+  {
+    "name": "Mongolia",
+    "isoCode": "MN",
+    "translations": {
+      "en": "Mongolia",
+      "mk": "Монголија",
+      "sr": "Mongolija",
+      "sl": "Mongolija"
+    }
+  },
+  {
+    "name": "Montenegro",
+    "isoCode": "ME",
+    "translations": {
+      "en": "Montenegro",
+      "mk": "Црна Гора",
+      "sr": "Crna gora",
+      "sl": "Črna gora"
+    }
+  },
+  {
+    "name": "Montserrat",
+    "isoCode": "MS",
+    "translations": {
+      "en": "Montserrat",
+      "mk": "Монтсерат",
+      "sr": "El Salvador",
+      "sl": "Montserrat"
+    }
+  },
+  {
+    "name": "Morocco",
+    "isoCode": "MA",
+    "translations": {
+      "en": "Morocco",
+      "mk": "Мароко",
+      "sr": "Maroko",
+      "sl": "Maroko"
+    }
+  },
+  {
+    "name": "Mozambique",
+    "isoCode": "MZ",
+    "translations": {
+      "en": "Mozambique",
+      "mk": "Мозамбик",
+      "sr": "Mozambiku",
+      "sl": "Mozambik"
+    }
+  },
+  {
+    "name": "Myanmar",
+    "isoCode": "MM",
+    "translations": {
+      "en": "Myanmar",
+      "mk": "Мјанмар",
+      "sr": "San-Tome i Prinsipi",
+      "sl": "Mjanmar"
+    }
+  },
+  {
+    "name": "Namibia",
+    "isoCode": "NA",
+    "translations": {
+      "en": "Namibia",
+      "mk": "Намибија",
+      "sr": "Namibiji",
+      "sl": "Namibija"
+    }
+  },
+  {
+    "name": "Nauru",
+    "isoCode": "NR",
+    "translations": {
+      "en": "Nauru",
+      "mk": "Науру",
+      "sr": "El Salvador",
+      "sl": "Nauru"
+    }
+  },
+  {
+    "name": "Nepal",
+    "isoCode": "NP",
+    "translations": {
+      "en": "Nepal",
+      "mk": "Непал",
+      "sr": "Nepal",
+      "sl": "Nepal"
+    }
+  },
+  {
+    "name": "Bonaire, Sint Eustatius and Saba",
+    "isoCode": "BQ",
+    "translations": {
+      "en": "Bonaire, Sint Eustatius and Saba",
+      "mk": "Бонер, Свети Евстатиј и Саба",
+      "sr": "Bonaire, Sint Eustatius i Saba",
+      "sl": "Bonaire, Sint Evstatius in Saba"
+    }
+  },
+  {
+    "name": "Netherlands",
+    "isoCode": "NL",
+    "translations": {
+      "en": "Netherlands",
+      "mk": "Холандија",
+      "sr": "Holandija",
+      "sl": "Nizozemska"
+    }
+  },
+  {
+    "name": "New Caledonia",
+    "isoCode": "NC",
+    "translations": {
+      "en": "New Caledonia",
+      "mk": "Нова Каледонија",
+      "sr": "Nova Kaledonija",
+      "sl": "Nova Kaledonija"
+    }
+  },
+  {
+    "name": "New Zealand",
+    "isoCode": "NZ",
+    "translations": {
+      "en": "New Zealand",
+      "mk": "Нов Зеланд",
+      "sr": "Novi Zeland",
+      "sl": "Nova Zelandija"
+    }
+  },
+  {
+    "name": "Nicaragua",
+    "isoCode": "NI",
+    "translations": {
+      "en": "Nicaragua",
+      "mk": "Никарагва",
+      "sr": "Nikaragva",
+      "sl": "Nikaragva"
+    }
+  },
+  {
+    "name": "Niger",
+    "isoCode": "NE",
+    "translations": {
+      "en": "Niger",
+      "mk": "Нигер",
+      "sr": "Niger",
+      "sl": "Niger"
+    }
+  },
+  {
+    "name": "Nigeria",
+    "isoCode": "NG",
+    "translations": {
+      "en": "Nigeria",
+      "mk": "Нигерија",
+      "sr": "Nigerija",
+      "sl": "Nigerija"
+    }
+  },
+  {
+    "name": "Niue",
+    "isoCode": "NU",
+    "translations": {
+      "en": "Niue",
+      "mk": "Ниуе",
+      "sr": "Niue",
+      "sl": "Niue"
+    }
+  },
+  {
+    "name": "Norfolk Island",
+    "isoCode": "NF",
+    "translations": {
+      "en": "Norfolk Island",
+      "mk": "Остров Норфолк",
+      "sr": "Ostrvo Norfolk",
+      "sl": "Norfolški otok"
+    }
+  },
+  {
+    "name": "Northern Mariana Islands",
+    "isoCode": "MP",
+    "translations": {
+      "en": "Northern Mariana Islands",
+      "mk": "Северни Маријански Острови",
+      "sr": "Severna Marijanska ostrva",
+      "sl": "Severni Marianski otoki"
+    }
+  },
+  {
+    "name": "Norway",
+    "isoCode": "NO",
+    "translations": {
+      "en": "Norway",
+      "mk": "Норвешка",
+      "sr": "Norveška",
+      "sl": "Norveška"
+    }
+  },
+  {
+    "name": "Oman",
+    "isoCode": "OM",
+    "translations": {
+      "en": "Oman",
+      "mk": "Оман",
+      "sr": "Oman",
+      "sl": "Oman"
+    }
+  },
+  {
+    "name": "Pakistan",
+    "isoCode": "PK",
+    "translations": {
+      "en": "Pakistan",
+      "mk": "Пакистан",
+      "sr": "Pakistan",
+      "sl": "Pakistan"
+    }
+  },
+  {
+    "name": "Palau",
+    "isoCode": "PW",
+    "translations": {
+      "en": "Palau",
+      "mk": "Палата",
+      "sr": "Palati",
+      "sl": "Palača"
+    }
+  },
+  {
+    "name": "Palestinian Territory Occupied",
+    "isoCode": "PS",
+    "translations": {
+      "en": "Palestinian Territory Occupied",
+      "mk": "Окупирана палестинска територија",
+      "sr": "Palestinska teritorija okupirana",
+      "sl": "Palestinsko ozemlje zasedeno"
+    }
+  },
+  {
+    "name": "Panama",
+    "isoCode": "PA",
+    "translations": {
+      "en": "Panama",
+      "mk": "Панама",
+      "sr": "Panama",
+      "sl": "Panama"
+    }
+  },
+  {
+    "name": "Papua new Guinea",
+    "isoCode": "PG",
+    "translations": {
+      "en": "Papua new Guinea",
+      "mk": "Папуа Нова Гвинеја",
+      "sr": "Papua Nova Gvineja",
+      "sl": "Papua Nova Gvineja"
+    }
+  },
+  {
+    "name": "Paraguay",
+    "isoCode": "PY",
+    "translations": {
+      "en": "Paraguay",
+      "mk": "Парагвај",
+      "sr": "Paragvaj",
+      "sl": "Paragvaj"
+    }
+  },
+  {
+    "name": "Peru",
+    "isoCode": "PE",
+    "translations": {
+      "en": "Peru",
+      "mk": "Перу",
+      "sr": "Peru",
+      "sl": "Peru"
+    }
+  },
+  {
+    "name": "Philippines",
+    "isoCode": "PH",
+    "translations": {
+      "en": "Philippines",
+      "mk": "Филипини",
+      "sr": "Filipinima",
+      "sl": "Filipini"
+    }
+  },
+  {
+    "name": "Pitcairn Island",
+    "isoCode": "PN",
+    "translations": {
+      "en": "Pitcairn Island",
+      "mk": "Островот Питкерн",
+      "sr": "Primorsko-Goranska",
+      "sl": "Otok Pitcairn"
+    }
+  },
+  {
+    "name": "Poland",
+    "isoCode": "PL",
+    "translations": {
+      "en": "Poland",
+      "mk": "Полска",
+      "sr": "Poljska",
+      "sl": "Poljska"
+    }
+  },
+  {
+    "name": "Portugal",
+    "isoCode": "PT",
+    "translations": {
+      "en": "Portugal",
+      "mk": "Португалија",
+      "sr": "Portugal",
+      "sl": "Portugalska"
+    }
+  },
+  {
+    "name": "Puerto Rico",
+    "isoCode": "PR",
+    "translations": {
+      "en": "Puerto Rico",
+      "mk": "Порторико",
+      "sr": "Puerto Riko",
+      "sl": "Portoriko"
+    }
+  },
+  {
+    "name": "Qatar",
+    "isoCode": "QA",
+    "translations": {
+      "en": "Qatar",
+      "mk": "Катар",
+      "sr": "Katar",
+      "sl": "Katar"
+    }
+  },
+  {
+    "name": "Reunion",
+    "isoCode": "RE",
+    "translations": {
+      "en": "Reunion",
+      "mk": "Повторно обединување",
+      "sr": "Okupljanje",
+      "sl": "Reunion"
+    }
+  },
+  {
+    "name": "Romania",
+    "isoCode": "RO",
+    "translations": {
+      "en": "Romania",
+      "mk": "Романија",
+      "sr": "Rumunija",
+      "sl": "Romunija"
+    }
+  },
+  {
+    "name": "Russia",
+    "isoCode": "RU",
+    "translations": {
+      "en": "Russia",
+      "mk": "Русија",
+      "sr": "Rusija",
+      "sl": "Rusija"
+    }
+  },
+  {
+    "name": "Rwanda",
+    "isoCode": "RW",
+    "translations": {
+      "en": "Rwanda",
+      "mk": "Руанда",
+      "sr": "Ruanda",
+      "sl": "Ruanda"
+    }
+  },
+  {
+    "name": "Saint Helena",
+    "isoCode": "SH",
+    "translations": {
+      "en": "Saint Helena",
+      "mk": "Света Елена",
+      "sr": "Sveta Jelena",
+      "sl": "Sveta Helena"
+    }
+  },
+  {
+    "name": "Saint Kitts And Nevis",
+    "isoCode": "KN",
+    "translations": {
+      "en": "Saint Kitts And Nevis",
+      "mk": "Сент Китс и Невис",
+      "sr": "Sao Tome i Prinsipi",
+      "sl": "Saint Kitts in Nevis"
+    }
+  },
+  {
+    "name": "Saint Lucia",
+    "isoCode": "LC",
+    "translations": {
+      "en": "Saint Lucia",
+      "mk": "Света Луција",
+      "sr": "Sveta Lucija",
+      "sl": "Saint Lucia"
+    }
+  },
+  {
+    "name": "Saint Pierre and Miquelon",
+    "isoCode": "PM",
+    "translations": {
+      "en": "Saint Pierre and Miquelon",
+      "mk": "Сен Пјер и Микелон",
+      "sr": "San-Tome i Prinsipi",
+      "sl": "Saint Pierre in Miquelon"
+    }
+  },
+  {
+    "name": "Saint Vincent And The Grenadines",
+    "isoCode": "VC",
+    "translations": {
+      "en": "Saint Vincent And The Grenadines",
+      "mk": "Свети Винсент и Гренадини",
+      "sr": "Sveti Vinsent i Grenadini",
+      "sl": "Sveti Vincent in Grenadine"
+    }
+  },
+  {
+    "name": "Saint-Barthelemy",
+    "isoCode": "BL",
+    "translations": {
+      "en": "Saint-Barthelemy",
+      "mk": "Сен Бартелеми",
+      "sr": "Sen-Bartolomej",
+      "sl": "Saint-Barthelemy"
+    }
+  },
+  {
+    "name": "Saint-Martin (French part)",
+    "isoCode": "MF",
+    "translations": {
+      "en": "Saint-Martin (French part)",
+      "mk": "Сен Мартен (француски дел)",
+      "sr": "Saint-Martin (francuski deo)",
+      "sl": "Saint-Martin (francoski del)"
+    }
+  },
+  {
+    "name": "Samoa",
+    "isoCode": "WS",
+    "translations": {
+      "en": "Samoa",
+      "mk": "Самоа",
+      "sr": "Samoa",
+      "sl": "Samoa"
+    }
+  },
+  {
+    "name": "San Marino",
+    "isoCode": "SM",
+    "translations": {
+      "en": "San Marino",
+      "mk": "Сан Марино",
+      "sr": "San-Tome i Prinsipi",
+      "sl": "San Marino"
+    }
+  },
+  {
+    "name": "Sao Tome and Principe",
+    "isoCode": "ST",
+    "translations": {
+      "en": "Sao Tome and Principe",
+      "mk": "Сао Томе и Принсипе",
+      "sr": "San-Tome i Prinsipi",
+      "sl": "Sao Tome in Principe"
+    }
+  },
+  {
+    "name": "Saudi Arabia",
+    "isoCode": "SA",
+    "translations": {
+      "en": "Saudi Arabia",
+      "mk": "Саудиска Арабија",
+      "sr": "Saudijska Arabija",
+      "sl": "Saudska Arabija"
+    }
+  },
+  {
+    "name": "Senegal",
+    "isoCode": "SN",
+    "translations": {
+      "en": "Senegal",
+      "mk": "Сенегал",
+      "sr": "Senegal",
+      "sl": "Senegal"
+    }
+  },
+  {
+    "name": "Serbia",
+    "isoCode": "RS",
+    "translations": {
+      "en": "Serbia",
+      "mk": "Србија",
+      "sr": "Srbija",
+      "sl": "Srbija"
+    }
+  },
+  {
+    "name": "Seychelles",
+    "isoCode": "SC",
+    "translations": {
+      "en": "Seychelles",
+      "mk": "Сејшели",
+      "sr": "Sejšeli",
+      "sl": "Sejšeli"
+    }
+  },
+  {
+    "name": "Sierra Leone",
+    "isoCode": "SL",
+    "translations": {
+      "en": "Sierra Leone",
+      "mk": "Сиера Леоне",
+      "sr": "Sijera Leone",
+      "sl": "Sierra Leone"
+    }
+  },
+  {
+    "name": "Singapore",
+    "isoCode": "SG",
+    "translations": {
+      "en": "Singapore",
+      "mk": "Сингапур",
+      "sr": "Singapur",
+      "sl": "Singapur"
+    }
+  },
+  {
+    "name": "Slovakia",
+    "isoCode": "SK",
+    "translations": {
+      "en": "Slovakia",
+      "mk": "Словачка",
+      "sr": "Slovačka",
+      "sl": "Slovaška"
+    }
+  },
+  {
+    "name": "Slovenia",
+    "isoCode": "SI",
+    "translations": {
+      "en": "Slovenia",
+      "mk": "Словенија",
+      "sr": "Slovenija",
+      "sl": "Slovenija"
+    }
+  },
+  {
+    "name": "Solomon Islands",
+    "isoCode": "SB",
+    "translations": {
+      "en": "Solomon Islands",
+      "mk": "Соломонови Острови",
+      "sr": "Solomonska Ostrva",
+      "sl": "Salomonovi otoki"
+    }
+  },
+  {
+    "name": "Somalia",
+    "isoCode": "SO",
+    "translations": {
+      "en": "Somalia",
+      "mk": "Сомалија",
+      "sr": "Somaliji",
+      "sl": "Somalija"
+    }
+  },
+  {
+    "name": "South Africa",
+    "isoCode": "ZA",
+    "translations": {
+      "en": "South Africa",
+      "mk": "Јужна Африка",
+      "sr": "Južna Afrika",
+      "sl": "Južna Afrika"
+    }
+  },
+  {
+    "name": "South Georgia",
+    "isoCode": "GS",
+    "translations": {
+      "en": "South Georgia",
+      "mk": "Јужна Џорџија",
+      "sr": "Južna Džordžija",
+      "sl": "Južna Gruzija"
+    }
+  },
+  {
+    "name": "South Sudan",
+    "isoCode": "SS",
+    "translations": {
+      "en": "South Sudan",
+      "mk": "Јужен Судан",
+      "sr": "Južni Sudan",
+      "sl": "Južni Sudan"
+    }
+  },
+  {
+    "name": "Spain",
+    "isoCode": "ES",
+    "translations": {
+      "en": "Spain",
+      "mk": "Шпанија",
+      "sr": "Španija",
+      "sl": "Španija"
+    }
+  },
+  {
+    "name": "Sri Lanka",
+    "isoCode": "LK",
+    "translations": {
+      "en": "Sri Lanka",
+      "mk": "Шри Ланка",
+      "sr": "Šri Lanka",
+      "sl": "Šrilanka"
+    }
+  },
+  {
+    "name": "Sudan",
+    "isoCode": "SD",
+    "translations": {
+      "en": "Sudan",
+      "mk": "Судан",
+      "sr": "Sudan",
+      "sl": "Sudan"
+    }
+  },
+  {
+    "name": "Suriname",
+    "isoCode": "SR",
+    "translations": {
+      "en": "Suriname",
+      "mk": "Суринам",
+      "sr": "San-Tome i Prinsipi",
+      "sl": "Surinam"
+    }
+  },
+  {
+    "name": "Svalbard And Jan Mayen Islands",
+    "isoCode": "SJ",
+    "translations": {
+      "en": "Svalbard And Jan Mayen Islands",
+      "mk": "Острови Свалбард и Јан Мајен",
+      "sr": "Ostrva Svalbard i Jan Maien",
+      "sl": "Otoki Svalbard in Jan Mayen"
+    }
+  },
+  {
+    "name": "Swaziland",
+    "isoCode": "SZ",
+    "translations": {
+      "en": "Swaziland",
+      "mk": "Свазиленд",
+      "sr": "Svazilend",
+      "sl": "Svazi"
+    }
+  },
+  {
+    "name": "Sweden",
+    "isoCode": "SE",
+    "translations": {
+      "en": "Sweden",
+      "mk": "Шведска",
+      "sr": "Švedska",
+      "sl": "Švedska"
+    }
+  },
+  {
+    "name": "Switzerland",
+    "isoCode": "CH",
+    "translations": {
+      "en": "Switzerland",
+      "mk": "Швајцарија",
+      "sr": "Švajcarska",
+      "sl": "Švica"
+    }
+  },
+  {
+    "name": "Syria",
+    "isoCode": "SY",
+    "translations": {
+      "en": "Syria",
+      "mk": "Сирија",
+      "sr": "Sirija",
+      "sl": "Sirija"
+    }
+  },
+  {
+    "name": "Taiwan",
+    "isoCode": "TW",
+    "translations": {
+      "en": "Taiwan",
+      "mk": "Тајван",
+      "sr": "Tajvan",
+      "sl": "Tajvan"
+    }
+  },
+  {
+    "name": "Tajikistan",
+    "isoCode": "TJ",
+    "translations": {
+      "en": "Tajikistan",
+      "mk": "Таџикистан",
+      "sr": "Tadžikistan",
+      "sl": "Tadžikistan"
+    }
+  },
+  {
+    "name": "Tanzania",
+    "isoCode": "TZ",
+    "translations": {
+      "en": "Tanzania",
+      "mk": "Танзанија",
+      "sr": "Tanzanija",
+      "sl": "Tanzanija"
+    }
+  },
+  {
+    "name": "Thailand",
+    "isoCode": "TH",
+    "translations": {
+      "en": "Thailand",
+      "mk": "Тајланд",
+      "sr": "Tajland",
+      "sl": "Tajska"
+    }
+  },
+  {
+    "name": "Togo",
+    "isoCode": "TG",
+    "translations": {
+      "en": "Togo",
+      "mk": "Того",
+      "sr": "El Salvador",
+      "sl": "Togo"
+    }
+  },
+  {
+    "name": "Tokelau",
+    "isoCode": "TK",
+    "translations": {
+      "en": "Tokelau",
+      "mk": "Токелау",
+      "sr": "Tokelau",
+      "sl": "Tokelau"
+    }
+  },
+  {
+    "name": "Tonga",
+    "isoCode": "TO",
+    "translations": {
+      "en": "Tonga",
+      "mk": "Тонга",
+      "sr": "Tonga",
+      "sl": "Tonga"
+    }
+  },
+  {
+    "name": "Trinidad And Tobago",
+    "isoCode": "TT",
+    "translations": {
+      "en": "Trinidad And Tobago",
+      "mk": "Тринидад и Тобаго",
+      "sr": "Trinidad i Tobago",
+      "sl": "Trinidad in Tobago"
+    }
+  },
+  {
+    "name": "Tunisia",
+    "isoCode": "TN",
+    "translations": {
+      "en": "Tunisia",
+      "mk": "Тунис",
+      "sr": "Tunis",
+      "sl": "Tunizija"
+    }
+  },
+  {
+    "name": "Turkey",
+    "isoCode": "TR",
+    "translations": {
+      "en": "Turkey",
+      "mk": "Турција",
+      "sr": "Turska",
+      "sl": "Turčija"
+    }
+  },
+  {
+    "name": "Turkmenistan",
+    "isoCode": "TM",
+    "translations": {
+      "en": "Turkmenistan",
+      "mk": "Туркменистан",
+      "sr": "Turkmenistan",
+      "sl": "Turkmenistan"
+    }
+  },
+  {
+    "name": "Turks And Caicos Islands",
+    "isoCode": "TC",
+    "translations": {
+      "en": "Turks And Caicos Islands",
+      "mk": "Туркс и Кајкос",
+      "sr": "Ostrva Turks i Kaikos",
+      "sl": "Otoki Turks in Caicos"
+    }
+  },
+  {
+    "name": "Tuvalu",
+    "isoCode": "TV",
+    "translations": {
+      "en": "Tuvalu",
+      "mk": "Тувалу",
+      "sr": "El Salvador",
+      "sl": "Tuvalu"
+    }
+  },
+  {
+    "name": "Uganda",
+    "isoCode": "UG",
+    "translations": {
+      "en": "Uganda",
+      "mk": "Уганда",
+      "sr": "Ugandi",
+      "sl": "Uganda"
+    }
+  },
+  {
+    "name": "Ukraine",
+    "isoCode": "UA",
+    "translations": {
+      "en": "Ukraine",
+      "mk": "Украина",
+      "sr": "Ukrajina",
+      "sl": "Ukrajina"
+    }
+  },
+  {
+    "name": "United Arab Emirates",
+    "isoCode": "AE",
+    "translations": {
+      "en": "United Arab Emirates",
+      "mk": "Обединети Арапски Емирати",
+      "sr": "Ujedinjeni Arapski Emirati",
+      "sl": "Združeni arabski emirati"
+    }
+  },
+  {
+    "name": "United Kingdom",
+    "isoCode": "GB",
+    "translations": {
+      "en": "United Kingdom",
+      "mk": "Обединето Кралство",
+      "sr": "Ujedinjeno Kraljevstvo",
+      "sl": "Velika Britanija"
+    }
+  },
+  {
+    "name": "United States",
+    "isoCode": "US",
+    "translations": {
+      "en": "United States",
+      "mk": "Соединети Држави",
+      "sr": "Sjedinjene Države",
+      "sl": "Združene države Amerike"
+    }
+  },
+  {
+    "name": "United States Minor Outlying Islands",
+    "isoCode": "UM",
+    "translations": {
+      "en": "United States Minor Outlying Islands",
+      "mk": "Мали оддалечени острови на САД",
+      "sr": "Manja udaljena ostrva Sjedinjenih Američkih Država",
+      "sl": "Manjši oddaljeni otoki Združenih držav Amerike"
+    }
+  },
+  {
+    "name": "Uruguay",
+    "isoCode": "UY",
+    "translations": {
+      "en": "Uruguay",
+      "mk": "Уругвај",
+      "sr": "Urugvaj",
+      "sl": "Urugvaj"
+    }
+  },
+  {
+    "name": "Uzbekistan",
+    "isoCode": "UZ",
+    "translations": {
+      "en": "Uzbekistan",
+      "mk": "Узбекистан",
+      "sr": "Uzbekistan",
+      "sl": "Uzbekistan"
+    }
+  },
+  {
+    "name": "Vanuatu",
+    "isoCode": "VU",
+    "translations": {
+      "en": "Vanuatu",
+      "mk": "Вануату",
+      "sr": "San-Tome i Prinsipi",
+      "sl": "Vanuatu"
+    }
+  },
+  {
+    "name": "Vatican City State (Holy See)",
+    "isoCode": "VA",
+    "translations": {
+      "en": "Vatican City State (Holy See)",
+      "mk": "Ватикан (Светата столица)",
+      "sr": "Vatikanska Država (Sveta Stolica)",
+      "sl": "Vatikanska mestna država (Sveti sedež)"
+    }
+  },
+  {
+    "name": "Venezuela",
+    "isoCode": "VE",
+    "translations": {
+      "en": "Venezuela",
+      "mk": "Венецуела",
+      "sr": "Venecuela",
+      "sl": "Venezuela"
+    }
+  },
+  {
+    "name": "Vietnam",
+    "isoCode": "VN",
+    "translations": {
+      "en": "Vietnam",
+      "mk": "Виетнам",
+      "sr": "Vijetnamu",
+      "sl": "Vietnam"
+    }
+  },
+  {
+    "name": "Virgin Islands (British)",
+    "isoCode": "VG",
+    "translations": {
+      "en": "Virgin Islands (British)",
+      "mk": "Девствени Острови (Британски)",
+      "sr": "Devičanska ostrva (britanski)",
+      "sl": "Deviški otoki (britanski)"
+    }
+  },
+  {
+    "name": "Virgin Islands (US)",
+    "isoCode": "VI",
+    "translations": {
+      "en": "Virgin Islands (US)",
+      "mk": "Девствени Острови (САД)",
+      "sr": "Devičanska ostrva (SAD)",
+      "sl": "Deviški otoki (ZDA)"
+    }
+  },
+  {
+    "name": "Wallis And Futuna Islands",
+    "isoCode": "WF",
+    "translations": {
+      "en": "Wallis And Futuna Islands",
+      "mk": "Островите Валис и Футуна",
+      "sr": "Ostrva Vallis i Futuna",
+      "sl": "Otoki Wallis in Futuna"
+    }
+  },
+  {
+    "name": "Western Sahara",
+    "isoCode": "EH",
+    "translations": {
+      "en": "Western Sahara",
+      "mk": "Западна Сахара",
+      "sr": "Zapadna Sahara",
+      "sl": "Zahodna Sahara"
+    }
+  },
+  {
+    "name": "Yemen",
+    "isoCode": "YE",
+    "translations": {
+      "en": "Yemen",
+      "mk": "Јемен",
+      "sr": "Jemen",
+      "sl": "Jemen"
+    }
+  },
+  {
+    "name": "Zambia",
+    "isoCode": "ZM",
+    "translations": {
+      "en": "Zambia",
+      "mk": "Замбија",
+      "sr": "Zambija",
+      "sl": "Zambija"
+    }
+  },
+  {
+    "name": "Zimbabwe",
+    "isoCode": "ZW",
+    "translations": {
+      "en": "Zimbabwe",
+      "mk": "Зимбабве",
+      "sr": "Zimbabve",
+      "sl": "Zimbabve"
+    }
+  },
+  {
+    "name": "Kosovo",
+    "isoCode": "XK",
+    "translations": {
+      "en": "Kosovo",
+      "mk": "Косово",
+      "sr": "Kosovu",
+      "sl": "Kosovo"
+    }
+  },
+  {
+    "name": "Curaçao",
+    "isoCode": "CW",
+    "translations": {
+      "en": "Curaçao",
+      "mk": "Курасао",
+      "sr": "Curaçao",
+      "sl": "Curaçao"
+    }
+  },
+  {
+    "name": "Sint Maarten (Dutch part)",
+    "isoCode": "SX",
+    "translations": {
+      "en": "Sint Maarten (Dutch part)",
+      "mk": "Свети Мартен (холандски дел)",
+      "sr": "Sint Maarten (holandski deo)",
+      "sl": "Sint Maarten (nizozemski del)"
+    }
+  }
+]

@@ -1,0 +1,2 @@
+-- AddForeignKey
+ALTER TABLE "Issue" ADD CONSTRAINT "Issue_ReviewId_fkey" FOREIGN KEY ("ReviewId") REFERENCES "Review"("ReviewId") ON DELETE CASCADE ON UPDATE CASCADE;

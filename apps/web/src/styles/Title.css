@@ -1,0 +1,28 @@
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-size: 1.8rem;
+  margin: 2rem 0 1rem;
+  text-align: center;
+  color: var(--beige);
+  font-family: 'Cormorant SC', serif;
+  width: 100%;
+}
+
+.section-title::before,
+.section-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--beige);
+}
+
+.section-title::before {
+  margin-right: 20px;
+}
+
+.section-title::after {
+  margin-left: 20px;
+}

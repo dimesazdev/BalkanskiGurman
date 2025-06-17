@@ -24,7 +24,6 @@
     width: 100%;
     max-width: 500px;
     object-fit: cover;
-    border-radius: 8px;
 }
 
 /* Arrow buttons */
@@ -41,9 +40,9 @@
 }
 
 .gallery-arrow.left {
-    left: -12px;
+    left: -5px;
 }
 
 .gallery-arrow.right {
-    right: -12px;
+    right: -5px;
 }

@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
-import "../styles/General.css"
+import "../styles/General.css";
 import "../styles/Auth.css";
 import "../styles/Register.css";
-import "../styles/Login.css"
+import "../styles/Login.css";
 import logo from "../../public/dark-logo.svg";
 import { Link } from "react-router-dom";
-import { Country, City } from "country-state-city";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import FormInput from "../components/FormInput";
 import FormSelect from "../components/FormSelect";
 import Button from "../components/Button";
 import { useTranslation } from "react-i18next";
+import i18n from "../i18n";
 
 const Register = () => {
   const { t } = useTranslation();
@@ -30,33 +30,73 @@ const Register = () => {
 
   const [countryList, setCountryList] = useState([]);
   const [cityList, setCityList] = useState([]);
+  const [allTranslatedCities, setAllTranslatedCities] = useState([]);
 
   useEffect(() => {
-    setCountryList(Country.getAllCountries());
-  }, []);
+    const fetchCountries = async () => {
+      try {
+        const res = await fetch("/translatedCountries.json");
+        const data = await res.json();
+        const lang = i18n.language || "en";
+        const translated = data.map((c) => ({
+          label: c.translations[lang] || c.name,
+          value: c.isoCode,
+          originalName: c.name,
+        }));
+        setCountryList(translated.sort((a, b) => a.label.localeCompare(b.label)));
+      } catch (err) {
+        console.error("Failed to load country list:", err);
+      }
+    };
+
+    const loadCityData = async () => {
+      try {
+        const res = await fetch("/translatedCities.json");
+        const data = await res.json();
+        setAllTranslatedCities(data);
+      } catch (err) {
+        console.error("Failed to load city translations:", err);
+      }
+    };
+
+    fetchCountries();
+    loadCityData();
+  }, [i18n.language]);
+
+  useEffect(() => {
+    if (formData.countryIso) {
+      handleCountryChange({ target: { value: formData.countryIso } });
+    }
+  }, [i18n.language]);
 
   const countryOptions = countryList.map((c) => ({
-    label: c.name,
-    value: c.isoCode,
+    label: c.label,
+    value: c.value,
   }));
 
-  const cityOptions = cityList.map((c) => ({
-    label: c.name,
-    value: c.name,
-  }));
+  const cityOptions = cityList;
 
   const handleCountryChange = (e) => {
     const isoCode = e.target.value;
-    const selectedCountry = countryList.find((c) => c.isoCode === isoCode);
+    const selectedCountry = countryList.find((c) => c.value === isoCode);
+    const lang = i18n.language || "en";
 
     setFormData((prev) => ({
       ...prev,
       countryIso: isoCode,
-      country: selectedCountry?.name || "",
+      country: selectedCountry?.originalName || "",
       city: "",
     }));
 
-    setCityList(City.getCitiesOfCountry(isoCode));
+    const translated = allTranslatedCities
+      .filter((c) => c.countryCode === isoCode)
+      .map((c) => ({
+        label: c.translations[lang] || c.name,
+        value: c.name,
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label));
+
+    setCityList(translated);
   };
 
   const handleCityChange = (e) => {
@@ -70,13 +110,11 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const fullPhone = `${formData.countryCode}${formData.phoneNumber}`.replace(/\D/g, '');
-      const cleanedCode = formData.countryCode.replace(/\D/g, '');
-
+      const fullPhone = `${formData.countryCode}${formData.phoneNumber}`.replace(/\D/g, "");
+      const cleanedCode = formData.countryCode.replace(/\D/g, "");
       const phoneNumberToSend =
-        formData.phoneNumber.trim() === '' || fullPhone === cleanedCode
+        formData.phoneNumber.trim() === "" || fullPhone === cleanedCode
           ? null
           : `${formData.countryCode}${formData.phoneNumber}`;
 
@@ -95,8 +133,6 @@ const Register = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-
-      const data = await res.json();
 
       if (!res.ok) {
         console.log("❌ Registration failed response");
@@ -123,14 +159,14 @@ const Register = () => {
           <form onSubmit={handleSubmit} className="register-form">
             <div className="form-grid">
               <div className="form-column">
-                <FormInput id="name" label={t("register.name") + ' *'} name="name" type="text" value={formData.name} onChange={handleInputChange} placeholder={t("register.namePlaceholder")} required />
-                <FormInput id="email" label={t("register.email") + ' *'} name="email" type="email" value={formData.email} onChange={handleInputChange} placeholder={t("register.emailPlaceholder")} required />
-                <FormSelect label={t("register.country") + ' *'} name="countryIso" value={formData.countryIso} onChange={handleCountryChange} options={[{ value: "" }, ...countryOptions]} placeholder={t("register.countryPlaceholder")} required />
-                <FormInput id="password" label={t("register.password") + ' *'} name="password" type="password" value={formData.password} onChange={handleInputChange} placeholder={t("register.passwordPlaceholder")} required />
+                <FormInput id="name" label={t("register.name") + " *"} name="name" type="text" value={formData.name} onChange={handleInputChange} placeholder={t("register.namePlaceholder")}/>
+                <FormInput id="email" label={t("register.email") + " *"} name="email" type="email" value={formData.email} onChange={handleInputChange} placeholder={t("register.emailPlaceholder")}/>
+                <FormSelect label={t("register.country") + " *"} name="countryIso" value={formData.countryIso} onChange={handleCountryChange} options={[{ value: "", label: t("register.countryPlaceholder") }, ...countryOptions]} placeholder={t("register.countryPlaceholder")}/>
+                <FormInput id="password" label={t("register.password") + " *"} name="password" type="password" value={formData.password} onChange={handleInputChange} placeholder={t("register.passwordPlaceholder")}/>
               </div>
 
               <div className="form-column">
-                <FormInput id="surname" label={t("register.surname") + ' *'} name="surname" type="text" value={formData.surname} onChange={handleInputChange} placeholder={t("register.surnamePlaceholder")} required />
+                <FormInput id="surname" label={t("register.surname") + " *"} name="surname" type="text" value={formData.surname} onChange={handleInputChange} placeholder={t("register.surnamePlaceholder")}/>
                 <div className="form-group">
                   <label htmlFor="phoneNumber" className="text-white">{t("register.phone")}</label>
                   <PhoneInput
@@ -146,8 +182,8 @@ const Register = () => {
                     dropdownClass="custom-phone-dropdown"
                   />
                 </div>
-                <FormSelect label={t("register.city") + ' *'} name="city" value={formData.city} onChange={handleCityChange} options={formData.country ? cityOptions.length > 0 ? [{ label: t("register.selectCity"), value: "" }, ...cityOptions] : [{ label: t("register.noCities"), value: "" }] : []} placeholder={t("register.cityPlaceholder")} required disabled={!formData.country} />
-                <FormInput id="retypePassword" label={t("register.retypePassword") + ' *'} name="retypePassword" type="password" value={formData.retypePassword} onChange={handleInputChange} placeholder={t("register.retypePasswordPlaceholder")} required />
+                <FormSelect label={t("register.city") + " *"} name="city" value={formData.city} onChange={handleCityChange} options={formData.country ? cityOptions.length > 0 ? [{ label: t("register.cityPlaceholder"), value: "" }, ...cityOptions] : [{ label: t("register.noCities"), value: "" }] : []} placeholder={t("register.cityPlaceholder")} required disabled={!formData.country}/>
+                <FormInput id="retypePassword" label={t("register.retypePassword") + " *"} name="retypePassword" type="password" value={formData.retypePassword} onChange={handleInputChange} placeholder={t("register.retypePasswordPlaceholder")}/>
               </div>
             </div>
             <Button type="submit" variant="beige"><p>{t("register.register")}</p></Button>

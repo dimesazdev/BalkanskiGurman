@@ -235,10 +235,6 @@ body {
   .form-group label {
     font-size: 1.125rem;
   }
-
-  .form-group input {
-    height: 3.25rem;
-  }
 }
 
 @media (max-width: 480px) {

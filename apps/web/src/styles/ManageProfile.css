@@ -6,34 +6,6 @@
   padding: 2rem;
 }
 
-.section-title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  font-size: 1.8rem;
-  margin: 2rem 0 1rem;
-  text-align: center;
-  color: var(--beige);
-  font-family: 'Cormorant SC', serif;
-}
-
-.section-title::before,
-.section-title::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--beige);
-}
-
-.section-title::before {
-  margin-right: 20px;
-}
-
-.section-title::after {
-  margin-left: 20px;
-}
-
 .photo-section {
   display: flex;
   flex-direction: column;
@@ -60,7 +32,6 @@
 
 .photo-icon {
   color: var(--red);
-  font-size: 2rem;
 }
 
 .medals {
@@ -71,7 +42,7 @@
 
 .review-count {
   color: var(--beige);
-  font-family: "Cormorant SC", serif;
+  font-family: "Cormorant Garamond", serif;
   font-size: 1.1rem;
 }
 
@@ -87,6 +58,20 @@
   max-width: 800px;
   align-items: center;
   justify-content: center;
+}
+
+@media (min-width: 600px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .form-grid > *:nth-child(odd) {
+    grid-column: 1;
+  }
+
+  .form-grid > *:nth-child(even) {
+    grid-column: 2;
+  }
 }
 
 .change-password-link {
@@ -121,4 +106,14 @@
   background: var(--beige) !important;
   border: none !important;
   border-radius: 20px 0 0 20px !important;
+}
+
+.react-tooltip {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  background-color: var(--red) !important;
+  color: #FFEEDB;
+  padding: 0.6rem;
+  border-radius: 8px;
+  z-index: 10000;
 }

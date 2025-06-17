@@ -129,31 +129,46 @@ router.delete('/:id', authenticate, requireRole('Admin'), async (req, res) => {
   }
 });
 
-// CREATE a review for a restaurant
+// CREATE a review for a restaurant and update AverageRating
 router.post('/:id/reviews', authenticate, async (req, res) => {
   try {
     const restaurantId = Number(req.params.id);
     const { rating, comment, photoUrl1, photoUrl2, photoUrl3 } = req.body;
 
-    const review = await prisma.review.create({
-      data: {
-        RestaurantId: restaurantId,
-        UserId: req.user.userId,
-        Rating: Number(rating),
-        Comment: comment,
-        PhotoUrl1: photoUrl1 || null,
-        PhotoUrl2: photoUrl2 || null,
-        PhotoUrl3: photoUrl3 || null,
-        CreatedAt: new Date(),
-        UpdatedAt: new Date(),
-        IsEdited: false,
-        StatusId: 1
-      }
+    await prisma.$transaction(async (tx) => {
+      // 1. Create the review
+      await tx.review.create({
+        data: {
+          RestaurantId: restaurantId,
+          UserId: req.user.userId,
+          Rating: Number(rating),
+          Comment: comment,
+          PhotoUrl1: photoUrl1 || null,
+          PhotoUrl2: photoUrl2 || null,
+          PhotoUrl3: photoUrl3 || null,
+          CreatedAt: new Date(),
+          UpdatedAt: new Date(),
+          IsEdited: false,
+          StatusId: 1
+        }
+      });
+
+      // 2. Recalculate the average
+      const { _avg } = await tx.review.aggregate({
+        where: { RestaurantId: restaurantId },
+        _avg: { Rating: true }
+      });
+
+      // 3. Update the restaurant's average rating
+      await tx.restaurant.update({
+        where: { RestaurantId: restaurantId },
+        data: { AverageRating: _avg.Rating ?? 0 }
+      });
     });
 
-    res.status(201).json(review);
+    res.status(201).json({ message: 'Review created and average updated' });
   } catch (error) {
-    console.error('Error creating review:', error);
+    console.error('Error creating review or updating average:', error);
     res.status(400).json({ error: 'Invalid input or related entity missing' });
   }
 });

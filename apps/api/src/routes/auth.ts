@@ -149,6 +149,11 @@ router.put('/me', authenticate, async (req, res) => {
         City: city,
         Country: country,
         ProfilePictureUrl: profilePictureUrl
+      },
+      include: {
+        _count: {
+          select: { reviews: true }
+        }
       }
     });
 

@@ -1,13 +1,17 @@
 import Icon from "@mdi/react";
-import { mdiStar, mdiStarHalfFull, mdiStarOutline } from "@mdi/js";
+import { mdiStar, mdiStarHalfFull, mdiStarOutline, mdiMedal, mdiDiamondStone } from "@mdi/js";
 import "../styles/ReviewCard.css";
-import {
-    mdiMedal,
-    mdiDiamondStone
-} from "@mdi/js";
 import { useTranslation } from "react-i18next";
+import ImageGallery from "./ImageGallery";
+import dayjs from "dayjs";
+import "dayjs/locale/en";
+import "dayjs/locale/mk";
+import "dayjs/locale/me";
+import "dayjs/locale/sl";
+import { useEffect, useState } from "react";
+import i18n from "../i18n";
 
-const ReviewCard = ({ review }) => {
+const ReviewCard = ({ review, children }) => {
     const {
         user,
         Rating,
@@ -19,6 +23,59 @@ const ReviewCard = ({ review }) => {
     } = review;
 
     const { t } = useTranslation();
+    const [translatedCountries, setTranslatedCountries] = useState([]);
+    const [translatedCities, setTranslatedCities] = useState([]);
+
+    const countryNameToCode = {
+        "Macedonia": "MK",
+        "Slovenia": "SI",
+        "Croatia": "HR",
+        "Serbia": "RS",
+        "Bosnia and Herzegovina": "BA",
+        "Montenegro": "ME"
+    }
+
+    useEffect(() => {
+        fetch("/translatedCountries.json")
+            .then((res) => res.json())
+            .then(setTranslatedCountries)
+            .catch(console.error);
+    }, []);
+
+    useEffect(() => {
+        fetch("/translatedCities.json")
+            .then((res) => res.json())
+            .then(setTranslatedCities)
+            .catch(console.error);
+    }, [i18n.language]);
+
+    const getTranslatedCountry = (countryName) => {
+        const match = translatedCountries.find(
+            (c) => c.name.toLowerCase() === countryName?.toLowerCase()
+        );
+        return match?.translations[i18n.language] || countryName;
+    };
+
+    const getTranslatedCity = (cityName, countryName) => {
+        if (!cityName || !countryName) return cityName;
+
+        const isoCode = countryNameToCode[countryName.trim()] || countryName.trim();
+
+        const match = translatedCities.find(
+            (c) =>
+                c.name.trim().toLowerCase() === cityName.trim().toLowerCase() &&
+                c.countryCode.toUpperCase() === isoCode.toUpperCase()
+        );
+
+        return match?.translations?.[i18n.language] || cityName;
+    };
+
+    const dayjsLocaleMap = {
+        en: "en",
+        mk: "mk",
+        sr: "me",
+        sl: "sl",
+    };
 
     const renderStars = (rating) => {
         const stars = [];
@@ -40,20 +97,21 @@ const ReviewCard = ({ review }) => {
 
     const getMedalIcon = (reviewCount) => {
         if (reviewCount > 50) return { icon: mdiDiamondStone, color: "#00bfff" };
-        if (reviewCount >= 26) return { icon: mdiMedal, color: "#ffd700" }; // Gold
-        if (reviewCount >= 11) return { icon: mdiMedal, color: "#c0c0c0" }; // Silver
-        return { icon: mdiMedal, color: "#cd7f32" }; // Bronze
+        if (reviewCount >= 26) return { icon: mdiMedal, color: "#ffd700" };
+        if (reviewCount >= 11) return { icon: mdiMedal, color: "#c0c0c0" };
+        return { icon: mdiMedal, color: "#cd7f32" };
     };
 
-    const reviewDate = new Date(CreatedAt).toLocaleDateString(undefined, {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-    });
+    dayjs.locale(dayjsLocaleMap[i18n.language] || "en");
+    const reviewDate = dayjs(CreatedAt).format("D MMMM YYYY");
 
     const reviewCount = review.user._count.reviews;
     const { icon: medalIcon, color: medalColor } = getMedalIcon(reviewCount);
     const reviewLabel = t("labels.reviewCount", { count: reviewCount });
+
+    const reviewImages = [PhotoUrl1, PhotoUrl2, PhotoUrl3]
+        .filter(Boolean)
+        .map((url) => ({ Url: url }));
 
     return (
         <div className="review-card">
@@ -78,7 +136,7 @@ const ReviewCard = ({ review }) => {
                         <Icon path={medalIcon} size={0.8} color={medalColor} />
                     </div>
                     <div className="review-user-meta">
-                        {user?.City}, {user?.Country} · {reviewLabel}
+                        {getTranslatedCity(user?.City, user?.Country)}, {getTranslatedCountry(user?.Country)} · {reviewLabel}
                     </div>
                     <div className="review-stars">
                         {renderStars(Rating)}
@@ -86,19 +144,23 @@ const ReviewCard = ({ review }) => {
                 </div>
             </div>
 
-            <div className="review-text">
-                {Comment}
-            </div>
+            <div className="review-text">{Comment}</div>
+
+            {children}
 
             <div className="review-images">
-                {PhotoUrl1 && <img src={PhotoUrl1} alt="Review 1" />}
-                {PhotoUrl2 && <img src={PhotoUrl2} alt="Review 2" />}
-                {PhotoUrl3 && <img src={PhotoUrl3} alt="Review 3" />}
+                {reviewImages.length > 0 && (
+                    <div style={{ maxWidth: "100%", overflow: "hidden" }}>
+                        <ImageGallery
+                            images={reviewImages}
+                            arrowColor="var(--red)"
+                            arrowSize={1.5}
+                        />
+                    </div>
+                )}
             </div>
 
-            <div className="review-date">
-                {reviewDate}
-            </div>
+            <div className="review-date">{reviewDate}</div>
         </div>
     );
 };

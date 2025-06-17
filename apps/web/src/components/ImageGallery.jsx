@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import Icon from "@mdi/react";
-import { mdiChevronLeftCircleOutline, mdiChevronRightCircleOutline } from "@mdi/js";
+import { mdiArrowLeftThin, mdiArrowRightThin } from "@mdi/js";
 import "../styles/ImageGallery.css";
 
-function ImageGallery({ images }) {
+function ImageGallery({ images, arrowColor="#FFEEDB", arrowSize=1.8 }) {
   const galleryRef = useRef(null);
   const [showArrows, setShowArrows] = useState(false);
 
@@ -23,7 +23,7 @@ function ImageGallery({ images }) {
   const scroll = (direction) => {
     const { current } = galleryRef;
     if (current) {
-      const scrollAmount = 500; // adjust if needed
+      const scrollAmount = 500; 
       current.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
         behavior: "smooth",
@@ -34,11 +34,8 @@ function ImageGallery({ images }) {
   return (
     <div className="image-gallery-wrapper">
       {showArrows && (
-        <button
-          className="gallery-arrow left"
-          onClick={() => scroll("left")}
-        >
-          <Icon path={mdiChevronLeftCircleOutline} size={1.8} />
+        <button className="gallery-arrow left" onClick={() => scroll("left")}>
+          <Icon path={mdiArrowLeftThin} size={arrowSize} color={arrowColor} />
         </button>
       )}
 
@@ -54,11 +51,8 @@ function ImageGallery({ images }) {
       </div>
 
       {showArrows && (
-        <button
-          className="gallery-arrow right"
-          onClick={() => scroll("right")}
-        >
-          <Icon path={mdiChevronRightCircleOutline} size={1.8} />
+        <button className="gallery-arrow right" onClick={() => scroll("right")}>
+          <Icon path={mdiArrowRightThin} size={arrowSize} color={arrowColor} />
         </button>
       )}
     </div>

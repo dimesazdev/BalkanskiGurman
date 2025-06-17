@@ -62,8 +62,9 @@ model Issue {
   CreatedAt    DateTime @default(now())
   StatusId     Int
 
-  user   User   @relation(fields: [UserId], references: [UserId])
-  status Status @relation(fields: [StatusId], references: [StatusId])
+  user   User     @relation(fields: [UserId], references: [UserId])
+  status Status   @relation(fields: [StatusId], references: [StatusId])
+  review Review?  @relation("ReviewIssues", fields: [ReviewId], references: [ReviewId], onDelete: Cascade)
 }
 
 model Status {
@@ -81,8 +82,8 @@ model Restaurant {
   PriceRange      Int
   Details         String
   PhoneNumber     String
-  Website         String
-  MenuUrl         String
+  Website         String?
+  MenuUrl         String?
   AddressId       Int
   AverageRating   Float
   IsClaimed       Boolean
@@ -189,6 +190,7 @@ model Review {
   restaurant Restaurant @relation(fields: [RestaurantId], references: [RestaurantId])
   user       User       @relation(fields: [UserId], references: [UserId])
   status     Status     @relation(fields: [StatusId], references: [StatusId])
+  issues     Issue[]    @relation("ReviewIssues")
 }
 
 model Favorite {

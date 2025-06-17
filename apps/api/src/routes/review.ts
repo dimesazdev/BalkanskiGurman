@@ -30,19 +30,41 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', authenticate, async (req, res) => {
   try {
     const reviewId = Number(req.params.id);
-    const review = await prisma.review.findUnique({ where: { ReviewId: reviewId } });
+    const review = await prisma.review.findUnique({
+      where: { ReviewId: reviewId },
+      select: { RestaurantId: true, UserId: true }
+    });
 
     if (!review || review.UserId !== req.user.userId) {
       res.status(403).json({ error: 'You can only edit your own review' });
       return;
     }
 
-    const updated = await prisma.review.update({
-      where: { ReviewId: reviewId },
-      data: { ...req.body, IsEdited: true, UpdatedAt: new Date() }
+    await prisma.$transaction(async (tx) => {
+      // Update review
+      await tx.review.update({
+        where: { ReviewId: reviewId },
+        data: {
+          ...req.body,
+          IsEdited: true,
+          EditedAt: new Date(),
+          UpdatedAt: new Date()
+        }
+      });
+
+      // Recalculate average
+      const { _avg } = await tx.review.aggregate({
+        where: { RestaurantId: review.RestaurantId },
+        _avg: { Rating: true }
+      });
+
+      await tx.restaurant.update({
+        where: { RestaurantId: review.RestaurantId },
+        data: { AverageRating: _avg.Rating ?? 0 }
+      });
     });
 
-    res.json(updated);
+    res.json({ message: 'Review updated and average rating updated' });
   } catch (error) {
     console.error('Error updating review:', error);
     res.status(400).json({ error: 'Update failed' });
@@ -53,14 +75,30 @@ router.put('/:id', authenticate, async (req, res) => {
 router.delete('/:id', authenticate, async (req, res) => {
   try {
     const reviewId = Number(req.params.id);
-    const review = await prisma.review.findUnique({ where: { ReviewId: reviewId } });
+    const review = await prisma.review.findUnique({
+      where: { ReviewId: reviewId },
+      select: { RestaurantId: true, UserId: true }
+    });
 
     if (!review || review.UserId !== req.user.userId) {
       res.status(403).json({ error: 'You can only delete your own review' });
       return;
     }
 
-    await prisma.review.delete({ where: { ReviewId: reviewId } });
+    await prisma.$transaction(async (tx) => {
+      await tx.review.delete({ where: { ReviewId: reviewId } });
+
+      const { _avg } = await tx.review.aggregate({
+        where: { RestaurantId: review.RestaurantId },
+        _avg: { Rating: true }
+      });
+
+      await tx.restaurant.update({
+        where: { RestaurantId: review.RestaurantId },
+        data: { AverageRating: _avg.Rating ?? 0 }
+      });
+    });
+
     res.status(204).send();
   } catch (error) {
     console.error('Error deleting review:', error);

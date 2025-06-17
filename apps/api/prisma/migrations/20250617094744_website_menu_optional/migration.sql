@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Restaurant" ALTER COLUMN "Website" DROP NOT NULL,
+ALTER COLUMN "MenuUrl" DROP NOT NULL;

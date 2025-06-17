@@ -62,7 +62,10 @@
         "clickToView": "Kliknite za pregled",
         "available": "Dostupno",
         "notAvailable": "Nedostupno",
-        "reviews": "recenzija"
+        "reviews": "recenzija",
+        "searchByKeyword": "Pretraži po ključnoj reči:",
+        "writeReview": "Napiši recenziju",
+        "aiTranslated": "Ova recenzija je prevedena uz pomoć veštačke inteligencije"
     },
     "days": {
         "mon": "ponedeljak",
@@ -77,7 +80,10 @@
         "label": "Sortiraj po:",
         "rating": "Najveća ocena",
         "priceLow": "Cena (rastuća)",
-        "priceHigh": "Cena (opadajuća)"
+        "priceHigh": "Cena (opadajuća)",
+        "highestRating": "Najviša ocena",
+        "lowestRating": "Najniža ocena",
+        "latest": "Najnovije"
     },
     "search": "Potraži...",
     "login": {
@@ -132,7 +138,9 @@
         "removeFromFavorites": "Ukloni iz omiljenih",
         "goBack": "Nazad",
         "choosePhoto": "Izaberi novu sliku",
-        "saveChanges": "Sačuvaj izmene"
+        "saveChanges": "Sačuvaj izmene",
+        "saving": "Sačuvavam...",
+        "writeReview": "Napiši recenziju"
     },
     "restaurant": {
         "details": "Detalji",
@@ -144,12 +152,13 @@
         "noReviews": "Nema recenzija.",
         "goToLocation": "Idi na lokaciju",
         "about": "O restoranu",
-        "cuisines": "Kuhinje",
+        "cuisines": "Kuhinjа",
         "phone": "Telefon",
         "website": "Veb sajt",
         "menu": "Meni",
         "price": "Cena",
-        "suggestEdit": "Napačne podatke?"
+        "suggestEdit": "Napačne podatke?",
+        "noSearchResults": "Nema recenzija koje odgovaraju vašoj pretrazi."
     },
     "amenities": {
         "DELIV": "Dostava",
@@ -175,5 +184,27 @@
     "profile": {
         "accountInfo": "Podaci o nalogu",
         "changePassword": "Promeni lozinku"
+    },
+    "manageProfile": {
+        "loadingUser": "Učitavanje korisnika...",
+        "fetchError": "Neuspešno učitavanje podataka profila",
+        "saveError": "Došlo je do greške pri čuvanju.",
+        "saveSuccess": "Profil je uspešno sačuvan!",
+        "photoUploadSuccess": "Fotografija je uspešno otpremljena!",
+        "invalidFileType": "Dozvoljeni su samo fajlovi sa slikama",
+        "fileTooLarge": "Slika mora biti manja od 2MB",
+        "saving": "Čuvanje vašeg profila... Molimo sačekajte.",
+        "forceClose": "Zatvori odmah"
+    },
+    "medals": {
+        "bronzeEarned": "Osvojili ste bronzanu medalju nakon {{count}} recenzije.",
+        "bronzeMissing": "Objavite najmanje {{count}} recenziju da biste osvojili bronzanu medalju.",
+        "silverEarned": "Osvojili ste srebrnu medalju nakon {{count}} recenzija.",
+        "silverMissing": "Objavite najmanje {{count}} recenzija da biste osvojili srebrnu medalju.",
+        "goldEarned": "Osvojili ste zlatnu medalju nakon {{count}} recenzija.",
+        "goldMissing": "Objavite najmanje {{count}} recenzija da biste osvojili zlatnu medalju.",
+        "diamondEarned": "Osvojili ste dijamantsku medalju nakon {{count}} recenzija.",
+        "diamondMissing": "Objavite najmanje {{count}} recenzija da biste osvojili dijamantа.",
+        "noReviews": "Još niste objavili nijednu recenziju."
     }
 }
