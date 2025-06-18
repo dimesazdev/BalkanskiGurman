@@ -65,7 +65,10 @@
         "reviews": "recenzija",
         "searchByKeyword": "Pretraži po ključnoj reči:",
         "writeReview": "Napiši recenziju",
-        "aiTranslated": "Ova recenzija je prevedena uz pomoć veštačke inteligencije"
+        "aiTranslated": "Ova recenzija je prevedena uz pomoć veštačke inteligencije",
+        "review": "Tvoja recenzija",
+        "addPhotos": "Dodaj fotografije",
+        "chooseOrDrop": "Izaberi ili prevuci sliku ovde"
     },
     "days": {
         "mon": "ponedeljak",
@@ -128,7 +131,10 @@
         "favoriteRemoved": "Uspešno uklonjeno iz omiljenih",
         "favoriteError": "Neuspešno ažuriranje omiljenih",
         "removeFavoriteConfirm": "Da li ste sigurni da želite da uklonite ovaj restoran iz omiljenih?",
-        "noFavorites": "Još uvek niste dodali nijedan omiljeni restoran."
+        "noFavorites": "Još uvek niste dodali nijedan omiljeni restoran.",
+        "unsupportedFile": "Tip fajla nije podržan. Dozvoljeni su samo PNG, JPG, JPEG i formati slika.",
+        "reviewGuidelines": "Molimo vas da budete pristojni, izbegavajte uvredljiv jezik i pišite konstruktivne i korisne komentare. Vaša recenzija mora biti zasnovana na vašem ličnom iskustvu i ne sme sadržati reklame ili vulgarnosti.",
+        "reviewSuccess": "Recenzija je uspešno poslata!"
     },
     "buttons": {
         "login": "Prijava",
@@ -140,7 +146,11 @@
         "choosePhoto": "Izaberi novu sliku",
         "saveChanges": "Sačuvaj izmene",
         "saving": "Sačuvavam...",
-        "writeReview": "Napiši recenziju"
+        "writeReview": "Napiši recenziju",
+        "close": "Zatvori",
+        "understand": "Razumem",
+        "remove": "Ukloni",
+        "postReview": "Objavi recenziju"
     },
     "restaurant": {
         "details": "Detalji",
@@ -206,5 +216,15 @@
         "diamondEarned": "Osvojili ste dijamantsku medalju nakon {{count}} recenzija.",
         "diamondMissing": "Objavite najmanje {{count}} recenzija da biste osvojili dijamantа.",
         "noReviews": "Još niste objavili nijednu recenziju."
+    },
+    "noResults": "Nijedan restoran ne odgovara vašoj pretrazi.",
+    "titles": {
+        "writeReview": "Napiši recenziju"
+    },
+    "checkbox": {
+        "agree": "Slažem se sa smernicama za pisanje recenzije i razumem da kršenja mogu dovesti do suspenzije ili blokiranje mojeg računa *"
+    },
+    "placeholders": {
+        "writeReview": "Podeli svoje iskustvo..."
     }
 }

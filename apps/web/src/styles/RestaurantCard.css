@@ -138,6 +138,13 @@
     color: var(--red);
 }
 
+mark {
+  background-color: yellow;
+  color: black;
+  font-weight: bold;
+  border-radius: 2px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .restaurant-card {

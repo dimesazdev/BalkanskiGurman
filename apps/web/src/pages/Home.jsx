@@ -26,8 +26,8 @@ const Home = () => {
           transition={{ duration: 1.2, ease: "easeOut" }}
         >
           <img className="home-logo" src={logo} />
-          <Button variant="red" onClick={() => navigate("/restaurants")}>
-            <h2>{t("home.button")}</h2>
+          <Button variant="red" onClick={() => navigate("/restaurants")} >
+            {t("home.button")}
             <Icon path={mdiArrowRightThin} size={1} className="arrow-icon" />
           </Button>
         </motion.div>

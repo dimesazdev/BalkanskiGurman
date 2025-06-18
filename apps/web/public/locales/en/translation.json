@@ -36,7 +36,10 @@
         "amenities": "Amenities",
         "hours": "Working hours",
         "openNow": "Open now",
-        "afterMidnight": "After midnight"
+        "afterMidnight": "After midnight",
+        "5-10€": "5-10€",
+        "10-20€": "10-20€",
+        "20€+": "20€+"
     },
     "labels": {
         "price": "Price",
@@ -63,8 +66,10 @@
         "notAvailable": "Not available",
         "reviews": "reviews",
         "searchByKeyword": "Search by keyword:",
-        "aiTranslated": "This review was translated by AI"
-
+        "aiTranslated": "This review was translated by AI",
+        "review": "Your Review",
+        "addPhotos": "Add Photos",
+        "chooseOrDrop": "Choose or drop a picture here"
     },
     "days": {
         "mon": "Monday",
@@ -127,7 +132,10 @@
         "favoriteRemoved": "Successfully removed from Favourites",
         "favoriteError": "Failed to update favourites",
         "removeFavoriteConfirm": "Are you sure you want to remove this restaurant from your favorites?",
-        "noFavorites": "You haven’t added any restaurants to your favorites yet."
+        "noFavorites": "You haven’t added any restaurants to your favorites yet.",
+        "reviewSuccess": "Review posted successfully!",
+        "unsupportedFile": "File type not supported. Only PNG, JPG, JPEG, and image formats are allowed.",
+        "reviewGuidelines": "Please be respectful, avoid offensive language, and write constructive and helpful feedback. Your review must be based on your personal experience and must not include advertisements or vulgarity."
     },
     "buttons": {
         "login": "Login",
@@ -139,7 +147,11 @@
         "choosePhoto": "Choose new photo",
         "saveChanges": "Save changes",
         "saving": "Saving...",
-        "writeReview": "Write a review"
+        "writeReview": "Write a review",
+        "postReview": "Post review",
+        "remove": "Remove",
+        "close": "Close",
+        "understand": "I understand"
     },
     "restaurant": {
         "details": "Details",
@@ -205,5 +217,26 @@
         "diamondEarned": "You earned the Diamond medal after posting {{count}} reviews.",
         "diamondMissing": "Post at least {{count}} reviews to earn the Diamond.",
         "noReviews": "You haven't posted any reviews yet."
+    },
+    "noResults": "No restaurants match your search.",
+    "form": {
+        "rating": "Rating",
+        "review": "Review",
+        "placeholder": "Write your review...",
+        "photos": "Add photos (max. 3)",
+        "agree": "I agree to the",
+        "rules": "community guidelines"
+    },
+    "review": {
+        "dragDrop": "Drop images here or click to upload"
+    },
+    "titles": {
+        "writeReview": "Write a Review"
+    },
+    "checkbox": {
+        "agree": "I agree to the review writing guidelines and understand that violations may result in account suspension or ban *"
+    },
+    "placeholders": {
+        "writeReview": "Share your experience..."
     }
 }

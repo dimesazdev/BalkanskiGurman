@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import Favorites from './pages/Favorites';
 import RestaurantPage from './pages/RestaurantPage';
 import ManageProfile from './pages/ManageProfile';
+import WriteReview from './pages/WriteReview';
 
 const App = () => (
   <Router>
@@ -18,6 +19,7 @@ const App = () => (
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/restaurants/:id" element={<RestaurantPage />} />
         <Route path="/me" element={<ManageProfile />} />
+        <Route path="/restaurants/:id/reviews" element={<WriteReview />} /> 
       </Route>
       <Route path="/" element={<Home />} />
     </Routes>

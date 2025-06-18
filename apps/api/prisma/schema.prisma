@@ -146,6 +146,12 @@ model WorkingHours {
   DayOfWeek      Int
   OpenTime       DateTime?
   CloseTime      DateTime?
+
+  OpenHour       Int?
+  OpenMinute     Int?
+  CloseHour      Int?
+  CloseMinute    Int?
+
   IsClosed       Boolean
   CreatedAt      DateTime @default(now())
   UpdatedAt      DateTime @updatedAt

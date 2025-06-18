@@ -30,6 +30,8 @@ import { useAuth } from "../context/AuthContext";
 import Title from "../components/Title";
 import { useAzureTranslation } from '../hooks/useAzureTranslation';
 import TranslatedReviewCard from "../components/TranslatedReviewCard";
+import dayjs from "dayjs";
+import { getOpenCloseStatus, getNextOpeningTime } from "../utils/openingHoursUtils";
 
 function RestaurantPage() {
   const { t } = useTranslation();
@@ -49,6 +51,17 @@ function RestaurantPage() {
     "DELIV", "PARK", "PET", "CARD", "KIDS",
     "SMOK", "VEGAN", "VEGE", "GLUT", "HALAL"
   ];
+
+  const now = dayjs();
+  const todayDayOfWeek = now.day() === 0 ? 7 : now.day();
+  const todayHours = restaurant?.workingHours?.find(h => h.DayOfWeek === todayDayOfWeek);
+
+  const { isOpen, closeFormatted: openUntil } = todayHours
+    ? getOpenCloseStatus(todayHours, now, t)
+    : { isOpen: false, closeFormatted: null };
+
+  const getNextOpenTime = () =>
+    getNextOpeningTime(restaurant?.workingHours, todayDayOfWeek, getDayName, t);
 
   useEffect(() => {
     fetch(`http://localhost:3001/restaurants/${id}`)
@@ -155,7 +168,7 @@ function RestaurantPage() {
   };
 
   const { translatedText: translatedDetailsText } = useAzureTranslation(restaurant?.Details ?? "");
-  
+
   if (!restaurant) return <div>Loading...</div>;
 
   const getSortedReviews = () => {
@@ -204,7 +217,11 @@ function RestaurantPage() {
       </div>
 
       <div className="restaurant-subinfo">
-        <span className="open-status green">{t("labels.openUntil")} 23:00</span>
+        {todayHours && !todayHours.IsClosed && isOpen ? (
+          <span className="open">{t("labels.openUntil")} {openUntil}</span>
+        ) : (
+          <span className="closed">{t("labels.closed")} · {getNextOpenTime()}</span>
+        )}
         <span className="dot">•</span>
         <span>{getPriceLabel(restaurant.PriceRange)}</span>
         <span className="dot">•</span>
@@ -297,7 +314,6 @@ function RestaurantPage() {
         <WorkingHoursCard
           hours={[...restaurant.workingHours].sort((a, b) => a.DayOfWeek - b.DayOfWeek)}
           getDayName={getDayName}
-          formatTime={formatTime}
           label={t("restaurant.workingHours")}
           buttonText={t("restaurant.suggestEdit")}
         />

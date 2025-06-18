@@ -13,7 +13,16 @@ router.get('/', async (req, res) => {
       include: {
         cuisines: { include: { cuisine: true } },
         amenities: { include: { amenity: true } },
-        workingHours: true,
+        workingHours: {
+          select: {
+            DayOfWeek: true,
+            OpenHour: true,
+            OpenMinute: true,
+            CloseHour: true,
+            CloseMinute: true,
+            IsClosed: true
+          }
+        },
         images: true,
         reviews: true
       }
@@ -81,6 +90,7 @@ router.post('/', authenticate, requireRole('Admin'), async (req, res) => {
   }
 });
 
+// Update restaurant
 router.put('/:id', authenticate, async (req, res) => {
   try {
     const id = Number(req.params.id);
@@ -95,8 +105,8 @@ router.put('/:id', authenticate, async (req, res) => {
 
     const { userId, role } = req.user;
 
-    const isAdmin = role === 'Admin';
-    const isOwner = role === 'Owner' && restaurant.ClaimedByUserId === userId;
+    const isAdmin = role === 'ADMIN';
+    const isOwner = role === 'OWNER' && restaurant.ClaimedByUserId === userId;
 
     if (!isAdmin && !isOwner) {
       res.status(403).json({ error: 'Not authorized to update this restaurant' });

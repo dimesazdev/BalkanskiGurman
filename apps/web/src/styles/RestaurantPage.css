@@ -7,171 +7,174 @@
     margin: 2rem auto;
     padding: 0 1rem;
     font-family: 'Cormorant SC', serif;
-}
 
-.go-back {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
-    color: var(--beige);
-    gap: 8px;
-    margin-top: 5rem;
-}
+    .go-back {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+        color: var(--beige);
+        gap: 8px;
+        margin-top: 5rem;
+    }
 
-.restaurant-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
+    .restaurant-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
 
-.restaurant-header-left {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
+    .restaurant-header-left {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
 
-.restaurant-title {
-    font-size: 2.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 0;
-    font-family: 'Cormorant SC';
-    color: var(--beige);
-}
+    .restaurant-title {
+        font-size: 2.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0;
+        font-family: 'Cormorant SC';
+        color: var(--beige);
+    }
 
-.restaurant-rating-stars {
-    display: flex;
-    align-items: center;
-    margin-top: 4px;
-}
+    .restaurant-rating-stars {
+        display: flex;
+        align-items: center;
+        margin-top: 4px;
+    }
 
-.restaurant-rating-value {
-    margin-left: 6px;
-    color: #333;
-    font-size: 1.1rem;
-    color: var(--beige);
-}
+    .restaurant-rating-value {
+        margin-left: 6px;
+        color: #333;
+        font-size: 1.1rem;
+        color: var(--beige);
+    }
 
-.restaurant-subinfo {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
-    color: var(--beige);
-}
+    .restaurant-subinfo {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        color: var(--beige);
+    }
 
-.open-status {
-    color: #08FF00;
-    font-weight: 500;
-}
+    .open {
+        color: #08FF00;
+        font-weight: 500;
+    }
 
-.dot {
-    font-size: 1.2rem;
-    color: var(--beige);
-}
+    .closed {
+        color: var(--red);
+        font-weight: 500;
+    }
 
-.section-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    font-size: 1.8rem;
-    margin: 2rem 0 1rem;
-    text-align: center;
-    color: var(--beige);
-    font-family: 'Cormorant SC', serif;
-}
+    .dot {
+        font-size: 1.2rem;
+        color: var(--beige);
+    }
 
-.section-title::before,
-.section-title::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: var(--beige);
-}
+    .section-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        font-size: 1.8rem;
+        margin: 2rem 0 1rem;
+        text-align: center;
+        color: var(--beige);
+        font-family: 'Cormorant SC', serif;
+    }
 
-.section-title::before {
-    margin-right: 20px;
-}
+    .section-title::before,
+    .section-title::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--beige);
+    }
 
-.section-title::after {
-    margin-left: 20px;
-}
+    .section-title::before {
+        margin-right: 20px;
+    }
 
-.restaurant-details {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    color: var(--beige);
-    margin-bottom: 2rem;
-    text-align: justify;
-}
+    .section-title::after {
+        margin-left: 20px;
+    }
 
-.info-cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 2rem;
-    justify-content: center;
-}
+    .restaurant-details {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        color: var(--beige);
+        margin-bottom: 2rem;
+        text-align: justify;
+    }
 
-.location-hours-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    margin-bottom: 2rem;
-}
+    .info-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 2rem;
+        justify-content: center;
+    }
 
-.location-card,
-.working-hours-card {
-    flex: 1 1 45%;
-    min-width: 300px;
-    max-width: 700px;
-}
+    .location-hours-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        margin-bottom: 2rem;
+    }
 
-.restaurant-amenities {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 2rem;
-}
+    .location-card,
+    .working-hours-card {
+        flex: 1 1 45%;
+        min-width: 300px;
+        max-width: 700px;
+    }
 
-.reviews-columns {
-  display: inline-flex;
-  gap: 24px;
-  justify-content: center;
-  align-items: flex-start; 
-  width: 100%;
-}
+    .restaurant-amenities {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 2rem;
+    }
 
-.reviews-column {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-width: 300px;
-}
+    .reviews-columns {
+        display: inline-flex;
+        gap: 24px;
+        justify-content: center;
+        align-items: flex-start;
+        width: 100%;
+    }
 
-@media (max-width: 900px) {
-  .reviews-columns {
-    flex-direction: column;
-  }
+    .reviews-column {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-width: 300px;
+    }
 
-  .reviews-column {
-    width: 100%;
-  }
-}
+    @media (max-width: 900px) {
+        .reviews-columns {
+            flex-direction: column;
+        }
 
-.restaurant-page {
+        .reviews-column {
+            width: 100%;
+        }
+    }
+
     .settings-bar {
         display: flex;
         flex-wrap: wrap;

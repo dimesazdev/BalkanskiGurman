@@ -4,11 +4,14 @@ import "../styles/WorkingHoursCard.css";
 import { useTranslation } from 'react-i18next';
 import Button from "./Button";
 
-const WorkingHoursCard = ({ hours, getDayName, formatTime, label, buttonText }) => {
-  // Force order Monday (1) → Sunday (7)
+const WorkingHoursCard = ({ hours, getDayName, label, buttonText }) => {
   const orderedDays = [1, 2, 3, 4, 5, 6, 7];
-
   const { t } = useTranslation();
+
+  const formatTimeManual = (hour, minute) => {
+    if (hour == null || minute == null) return "";
+    return `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
+  };
 
   return (
     <div className="working-hours-card">
@@ -27,8 +30,8 @@ const WorkingHoursCard = ({ hours, getDayName, formatTime, label, buttonText }) 
                 <td>{getDayName(dayNum)}</td>
                 <td>
                   {h?.IsClosed
-                    ? `${t("labels.closed")}`
-                    : `${formatTime(h?.OpenTime)} - ${formatTime(h?.CloseTime)}`}
+                    ? t("labels.closed")
+                    : `${formatTimeManual(h.OpenHour, h.OpenMinute)} - ${formatTimeManual(h.CloseHour, h.CloseMinute)}`}
                 </td>
               </tr>
             );

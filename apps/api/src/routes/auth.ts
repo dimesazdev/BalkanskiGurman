@@ -76,7 +76,14 @@ router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await prisma.user.findUnique({ where: { Email: email }, include: { userRoles: true } });
+    const user = await prisma.user.findUnique({
+      where: { Email: email },
+      include: {
+        userRoles: {
+          include: { role: true }
+        }
+      }
+    });
     if (!user) {
       res.status(404).json({ error: 'User not found' });
       return;
@@ -88,8 +95,13 @@ router.post('/login', async (req, res) => {
       return;
     }
 
+    const roles = user.userRoles.map(ur => ur.role.NormalizedName);
     const token = jwt.sign(
-      { userId: user.UserId, role: user.userRoles?.[0]?.RoleId || 'User' },
+      {
+        userId: user.UserId,
+        role: roles[0],       
+        roles: roles           
+      },
       JWT_SECRET,
       { expiresIn: '7d' }
     );

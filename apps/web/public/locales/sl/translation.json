@@ -66,7 +66,10 @@
         "reviews": "recenzij",
         "searchByKeyword": "Išči po ključni besedi:",
         "writeReview": "Napiši recenzijo",
-        "aiTranslated": "Ta recenzija je bila prevedena s pomočjo umetne inteligence"
+        "aiTranslated": "Ta recenzija je bila prevedena s pomočjo umetne inteligence",
+        "review": "Vaša recenzija",
+        "addPhotos": "Dodaj fotografije",
+        "chooseOrDrop": "Izberi ali spusti sliko tukaj"
     },
     "days": {
         "mon": "ponedeljek",
@@ -130,7 +133,10 @@
         "favoriteRemoved": "Uspešno odstranjeno iz priljubljenih",
         "favoriteError": "Napaka pri posodabljanju priljubljenih",
         "removeFavoriteConfirm": "Ali ste prepričani, da želite odstraniti to restavracijo iz priljubljenih?",
-        "noFavorites": "Še niste dodali nobene restavracije med priljubljene."
+        "noFavorites": "Še niste dodali nobene restavracije med priljubljene.",
+        "unsupportedFile": "Vrsta datoteke ni podprta. Dovoljene so samo datoteke PNG, JPG, JPEG in slikovni formati.",
+        "reviewGuidelines": "Bodite spoštljivi, izogibajte se žaljivemu jeziku ter napišite konstruktivne in koristne komentarje. Vaše mnenje mora temeljiti na vaši osebni izkušnji in ne sme vsebovati oglasov ali vulgarnosti.",
+        "reviewSuccess": "Recenzija uspešno oddana!"
     },
     "buttons": {
         "login": "Prijava",
@@ -142,7 +148,11 @@
         "choosePhoto": "Izberi novo sliko",
         "saveChanges": "Shrani spremembe",
         "saving": "Shranjujem...",
-        "writeReview": "Napiši recenzijo"
+        "writeReview": "Napiši recenzijo",
+        "close": "Zapri",
+        "understand": "Razumem",
+        "remove": "Odstrani",
+        "postReview": "Objavi recenzij"
     },
     "restaurant": {
         "details": "Podrobnosti",
@@ -199,13 +209,23 @@
     },
     "medals": {
         "bronzeEarned": "Prejeli ste bronasto medaljo po {{count}} objavljenih recenzijah.",
-        "bronzeMissing": "Objavite vsaj {{count}} oceno, da pridobite bronasto medaljo.",
+        "bronzeMissing": "Objavite vsaj {{count}} recenzijo, da pridobite bronasto medaljo.",
         "silverEarned": "Prejeli ste srebrno medaljo po {{count}} objavljenih recenzijah.",
-        "silverMissing": "Objavite vsaj {{count}} ocen, da pridobite srebrno medaljo.",
+        "silverMissing": "Objavite vsaj {{count}} recenzij, da pridobite srebrno medaljo.",
         "goldEarned": "Prejeli ste zlato medaljo po {{count}} objavljenih recenzijah.",
-        "goldMissing": "Objavite vsaj {{count}} ocen, da pridobite zlato medaljo.",
+        "goldMissing": "Objavite vsaj {{count}} recenzij, da pridobite zlato medaljo.",
         "diamondEarned": "Prejeli ste diamantno medaljo po {{count}} objavljenih recenzijah.",
-        "diamondMissing": "Objavite vsaj {{count}} ocen, da pridobite diamantа.",
+        "diamondMissing": "Objavite vsaj {{count}} re, da pridobite diamantа.",
         "noReviews": "Še niste objavili nobene recenzije."
+    },
+    "noResults": "Nobena restavracija ne ustreza vašemu iskanju.",
+    "titles": {
+        "writeReview": "Napiši recenzijo"
+    },
+    "checkbox": {
+        "agree": "Strinjam se s smernicami za pisanje recenzije in razumem, da lahko kršitve vodijo do začasne ali trajne prepovedi mojega uporabniškega računa *"
+    },
+    "placeholders": {
+        "writeReview": "Delite svojo izkušnjo..."
     }
 }

@@ -1,5 +1,6 @@
 .filter-sidebar {
     max-width: 500px;
+    width: 270px;
     background-color: var(--beige);
     color: black;
     padding: 1rem;
@@ -27,12 +28,6 @@
     flex-direction: column;
     gap: 0.5rem;
     font-size: 1.2rem;
-}
-
-.filter-section > label {
-    font-weight: bold;
-    font-size: 1.4rem;
-    cursor: pointer;
 }
 
 .filter-options {

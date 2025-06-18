@@ -23,7 +23,16 @@ import {
 import Icon from "@mdi/react";
 import "../styles/RestaurantCard.css";
 
-function RestaurantCard({ restaurant, isFavorite, onToggleFavorite }) {
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import { getOpenCloseStatus, getNextOpeningTime } from "../utils/openingHoursUtils";
+import { useAzureTranslation } from '../hooks/useAzureTranslation';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+function RestaurantCard({ restaurant, isFavorite, onToggleFavorite, searchTerm = "" }) {
     const { t } = useTranslation();
     const navigate = useNavigate();
 
@@ -40,22 +49,15 @@ function RestaurantCard({ restaurant, isFavorite, onToggleFavorite }) {
         images
     } = restaurant;
 
+    const { translatedText: translatedDetailsText } = useAzureTranslation(Details || "");
+
     const firstImage = images?.[0]?.Url || "/placeholder.jpg";
 
-    const today = new Date();
-    const todayDayOfWeek = today.getDay() === 0 ? 7 : today.getDay();
+    const localTZ = dayjs.tz.guess();
+    const now = dayjs().tz(localTZ);
+    const todayDayOfWeek = now.day() === 0 ? 7 : now.day();
+
     const todayHours = workingHours?.find(h => h.DayOfWeek === todayDayOfWeek);
-
-    const isOpen = todayHours && !todayHours.IsClosed && (() => {
-        const now = today.getHours() * 60 + today.getMinutes();
-        const open = new Date(todayHours.OpenTime).getHours() * 60 + new Date(todayHours.OpenTime).getMinutes();
-        const close = new Date(todayHours.CloseTime).getHours() * 60 + new Date(todayHours.CloseTime).getMinutes();
-        return now >= open && now < close;
-    })();
-
-    const openUntil = isOpen
-        ? new Date(todayHours.CloseTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
-        : null;
 
     const getPriceLabel = () => {
         switch (PriceRange) {
@@ -64,23 +66,6 @@ function RestaurantCard({ restaurant, isFavorite, onToggleFavorite }) {
             case 3: return "20€+";
             default: return "-";
         }
-    };
-
-    const getNextOpenTime = () => {
-        for (let i = 1; i <= 7; i++) {
-            const nextDayIndex = (todayDayOfWeek + i - 1) % 7 + 1;
-            const nextDayHours = workingHours?.find(h => h.DayOfWeek === nextDayIndex);
-            if (nextDayHours && !nextDayHours.IsClosed) {
-                const openTime = new Date(nextDayHours.OpenTime).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: false
-                });
-                const dayName = getDayName(nextDayIndex);
-                return `${t("labels.opensAt")} ${openTime} ${t("labels.on")} ${dayName}`;
-            }
-        }
-        return t("labels.closedAllWeek");
     };
 
     const getDayName = (dayNum) => {
@@ -95,6 +80,9 @@ function RestaurantCard({ restaurant, isFavorite, onToggleFavorite }) {
         };
         return dayMap[dayNum];
     };
+
+    const { isOpen, closeFormatted } = getOpenCloseStatus(todayHours, now, t);
+    const nextOpeningText = getNextOpeningTime(workingHours, todayDayOfWeek, getDayName, t);
 
     const renderStars = () => {
         const stars = [];
@@ -114,6 +102,16 @@ function RestaurantCard({ restaurant, isFavorite, onToggleFavorite }) {
         return stars;
     };
 
+    const highlightMatch = (text) => {
+        if (!searchTerm) return text;
+        const regex = new RegExp(`(${searchTerm})`, "gi");
+        return text?.split(regex).map((part, i) =>
+            part.toLowerCase() === searchTerm.toLowerCase()
+                ? <mark key={i} style={{ backgroundColor: "yellow", fontWeight: "bold" }}>{part}</mark>
+                : part
+        );
+    };
+
     return (
         <div className="restaurant-card" onClick={() => navigate(`/restaurants/${RestaurantId}`)}>
             <div className="card-image-section">
@@ -131,7 +129,7 @@ function RestaurantCard({ restaurant, isFavorite, onToggleFavorite }) {
 
             <div className="card-content-section">
                 <div className="header-row">
-                    <h2 className="restaurant-name">{Name}</h2>
+                    <h2 className="restaurant-name">{highlightMatch(Name)}</h2>
                     {IsClaimed && (
                         <Icon path={mdiCheckCircle} size={1} color="green" title="Claimed" style={{ marginLeft: 5 }} />
                     )}
@@ -140,12 +138,12 @@ function RestaurantCard({ restaurant, isFavorite, onToggleFavorite }) {
                 {todayHours && !todayHours.IsClosed && isOpen ? (
                     <div className="restaurant-info-line open-now">
                         <Icon path={mdiClockOutline} size={0.8} />
-                        {t("labels.openUntil")} {openUntil}
+                        {t("labels.openUntil")} {closeFormatted}
                     </div>
                 ) : (
                     <div className="restaurant-info-line closed-now">
                         <Icon path={mdiClockOutline} size={0.8} />
-                        {t("labels.closed")}{" · "}{getNextOpenTime()}
+                        {t("labels.closed")}{" · "}{nextOpeningText}
                     </div>
                 )}
 
@@ -154,7 +152,7 @@ function RestaurantCard({ restaurant, isFavorite, onToggleFavorite }) {
                     <span className="stars-red">{renderStars()}<span className="rating-value"> {AverageRating.toFixed(2)}</span></span>
                     {restaurant.reviews && (
                         <span className="review-count-card" style={{ color: "ba3b46" }}>
-                            ({t("labels.reviewCount", { count: restaurant.reviews.length })}) 
+                            ({t("labels.reviewCount", { count: restaurant.reviews.length })})
                         </span>
                     )}
                 </div>
@@ -169,7 +167,7 @@ function RestaurantCard({ restaurant, isFavorite, onToggleFavorite }) {
                 </div>
 
                 <div className="restaurant-info-line details-line">
-                    {Details}
+                    {translatedDetailsText}
                 </div>
 
                 <div className="amenities-line">

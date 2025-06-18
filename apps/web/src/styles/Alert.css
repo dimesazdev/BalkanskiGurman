@@ -15,6 +15,7 @@
     text-align: center;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     gap: 5px;
+    max-width: 70%;
 }
 
 .alert-box p {
