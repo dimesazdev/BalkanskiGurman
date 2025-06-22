@@ -104,7 +104,7 @@ const FilterSidebar = ({ filters, onChange }) => {
 
         <div className="filter-section">
           <label>{t("filters.price")}</label>
-          {[{ code: 1, label: "5-10€" }, { code: 2, label: "10-20€" }, { code: 3, label: "20€+" }]
+          {[{ code: 1, label: "filters.5-10€" }, { code: 2, label: "filters.10-20€" }, { code: 3, label: "filters.20€+" }]
             .map(p => renderCheckbox("price", p.code, p.label))}
         </div>
 

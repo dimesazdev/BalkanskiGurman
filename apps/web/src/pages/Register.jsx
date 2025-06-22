@@ -5,13 +5,12 @@ import "../styles/Register.css";
 import "../styles/Login.css";
 import logo from "../../public/dark-logo.svg";
 import { Link } from "react-router-dom";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
 import FormInput from "../components/FormInput";
 import FormSelect from "../components/FormSelect";
 import Button from "../components/Button";
 import { useTranslation } from "react-i18next";
 import i18n from "../i18n";
+import PhoneNumberPicker from "../components/PhoneNumberPicker";
 
 const Register = () => {
   const { t } = useTranslation();
@@ -159,31 +158,26 @@ const Register = () => {
           <form onSubmit={handleSubmit} className="register-form">
             <div className="form-grid">
               <div className="form-column">
-                <FormInput id="name" label={t("register.name") + " *"} name="name" type="text" value={formData.name} onChange={handleInputChange} placeholder={t("register.namePlaceholder")}/>
-                <FormInput id="email" label={t("register.email") + " *"} name="email" type="email" value={formData.email} onChange={handleInputChange} placeholder={t("register.emailPlaceholder")}/>
-                <FormSelect label={t("register.country") + " *"} name="countryIso" value={formData.countryIso} onChange={handleCountryChange} options={[{ value: "", label: t("register.countryPlaceholder") }, ...countryOptions]} placeholder={t("register.countryPlaceholder")}/>
-                <FormInput id="password" label={t("register.password") + " *"} name="password" type="password" value={formData.password} onChange={handleInputChange} placeholder={t("register.passwordPlaceholder")}/>
+                <FormInput id="name" label={t("register.name") + " *"} name="name" type="text" value={formData.name} onChange={handleInputChange} placeholder={t("register.namePlaceholder")} />
+                <FormInput id="email" label={t("register.email") + " *"} name="email" type="email" value={formData.email} onChange={handleInputChange} placeholder={t("register.emailPlaceholder")} />
+                <FormSelect label={t("register.country") + " *"} name="countryIso" value={formData.countryIso} onChange={handleCountryChange} options={[{ value: "", label: t("register.countryPlaceholder") }, ...countryOptions]} placeholder={t("register.countryPlaceholder")} />
+                <FormInput id="password" label={t("register.password") + " *"} name="password" type="password" value={formData.password} onChange={handleInputChange} placeholder={t("register.passwordPlaceholder")} />
               </div>
 
               <div className="form-column">
-                <FormInput id="surname" label={t("register.surname") + " *"} name="surname" type="text" value={formData.surname} onChange={handleInputChange} placeholder={t("register.surnamePlaceholder")}/>
-                <div className="form-group">
-                  <label htmlFor="phoneNumber" className="text-white">{t("register.phone")}</label>
-                  <PhoneInput
-                    country={"mk"}
-                    value={formData.phoneNumber}
-                    onChange={(phone, countryData) => {
-                      setFormData((prev) => ({ ...prev, phoneNumber: phone, countryCode: `+${countryData.dialCode}` }));
-                    }}
-                    inputProps={{ name: "phone" }}
-                    containerClass="custom-phone-container"
-                    inputClass="custom-phone-input"
-                    buttonClass="custom-phone-button"
-                    dropdownClass="custom-phone-dropdown"
-                  />
-                </div>
-                <FormSelect label={t("register.city") + " *"} name="city" value={formData.city} onChange={handleCityChange} options={formData.country ? cityOptions.length > 0 ? [{ label: t("register.cityPlaceholder"), value: "" }, ...cityOptions] : [{ label: t("register.noCities"), value: "" }] : []} placeholder={t("register.cityPlaceholder")} required disabled={!formData.country}/>
-                <FormInput id="retypePassword" label={t("register.retypePassword") + " *"} name="retypePassword" type="password" value={formData.retypePassword} onChange={handleInputChange} placeholder={t("register.retypePasswordPlaceholder")}/>
+                <FormInput id="surname" label={t("register.surname") + " *"} name="surname" type="text" value={formData.surname} onChange={handleInputChange} placeholder={t("register.surnamePlaceholder")} />
+                <PhoneNumberPicker
+                  value={{ phoneNumber: formData.phoneNumber }}
+                  onChange={({ phoneNumber, countryCode }) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      phoneNumber,
+                      countryCode
+                    }))
+                  }
+                />
+                <FormSelect label={t("register.city") + " *"} name="city" value={formData.city} onChange={handleCityChange} options={formData.country ? cityOptions.length > 0 ? [{ label: t("register.cityPlaceholder"), value: "" }, ...cityOptions] : [{ label: t("register.noCities"), value: "" }] : []} placeholder={t("register.cityPlaceholder")} required disabled={!formData.country} />
+                <FormInput id="retypePassword" label={t("register.retypePassword") + " *"} name="retypePassword" type="password" value={formData.retypePassword} onChange={handleInputChange} placeholder={t("register.retypePasswordPlaceholder")} />
               </div>
             </div>
             <Button type="submit" variant="beige"><p>{t("register.register")}</p></Button>

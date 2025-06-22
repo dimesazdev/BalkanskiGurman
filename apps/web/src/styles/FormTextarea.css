@@ -1,0 +1,23 @@
+textarea.custom-textarea {
+  height: auto; 
+  min-height: 10rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--beige);
+  color: black;
+  font-size: 1.2rem;
+  font-family: "Cormorant Garamond", serif;
+  outline: none;
+  transition: box-shadow 0.2s ease;
+  resize: vertical; 
+}
+
+textarea.custom-textarea:focus {
+  box-shadow: 0 0 0 0.1875rem rgba(249, 234, 221, 0.3);
+}
+
+textarea.custom-textarea::placeholder {
+  color: #666;
+  font-family: "Cormorant Garamond", serif;
+}

@@ -14,7 +14,7 @@ const FormSelect = ({
       <select
         id={name}
         name={name}
-        value={value || ''}
+        value={value !== null && value !== undefined ? value : ''}
         onChange={onChange}
         required={required}
         disabled={disabled}

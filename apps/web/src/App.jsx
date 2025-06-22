@@ -8,6 +8,10 @@ import Favorites from './pages/Favorites';
 import RestaurantPage from './pages/RestaurantPage';
 import ManageProfile from './pages/ManageProfile';
 import WriteReview from './pages/WriteReview';
+import RequireAdmin from './context/RequireAdmin';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminRestaurants from './pages/admin/AdminRestaurants';
+import RestaurantFormPage from './pages/admin/RestaurantFormPage';
 
 const App = () => (
   <Router>
@@ -19,9 +23,30 @@ const App = () => (
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/restaurants/:id" element={<RestaurantPage />} />
         <Route path="/me" element={<ManageProfile />} />
-        <Route path="/restaurants/:id/reviews" element={<WriteReview />} /> 
+        <Route path="/restaurants/:id/reviews" element={<WriteReview />} />
+        <Route path="/admin" element={
+          <RequireAdmin>
+            <AdminDashboard />
+          </RequireAdmin>
+        } />
+        <Route path="/admin/restaurants" element={
+          <RequireAdmin>
+            <AdminRestaurants />
+          </RequireAdmin>
+        } />
+        <Route path="/admin/restaurants/add" element={
+          <RequireAdmin>
+            <RestaurantFormPage />
+          </RequireAdmin>
+        } />
+        <Route path="/admin/restaurants/edit/:id" element={
+          <RequireAdmin>
+            <RestaurantFormPage />
+          </RequireAdmin>
+        } />
       </Route>
       <Route path="/" element={<Home />} />
+      <Route path="/unauthorized" element={<div style={{ padding: "2rem", textAlign: "center", color: "#FFEEDB" }}><h1>403 - Not Authorized</h1><p>You do not have access to this page.</p></div>} />
     </Routes>
   </Router>
 );

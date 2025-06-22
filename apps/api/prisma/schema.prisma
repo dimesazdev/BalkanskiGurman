@@ -161,7 +161,7 @@ model WorkingHours {
 
 model Amenity {
   AmenityId Int    @id @default(autoincrement())
-  Code      String
+  Code      String @unique
   Name      String
 
   restaurantAmenities RestaurantAmenity[]

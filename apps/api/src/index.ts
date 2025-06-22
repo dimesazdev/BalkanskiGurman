@@ -47,7 +47,7 @@ app.use('/working-hours', workingHoursRoutes);
 app.use('/issues', issueRoutes);
 app.use('/favorites', favoriteRoutes);
 app.use('/user-roles', userRoleRoutes);
-app.use('/restaurant-amenities', restaurantAmenityRoutes);
+app.use('/restaurant-amenities', restaurantAmenityRoutes);  
 app.use('/restaurant-cuisines', restaurantCuisineRoutes);
 app.use('/auth', authRoutes);
 app.use('/upload', uploadRoutes);

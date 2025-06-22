@@ -1,0 +1,52 @@
+.custom-phone-container {
+  width: 100% !important;
+}
+
+.custom-phone-input {
+  width: 100% !important;
+  height: 3.5rem !important;
+  border-radius: 20px !important;
+  background-color: var(--beige) !important;
+  color: black !important;
+  font-size: 1.2rem !important;
+  font-family: 'Cormorant Garamond', sans-serif !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.custom-phone-button {
+  background: var(--beige) !important;
+  border: none !important;
+  border-radius: 20px 0 0 20px !important;
+}
+
+.react-tel-input .country-list {
+  background-color: var(--beige) !important;
+  font-family: 'Cormorant Garamond', sans-serif !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000 !important;
+}
+
+.react-tel-input .country-list .country {
+  font-size: 1rem;
+  color: black !important;
+  background-color: var(--beige) !important;
+  font-family: 'Cormorant Garamond', serif !important;
+}
+
+.react-tel-input .selected-flag {
+  outline: none;
+  height: 100%;
+  border-radius: 20px 0 0 20px !important;
+  padding: 0 15px !important;
+}
+
+.react-tel-input .selected-flag:hover,
+.react-tel-input .selected-flag.open {
+  background-color: var(--beige) !important;
+}
+
+.react-tel-input .country-list .country:hover {
+  background-color: #f0dbc9 !important;
+  color: black !important;
+}

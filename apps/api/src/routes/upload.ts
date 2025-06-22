@@ -62,4 +62,34 @@ router.post('/review-photos', upload.array('files', 3), async (req: Request, res
   }
 });
 
+// Upload restaurant photos
+router.post('/restaurant-photos', upload.array('files', 10), async (req: Request, res: Response) => {
+  try {
+    if (!req.files || !(req.files instanceof Array)) {
+      res.status(400).json({ error: 'No files uploaded' });
+      return;
+    }
+
+    const results: string[] = [];
+
+    for (const file of req.files) {
+      const filePath = path.resolve(file.path);
+      const result = await cloudinary.uploader.upload(filePath, {
+        folder: 'restaurant_photos',
+        use_filename: true,
+        unique_filename: false,
+      });
+      results.push(result.secure_url);
+      fs.unlinkSync(filePath);
+    }
+
+    res.status(200).json({ urls: results });
+    return;
+  } catch (error) {
+    console.error('Upload error:', error);
+    res.status(500).json({ error: 'File upload failed' });
+    return;
+  }
+});
+
 export default router;

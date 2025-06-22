@@ -81,7 +81,11 @@ router.get('/:id', async (req, res) => {
 router.post('/', authenticate, requireRole('Admin'), async (req, res) => {
   try {
     const restaurant = await prisma.restaurant.create({
-      data: req.body
+      data: {
+        ...req.body,
+        AverageRating: 0,
+        IsClaimed: false
+      }
     });
     res.status(201).json(restaurant);
   } catch (error) {
@@ -129,9 +133,28 @@ router.put('/:id', authenticate, async (req, res) => {
 router.delete('/:id', authenticate, requireRole('Admin'), async (req, res) => {
   try {
     const id = Number(req.params.id);
-    await prisma.restaurant.delete({
-      where: { RestaurantId: id }
+    const restaurant = await prisma.restaurant.findUnique({
+      where: { RestaurantId: id },
+      select: { AddressId: true }
     });
+
+    await prisma.$transaction([
+      prisma.restaurant.update({
+        where: { RestaurantId: id },
+        data: {
+          cuisines: { deleteMany: {} },
+          amenities: { deleteMany: {} },
+          workingHours: { deleteMany: {} },
+          images: { deleteMany: {} },
+        },
+      }),
+      prisma.restaurant.delete({
+        where: { RestaurantId: id },
+      }),
+      prisma.address.delete({
+        where: { AddressId: restaurant?.AddressId }
+      })
+    ]);
     res.status(204).send();
   } catch (error) {
     console.error('Error deleting restaurant:', error);

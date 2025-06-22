@@ -147,27 +147,15 @@ function Restaurants() {
         <FilterSidebar filters={filters} onChange={setFilters} />
       </motion.div>
 
-      <motion.div initial={{ x: 100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.8 }}>
+      <motion.div className="restaurants-right" initial={{ x: 100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.8 }}>
         <div className="settings-bar">
-          <div className="search-group">
-            <div className="search-bar">
-              <input
-                type="text"
-                placeholder={t("labels.searchByKeyword")}
-                value={searchTerm} 
-              onChange={(e) => setSearchTerm(e.target.value)}
-                      />
-              <button type="submit">
-                <Icon path={mdiMagnify} size={1} color="#2f2f2f" />
-              </button>
-            </div>
+          <div className="search-bar">
+            <input placeholder={t("labels.searchByKeyword")} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+            <button><Icon path={mdiMagnify} size={1} color="#2f2f2f" /></button>
           </div>
           <div className="sort-bar">
             <label>{t("sort.label")}</label>
-            <div
-              className={`sort-select ${showSortDropdown ? "open" : ""}`}
-              onClick={() => setShowSortDropdown(!showSortDropdown)}
-            >
+            <div className={`sort-select ${showSortDropdown ? "open" : ""}`} onClick={() => setShowSortDropdown(!showSortDropdown)}>
               {t(`sort.${sortOption}`)} {showSortDropdown ? "▾" : "▸"}
               {showSortDropdown && (
                 <ul className="sort-dropdown">
@@ -182,9 +170,7 @@ function Restaurants() {
 
         <div className="restaurant-cards">
           {filteredRestaurants.length === 0 ? (
-            <p style={{ color: "var(--beige)", marginTop: "2rem", fontSize: "1.1rem" }}>
-              {t("noResults")}
-            </p>
+            <p style={{ color: "var(--beige)", marginTop: "2rem", fontSize: "1.1rem" }}>{t("noResults")}</p>
           ) : (
             filteredRestaurants.map((restaurant) => (
               <RestaurantCard

@@ -18,7 +18,9 @@ import {
     mdiHelpCircle,
     mdiStar,
     mdiStarHalfFull,
-    mdiStarOutline
+    mdiStarOutline,
+    mdiPencil,
+    mdiDelete
 } from "@mdi/js";
 import Icon from "@mdi/react";
 import "../styles/RestaurantCard.css";
@@ -32,7 +34,7 @@ import { useAzureTranslation } from '../hooks/useAzureTranslation';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-function RestaurantCard({ restaurant, isFavorite, onToggleFavorite, searchTerm = "" }) {
+function RestaurantCard({ restaurant, isFavorite, onToggleFavorite, searchTerm = "", adminActions }) {
     const { t } = useTranslation();
     const navigate = useNavigate();
 
@@ -116,15 +118,38 @@ function RestaurantCard({ restaurant, isFavorite, onToggleFavorite, searchTerm =
         <div className="restaurant-card" onClick={() => navigate(`/restaurants/${RestaurantId}`)}>
             <div className="card-image-section">
                 <img src={firstImage} alt={Name} className="restaurant-image" />
-                <div
-                    className="favorite-btn"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        onToggleFavorite(RestaurantId);
-                    }}
-                >
-                    <Icon path={isFavorite ? mdiHeart : mdiHeartOutline} size={1.5} color="var(--red)" />
-                </div>
+                {adminActions ? (
+                    <div className="stacked-buttons">
+                        <div className="favorite-btn" onClick={(e) => e.stopPropagation()}>
+                            <Icon
+                                path={mdiPencil}
+                                size={1.3}
+                                color="var(--red)"
+                                title="Edit"
+                                onClick={() => adminActions.onEdit(RestaurantId)}
+                                style={{ cursor: "pointer" }} />
+                        </div>
+                        <div className="favorite-btn" style={{ marginTop:"4rem" }} onClick={(e) => e.stopPropagation()}>
+                            <Icon
+                                path={mdiDelete}
+                                size={1.3}
+                                color="var(--red)"
+                                title="Delete"
+                                onClick={() => adminActions.onDelete(RestaurantId)}
+                                style={{ cursor: "pointer" }} />
+                        </div>
+                    </div>
+                ) : (
+                    <div
+                        className="favorite-btn"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onToggleFavorite(RestaurantId);
+                        }}
+                    >
+                        <Icon path={isFavorite ? mdiHeart : mdiHeartOutline} size={1.5} color="var(--red)" />
+                    </div>
+                )}
             </div>
 
             <div className="card-content-section">

@@ -15,6 +15,7 @@ import { Country, City } from "country-state-city";
 import "../styles/ManageProfile.css";
 import Title from "../components/Title";
 import { Tooltip } from 'react-tooltip';
+import PhoneNumberPicker from "../components/PhoneNumberPicker";
 
 function ManageProfile() {
     const { t, i18n } = useTranslation();
@@ -286,23 +287,16 @@ function ManageProfile() {
                 <FormInput id="name" label={t("register.name")} value={formData.name} onChange={handleInputChange} name="name" placeholder={t("register.namePlaceholder")} />
                 <FormInput id="surname" label={t("register.surname")} value={formData.surname} onChange={handleInputChange} name="surname" placeholder={t("register.surnamePlaceholder")} />
                 <FormInput id="email" label={t("register.email")} type="email" value={formData.email} onChange={handleInputChange} name="email" placeholder={t("register.emailPlaceholder")} />
-
-                <div className="form-group">
-                    <label htmlFor="phoneNumber" className="text-white">{t("register.phone")}</label>
-                    <PhoneInput
-                        country="mk"
-                        value={formData.phoneNumber}
-                        onChange={(phone, countryData) => {
-                            setFormData(prev => ({ ...prev, phoneNumber: phone, countryCode: `+${countryData.dialCode}` }));
-                        }}
-                        inputProps={{ name: "phone" }}
-                        containerClass="custom-phone-container"
-                        inputClass="custom-phone-input"
-                        buttonClass="custom-phone-button"
-                        dropdownClass="custom-phone-dropdown"
-                    />
-                </div>
-
+                <PhoneNumberPicker
+                    value={{ phoneNumber: formData.phoneNumber }}
+                    onChange={({ phoneNumber, countryCode }) =>
+                        setFormData((prev) => ({
+                            ...prev,
+                            phoneNumber,
+                            countryCode
+                        }))
+                    }
+                />
                 <FormSelect
                     label={t("register.country")}
                     name="countryIso"
@@ -311,7 +305,6 @@ function ManageProfile() {
                     options={[{ value: "", label: t("register.countryPlaceholder") }, ...sortedCountryOptions]}
                     placeholder={t("register.countryPlaceholder")}
                 />
-
                 <FormSelect
                     label={t("register.city")}
                     name="city"

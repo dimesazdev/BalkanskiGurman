@@ -13,7 +13,10 @@ import {
   mdiSilverwareForkKnife,
   mdiHeartOutline,
   mdiAccountCircleOutline,
-  mdiLogout
+  mdiLogout,
+  mdiMessageDraw,
+  mdiAccountGroup,
+  mdiAlertCircleOutline
 } from '@mdi/js';
 import { useAuth } from '../context/AuthContext';
 
@@ -60,22 +63,46 @@ const Navbar = () => {
       className="navbar"
     >
       <div className="navbar-brand">
-        <Link to="/" className="navbar-link">
-          <Icon path={mdiHomeOutline} size={1} className='navbar-icon' />
-          {t('navbar.home')}
-        </Link>
-        <Link to="/restaurants" className="navbar-link">
-          <Icon path={mdiSilverwareForkKnife} size={1} className='navbar-icon' />
-          {t('navbar.restaurants')}
-        </Link>
-        {user && (
-          <Link to="/favorites" className="navbar-link">
-            <Icon path={mdiHeartOutline} size={1} className='navbar-icon' />
-            {t('navbar.favourites')}
-          </Link>
-        )}
-        {user?.role === 'Admin' && (
-          <Link to="/admin/dashboard" className="navbar-link">Admin</Link>
+        {!user?.role || user?.role !== "644f2db4-9bbb-40a2-8b7d-963623c0c64a" ? (
+          <>
+            <Link to="/" className="navbar-link">
+              <Icon path={mdiHomeOutline} size={1} className="navbar-icon" />
+              {t('navbar.home')}
+            </Link>
+            <Link to="/restaurants" className="navbar-link">
+              <Icon path={mdiSilverwareForkKnife} size={1} className="navbar-icon" />
+              {t('navbar.restaurants')}
+            </Link>
+            {user && (
+              <Link to="/favorites" className="navbar-link">
+                <Icon path={mdiHeartOutline} size={1} className="navbar-icon" />
+                {t('navbar.favourites')}
+              </Link>
+            )}
+          </>
+        ) : (
+          <>
+            <Link to="/admin" className="navbar-link">
+              <Icon path={mdiHomeOutline} size={1} className="navbar-icon" />
+              {t('navbar.dashboard')}
+            </Link>
+            <Link to="/admin/restaurants" className="navbar-link">
+              <Icon path={mdiSilverwareForkKnife} size={1} className="navbar-icon" />
+              {t('navbar.restaurants')}
+            </Link>
+            <Link to="/admin/reviews" className="navbar-link">
+              <Icon path={mdiMessageDraw} size={1} className="navbar-icon" />
+              {t('navbar.reviews')}
+            </Link>
+            <Link to="/admin/users" className="navbar-link">
+              <Icon path={mdiAccountGroup} size={1} className="navbar-icon" />
+              {t('navbar.users')}
+            </Link>
+            <Link to="/admin/issues" className="navbar-link">
+              <Icon path={mdiAlertCircleOutline} size={1} className="navbar-icon" />
+              {t('navbar.issues')}
+            </Link>
+          </>
         )}
       </div>
 
@@ -125,7 +152,7 @@ const Navbar = () => {
                 )}
               </Link>
               <div className="navbar-link logout-btn" onClick={handleLogout}>
-                <Icon path={mdiLogout} size={1} className="navbar-icon" title={t('navbar.logout')}/>
+                <Icon path={mdiLogout} size={1} className="navbar-icon" title={t('navbar.logout')} />
               </div>
             </>
           )}
