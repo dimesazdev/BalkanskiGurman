@@ -8,7 +8,10 @@ const Button = ({ children, onClick, type = "button", variant = "beige", classNa
     red: "btn-red",
     beige: "btn-beige",
     "red-outline": "btn-red-outline",
-    "beige-outline": "btn-beige-outline"
+    "beige-outline": "btn-beige-outline",
+    "red-small": "btn-red-small",
+    "yellow-small": "btn-yellow-small",
+    green: "btn-green"
   };
 
   const variantClass = variantMap[variant] || "";

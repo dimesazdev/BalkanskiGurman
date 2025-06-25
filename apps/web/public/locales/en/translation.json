@@ -10,6 +10,20 @@
         "users": "Manage Users",
         "addRestaurant": "Add New Restaurant"
     },
+    "adminReview": {
+        "reviewId": "Review #{{id}}",
+        "rating": "Rating",
+        "forRestaurant": "For restaurant",
+        "location": "Location",
+        "reviewStatus": "Review status",
+        "datePosted": "Date posted",
+        "status": "Status",
+        "actions": "Actions",
+        "approve": "Approve",
+        "reject": "Reject",
+        "userStatus": "User status",
+        "review": "Review"
+    },
     "alerts": {
         "deleteError": "Failed to delete restaurant.",
         "deleted": "Restaurant successfully deleted.",
@@ -21,7 +35,12 @@
         "removeFavoriteConfirm": "Are you sure you want to remove this restaurant from your favorites?",
         "reviewGuidelines": "Please be respectful, avoid offensive language, and write constructive and helpful feedback. Your review must be based on your personal experience and must not include advertisements or vulgarity.",
         "reviewSuccess": "Review posted successfully!",
-        "unsupportedFile": "File type not supported. Only PNG, JPG, JPEG, and image formats are allowed."
+        "unsupportedFile": "File type not supported. Only PNG, JPG, JPEG, and image formats are allowed.",
+        "savingRestaurant": "Saving restaurant... Please wait.",
+        "creatingRestaurant": "Creating restaurant... Please wait.",
+        "restaurantCreated": "Restaurant created successfully.",
+        "restaurantUpdated": "Restaurant updated successfully.",
+        "restaurantError": "An error occurred. Please check the data and try again."
     },
     "amenities": {
         "CARD": "Card payment",
@@ -50,7 +69,12 @@
         "saveChanges": "Save changes",
         "saving": "Saving...",
         "understand": "I understand",
-        "writeReview": "Write a review"
+        "writeReview": "Write a review",
+        "manageReview": "Manage Review",
+        "approve": "Approve",
+        "reject": "Reject",
+        "suspend": "Suspend",
+        "ban": "Ban"
     },
     "checkbox": {
         "agree": "I agree to the review writing guidelines and understand that violations may result in account suspension or ban *"
@@ -172,7 +196,9 @@
         "reviewCount_other": "{{count}} reviews",
         "reviewCount_zero": "No reviews",
         "reviews": "reviews",
-        "searchByKeyword": "Search by keyword:"
+        "searchByKeyword": "Search by keyword:",
+        "by": "by",
+        "reviewedRestaurant": "Reviewed restaurant"
     },
     "login": {
         "continueWithGoogle": "Continue with Google",
@@ -226,6 +252,16 @@
         "restaurantDetails": "Type restaurant details...",
         "restaurantName": "Type restaurant name...",
         "writeReview": "Share your experience..."
+    },
+    "popup": {
+        "statusChangeSuccess": {
+            "approve": "Review successfully approved.",
+            "reject": "Review successfully rejected."
+        },
+        "statusChangeError": {
+            "approve": "Failed to approve review.",
+            "reject": "Failed to reject review."
+        }
     },
     "profile": {
         "accountInfo": "Account info",
@@ -282,9 +318,23 @@
         "lowestRating": "Lowest Rating",
         "priceHigh": "Price (descending)",
         "priceLow": "Price (ascending)",
-        "rating": "Highest Rating"
+        "rating": "Highest Rating",
+        "newest": "Newest",
+        "oldest": "Oldest"
     },
     "titles": {
         "writeReview": "Write a Review"
+    },
+    "reviewStatus": {
+        "all": "All",
+        "approved": "Approved",
+        "pending": "Pending",
+        "rejected": "Rejected",
+        "undefined": "Undefined"
+    },
+    "userStatus": {
+        "active": "Active",
+        "suspended": "Suspended",
+        "banned": "Banned"
     }
 }

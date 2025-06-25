@@ -8,12 +8,14 @@ import ImagePicker from "../../components/ImagePicker";
 import Button from "../../components/Button";
 import Icon from "@mdi/react";
 import { getAmenityIcon } from "../../utils/getAmenityIcon";
-import { City, Country } from "country-state-city";
+import { Country } from "country-state-city";
 import { useTranslation } from "react-i18next";
 import Alert from "../../components/Alert";
 import Popup from "../../components/Popup";
 import { useAuth } from "../../context/AuthContext";
 import FormTextarea from "../../components/FormTextarea";
+import CountryPicker from "../../components/CountryPicker";
+import CityPicker from "../../components/CityPicker";
 import "../../styles/RestaurantForm.css";
 
 const amenityOptions = [
@@ -65,11 +67,8 @@ const RestaurantFormPage = () => {
     const [images, setImages] = useState([]);
     const [popup, setPopup] = useState(null);
     const [showAlert, setShowAlert] = useState(false);
-    const [countryList, setCountryList] = useState([]);
-    const [cityList, setCityList] = useState([]);
 
     useEffect(() => {
-        setCountryList(Country.getAllCountries());
         fetch("http://localhost:3001/cuisines")
             .then(res => res.json())
             .then(data => {
@@ -133,32 +132,33 @@ const RestaurantFormPage = () => {
         }
     }, [id, isEdit]);
 
-    useEffect(() => {
-        if (formData.countryIso) {
-            const cities = City.getCitiesOfCountry(formData.countryIso) || [];
-            setCityList(cities);
-        }
-    }, [formData.countryIso]);
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleCountryChange = (e) => {
-        const isoCode = e.target.value;
-        const selected = countryList.find(c => c.isoCode === isoCode);
-        setFormData(prev => ({
-            ...prev,
-            countryIso: isoCode,
-            country: selected?.name || "",
-            city: ""
-        }));
-        setCityList(City.getCitiesOfCountry(isoCode) || []);
-    };
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 850);
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 850);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     const handlePhoneChange = ({ phoneNumber, countryCode }) => {
         setFormData(prev => ({ ...prev, phoneNumber, countryCode }));
+    };
+
+    const handleCountryChange = ({ countryIso, countryName }) => {
+        setFormData(prev => ({
+            ...prev,
+            countryIso,
+            country: countryName,
+            city: ""
+        }));
+    };
+
+    const handleCityChange = (city) => {
+        setFormData(prev => ({ ...prev, city }));
     };
 
     const handleAmenityToggle = (code) => {
@@ -180,16 +180,15 @@ const RestaurantFormPage = () => {
         const imageFiles = images.filter(img => img.file);
         if (imageFiles.length === 0) return [];
 
-        const formData = new FormData();
-        imageFiles.forEach(img => formData.append('files', img.file));
+        const formDataObj = new FormData();
+        imageFiles.forEach(img => formDataObj.append('files', img.file));
 
         const res = await fetch('http://localhost:3001/upload/restaurant-photos', {
             method: 'POST',
-            body: formData
+            body: formDataObj
         });
 
         if (!res.ok) throw new Error('Failed to upload images');
-
         const data = await res.json();
         return data.urls;
     };
@@ -219,9 +218,7 @@ const RestaurantFormPage = () => {
         }));
 
         const cuisineData = formData.cuisine
-            ? [{
-                cuisine: { connect: { CuisineId: Number(formData.cuisine) } }
-            }]
+            ? [{ cuisine: { connect: { CuisineId: Number(formData.cuisine) } } }]
             : [];
 
         const amenityData = formData.amenities.map(code => ({
@@ -229,7 +226,6 @@ const RestaurantFormPage = () => {
         }));
 
         const imageUrls = await uploadImages();
-
         const imageData = imageUrls.map(url => ({ Url: url }));
 
         try {
@@ -240,12 +236,10 @@ const RestaurantFormPage = () => {
                 PhoneNumber: phoneNumberToSend,
                 Website: formData.website,
                 MenuUrl: formData.menuUrl,
-
                 cuisines: relationWithOptionalDelete(cuisineData),
                 amenities: relationWithOptionalDelete(amenityData),
                 workingHours: relationWithOptionalDelete(workingHourData),
                 images: relationWithOptionalDelete(imageData),
-
                 address: isEdit
                     ? {
                         update: {
@@ -365,114 +359,201 @@ const RestaurantFormPage = () => {
                 <div className="form-grid two-col">
                     <FormInput id="street" label={t("form.street")} value={formData.street} onChange={handleChange} placeholder="e.g. Bulevar Partizanski Odredi 23" />
                     <FormInput id="postalCode" label={t("form.postalCode")} value={formData.postalCode} onChange={handleChange} placeholder="e.g. 1000" />
-                    <FormSelect
-                        name="countryIso"
-                        label={t("form.country")}
+                    <CountryPicker
                         value={formData.countryIso}
                         onChange={handleCountryChange}
-                        options={countryList.map(c => ({ value: c.isoCode, label: c.name }))}
-                        placeholder={t("form.selectCountry")}
+                        required
                     />
-                    <FormSelect
-                        name="city"
-                        label={t("form.city")}
+                    <CityPicker
+                        countryIso={formData.countryIso}
                         value={formData.city}
-                        onChange={handleChange}
-                        options={cityList.map(c => ({ value: c.name, label: c.name }))}
-                        placeholder={t("form.selectCity")}
+                        onChange={handleCityChange}
+                        disabled={!formData.countryIso}
+                        required
                     />
                 </div>
 
                 {/* Section 4: Working Hours */}
                 <Title>{t("form.workingHours")}</Title>
-                <div className="working-hours-grid">
-                    {/* Header row aligned with grid */}
-                    <div className="working-hours-header">
-                        <div></div> {/* empty space for day label */}
-                        <label>{t("form.openTime")}</label>
-                        <label>{t("form.closeTime")}</label>
-                        <div></div> {/* empty space for checkbox */}
+                {isMobile ? (
+                    <div className="wh-mobile-container">
+                        {[...Array(7)].map((_, i) => {
+                            const entry = formData.workingHours[i] || {};
+                            const isClosed = entry.IsClosed;
+
+                            return (
+                                <div className="working-hours-mobile" style={{ opacity: isClosed ? 0.5 : 1 }}>
+                                    <div className="day-header">
+                                        <label>{t(`days.${i + 1}`)}</label>
+                                    </div>
+
+                                    <div className="time-block">
+                                        <label>{t("form.openTime")}</label>
+                                        <div className="time-selects">
+                                            <FormSelect
+                                                name="OpenHour"
+                                                value={entry.OpenHour}
+                                                onChange={(e) => {
+                                                    const val = e.target.value === "" ? "" : Number(e.target.value);
+                                                    handleWorkingHourChange(i, "OpenHour", val);
+                                                }}
+                                                options={Array.from({ length: 24 }, (_, i) => ({ value: i, label: i.toString().padStart(2, "0") }))}
+                                                disabled={isClosed}
+                                                placeholder="hh"
+                                            />
+                                            <FormSelect
+                                                name="OpenMinute"
+                                                value={entry.OpenMinute}
+                                                onChange={(e) => {
+                                                    const val = e.target.value === "" ? "" : Number(e.target.value);
+                                                    handleWorkingHourChange(i, "OpenMinute", val);
+                                                }} options={Array.from({ length: 60 }, (_, i) => ({ value: i, label: i.toString().padStart(2, "0") }))}
+                                                disabled={isClosed}
+                                                placeholder="mm"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="time-block">
+                                        <label>{t("form.closeTime")}</label>
+                                        <div className="time-selects">
+                                            <FormSelect
+                                                name="CloseHour"
+                                                value={entry.CloseHour}
+                                                onChange={(e) => {
+                                                    const val = e.target.value === "" ? "" : Number(e.target.value);
+                                                    handleWorkingHourChange(i, "CloseHour", val);
+                                                }} options={Array.from({ length: 24 }, (_, i) => ({ value: i, label: i.toString().padStart(2, "0") }))}
+                                                disabled={isClosed}
+                                                placeholder="hh"
+                                            />
+                                            <FormSelect
+                                                name="CloseMinute"
+                                                value={entry.CloseMinute}
+                                                onChange={(e) => {
+                                                    const val = e.target.value === "" ? "" : Number(e.target.value);
+                                                    handleWorkingHourChange(i, "CloseMinute", val);
+                                                }}
+                                                options={Array.from({ length: 60 }, (_, i) => ({ value: i, label: i.toString().padStart(2, "0") }))}
+                                                disabled={isClosed}
+                                                placeholder="mm"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <label className="closed-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            checked={isClosed}
+                                            onChange={() => {
+                                                const updated = [...formData.workingHours];
+                                                updated[i] = {
+                                                    ...updated[i],
+                                                    IsClosed: !isClosed,
+                                                    OpenHour: "",
+                                                    OpenMinute: "",
+                                                    CloseHour: "",
+                                                    CloseMinute: ""
+                                                };
+                                                setFormData(prev => ({ ...prev, workingHours: updated }));
+                                            }}
+                                        />
+                                        {t("form.closed")}
+                                    </label>
+                                </div>
+                            );
+                        })}
                     </div>
+                ) : (
+                    <div className="working-hours-grid">
+                        {/* Header row aligned with grid */}
+                        <div className="working-hours-header">
+                            <div></div> {/* empty space for day label */}
+                            <label>{t("form.openTime")}</label>
+                            <label>{t("form.closeTime")}</label>
+                            <div></div> {/* empty space for checkbox */}
+                        </div>
 
-                    {[...Array(7)].map((_, i) => {
-                        const entry = formData.workingHours[i] || {};
-                        const isClosed = entry.IsClosed;
+                        {[...Array(7)].map((_, i) => {
+                            const entry = formData.workingHours[i] || {};
+                            const isClosed = entry.IsClosed;
 
-                        return (
-                            <div className="day-grid-row" key={i}>
-                                <label>{t(`days.${i + 1}`)}</label>
+                            return (
+                                <div className="day-grid-row" key={i}>
+                                    <label>{t(`days.${i + 1}`)}</label>
 
-                                <div className="time-selects">
-                                    <FormSelect
-                                        name="OpenHour"
-                                        value={entry.OpenHour}
-                                        onChange={(e) => {
-                                            const val = e.target.value === "" ? "" : Number(e.target.value);
-                                            handleWorkingHourChange(i, "OpenHour", val);
-                                        }}
-                                        options={Array.from({ length: 24 }, (_, i) => ({ value: i, label: i.toString().padStart(2, "0") }))}
-                                        disabled={isClosed}
-                                        placeholder="hh"
-                                    />
-                                    <FormSelect
-                                        name="OpenMinute"
-                                        value={entry.OpenMinute}
-                                        onChange={(e) => {
-                                            const val = e.target.value === "" ? "" : Number(e.target.value);
-                                            handleWorkingHourChange(i, "OpenMinute", val);
-                                        }} options={Array.from({ length: 60 }, (_, i) => ({ value: i, label: i.toString().padStart(2, "0") }))}
-                                        disabled={isClosed}
-                                        placeholder="mm"
-                                    />
+                                    <div className="time-selects">
+                                        <FormSelect
+                                            name="OpenHour"
+                                            value={entry.OpenHour}
+                                            onChange={(e) => {
+                                                const val = e.target.value === "" ? "" : Number(e.target.value);
+                                                handleWorkingHourChange(i, "OpenHour", val);
+                                            }}
+                                            options={Array.from({ length: 24 }, (_, i) => ({ value: i, label: i.toString().padStart(2, "0") }))}
+                                            disabled={isClosed}
+                                            placeholder="hh"
+                                        />
+                                        <FormSelect
+                                            name="OpenMinute"
+                                            value={entry.OpenMinute}
+                                            onChange={(e) => {
+                                                const val = e.target.value === "" ? "" : Number(e.target.value);
+                                                handleWorkingHourChange(i, "OpenMinute", val);
+                                            }} options={Array.from({ length: 60 }, (_, i) => ({ value: i, label: i.toString().padStart(2, "0") }))}
+                                            disabled={isClosed}
+                                            placeholder="mm"
+                                        />
+                                    </div>
+
+                                    <div className="time-selects">
+                                        <FormSelect
+                                            name="CloseHour"
+                                            value={entry.CloseHour}
+                                            onChange={(e) => {
+                                                const val = e.target.value === "" ? "" : Number(e.target.value);
+                                                handleWorkingHourChange(i, "CloseHour", val);
+                                            }} options={Array.from({ length: 24 }, (_, i) => ({ value: i, label: i.toString().padStart(2, "0") }))}
+                                            disabled={isClosed}
+                                            placeholder="hh"
+                                        />
+                                        <FormSelect
+                                            name="CloseMinute"
+                                            value={entry.CloseMinute}
+                                            onChange={(e) => {
+                                                const val = e.target.value === "" ? "" : Number(e.target.value);
+                                                handleWorkingHourChange(i, "CloseMinute", val);
+                                            }}
+                                            options={Array.from({ length: 60 }, (_, i) => ({ value: i, label: i.toString().padStart(2, "0") }))}
+                                            disabled={isClosed}
+                                            placeholder="mm"
+                                        />
+                                    </div>
+
+                                    <label className="closed-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            checked={isClosed}
+                                            onChange={() => {
+                                                const updated = [...formData.workingHours];
+                                                updated[i] = {
+                                                    ...updated[i],
+                                                    IsClosed: !isClosed,
+                                                    OpenHour: "",
+                                                    OpenMinute: "",
+                                                    CloseHour: "",
+                                                    CloseMinute: ""
+                                                };
+                                                setFormData(prev => ({ ...prev, workingHours: updated }));
+                                            }}
+                                        />
+                                        {t("form.closed")}
+                                    </label>
                                 </div>
-
-                                <div className="time-selects">
-                                    <FormSelect
-                                        name="CloseHour"
-                                        value={entry.CloseHour}
-                                        onChange={(e) => {
-                                            const val = e.target.value === "" ? "" : Number(e.target.value);
-                                            handleWorkingHourChange(i, "CloseHour", val);
-                                        }} options={Array.from({ length: 24 }, (_, i) => ({ value: i, label: i.toString().padStart(2, "0") }))}
-                                        disabled={isClosed}
-                                        placeholder="hh"
-                                    />
-                                    <FormSelect
-                                        name="CloseMinute"
-                                        value={entry.CloseMinute}
-                                        onChange={(e) => {
-                                            const val = e.target.value === "" ? "" : Number(e.target.value);
-                                            handleWorkingHourChange(i, "CloseMinute", val);
-                                        }}
-                                        options={Array.from({ length: 60 }, (_, i) => ({ value: i, label: i.toString().padStart(2, "0") }))}
-                                        disabled={isClosed}
-                                        placeholder="mm"
-                                    />
-                                </div>
-
-                                <label className="closed-checkbox">
-                                    <input
-                                        type="checkbox"
-                                        checked={isClosed}
-                                        onChange={() => {
-                                            const updated = [...formData.workingHours];
-                                            updated[i] = {
-                                                ...updated[i],
-                                                IsClosed: !isClosed,
-                                                OpenHour: "",
-                                                OpenMinute: "",
-                                                CloseHour: "",
-                                                CloseMinute: ""
-                                            };
-                                            setFormData(prev => ({ ...prev, workingHours: updated }));
-                                        }}
-                                    />
-                                    {t("form.closed")}
-                                </label>
-                            </div>
-                        );
-                    })}
-                </div>
+                            );
+                        })}
+                    </div>
+                )}
 
                 {/* Section 5: Amenities */}
                 <Title>{t("form.amenities")}</Title>

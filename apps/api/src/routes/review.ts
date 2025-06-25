@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { PrismaClient } from '@prisma/client';
 import authenticate from '../middleware/authenticate';
+import requireRole from "../middleware/requireRole";
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -23,6 +24,50 @@ router.get('/:id', async (req, res) => {
   } catch (error) {
     console.error('Error fetching review:', error);
     res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// GET all reviews
+router.get('/', authenticate, requireRole("Admin"), async (req, res) => {
+  try {
+    const reviews = await prisma.review.findMany({
+      include: {
+        user: {
+          select: {
+            UserId: true,
+            Name: true,
+            Surname: true,
+            City: true,
+            Country: true,
+            ProfilePictureUrl: true,
+            StatusId: true,
+            status: true,
+            _count: { select: { reviews: true } }
+          }
+        },
+        restaurant: {
+          select: {
+            Name: true,
+            address: {
+              select: {
+                City: true,
+                Country: true
+              }
+            },
+            Details: true
+          }
+        },
+        status: true
+      },
+      orderBy: {
+        CreatedAt: 'desc'
+      }
+    });
+
+    res.json(reviews);
+  } catch (error) {
+    console.error("Failed to fetch reviews:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -68,6 +113,38 @@ router.put('/:id', authenticate, async (req, res) => {
   } catch (error) {
     console.error('Error updating review:', error);
     res.status(400).json({ error: 'Update failed' });
+  }
+});
+
+// PUT Approve/Reject review (Admin action)
+router.put('/:id/status', authenticate, requireRole("Admin"), async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const action = req.body.action as "approve" | "reject";
+
+    const statusMap: Record<"approve" | "reject", number> = {
+      approve: 5,
+      reject: 6,
+    };
+
+    if (!(action in statusMap)) {
+      res.status(400).json({ error: "Invalid action" });
+      return;
+    }
+
+    const updated = await prisma.review.update({
+      where: { ReviewId: id },
+      data: {
+        StatusId: statusMap[action],
+        UpdatedAt: new Date(),
+      },
+      include: { status: true }
+    });
+
+    res.json(updated);
+  } catch (err) {
+    console.error("Status update failed:", err);
+    res.status(500).json({ error: "Failed to update review status" });
   }
 });
 

@@ -129,7 +129,7 @@ function RestaurantCard({ restaurant, isFavorite, onToggleFavorite, searchTerm =
                                 onClick={() => adminActions.onEdit(RestaurantId)}
                                 style={{ cursor: "pointer" }} />
                         </div>
-                        <div className="favorite-btn" style={{ marginTop:"4rem" }} onClick={(e) => e.stopPropagation()}>
+                        <div className="favorite-btn" style={{ marginTop: "4rem" }} onClick={(e) => e.stopPropagation()}>
                             <Icon
                                 path={mdiDelete}
                                 size={1.3}
@@ -196,9 +196,11 @@ function RestaurantCard({ restaurant, isFavorite, onToggleFavorite, searchTerm =
                 </div>
 
                 <div className="amenities-line">
-                    {amenities.map(a => (
-                        <Icon key={a.Code} path={getAmenityIcon(a.Code)} size={1} title={a.Name} />
-                    ))}
+                    {[...amenities]
+                        .sort((a, b) => t(`amenities.${a.Code}`).localeCompare(t(`amenities.${b.Code}`)))
+                        .map(a => (
+                            <Icon key={a.Code} path={getAmenityIcon(a.Code)} size={1} title={t(`amenities.${a.Code}`)} />
+                        ))}
                 </div>
             </div>
         </div>

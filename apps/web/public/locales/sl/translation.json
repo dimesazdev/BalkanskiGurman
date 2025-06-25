@@ -10,6 +10,20 @@
         "reviews": "Upravljanje recenzij",
         "users": "Upravljanje uporabnikov"
     },
+    "adminReview": {
+        "reviewId": "Recenzija št. {{id}}",
+        "rating": "Ocena",
+        "forRestaurant": "Za restavracijo",
+        "location": "Lokacija",
+        "reviewStatus": "Status recenzije",
+        "datePosted": "Datum objave",
+        "status": "Status",
+        "actions": "Dejanja",
+        "approve": "Odobri",
+        "reject": "Zavrni",
+        "userStatus": "Status uporabnika",
+        "review": "Recenzija"
+    },
     "alerts": {
         "deleteError": "Brisanje restavracije ni uspelo.",
         "deleted": "Restavracija je bila uspešno izbrisana.",
@@ -21,7 +35,12 @@
         "removeFavoriteConfirm": "Ali ste prepričani, da želite odstraniti to restavracijo iz priljubljenih?",
         "reviewGuidelines": "Bodite spoštljivi, izogibajte se žaljivemu jeziku ter napišite konstruktivne in koristne komentarje. Vaše mnenje mora temeljiti na vaši osebni izkušnji in ne sme vsebovati oglasov ali vulgarnosti.",
         "reviewSuccess": "Recenzija uspešno oddana!",
-        "unsupportedFile": "Vrsta datoteke ni podprta. Dovoljene so samo datoteke PNG, JPG, JPEG in slikovni formati."
+        "unsupportedFile": "Vrsta datoteke ni podprta. Dovoljene so samo datoteke PNG, JPG, JPEG in slikovni formati.",
+        "savingRestaurant": "Shranjevanje restavracije... Prosimo, počakajte.",
+        "creatingRestaurant": "Ustvarjanje restavracije... Prosimo, počakajte.",
+        "restaurantCreated": "Restavracija je bila uspešno ustvarjena.",
+        "restaurantUpdated": "Restavracija je bila uspešno posodobljena.",
+        "restaurantError": "Prišlo je do napake. Preverite podatke in poskusite znova."
     },
     "amenities": {
         "CARD": "Plačilo s kartico",
@@ -50,7 +69,12 @@
         "saveChanges": "Shrani spremembe",
         "saving": "Shranjujem...",
         "understand": "Razumem",
-        "writeReview": "Napiši recenzijo"
+        "writeReview": "Napiši recenzijo",
+        "manageReview": "Uredi recenzijo",
+        "approve": "Odobri",
+        "reject": "Zavrni",
+        "suspend": "Suspendiraj",
+        "ban": "Blokiraj"
     },
     "checkbox": {
         "agree": "Strinjam se s smernicami za pisanje recenzije in razumem, da lahko kršitve vodijo do začasne ali trajne prepovedi mojega uporabniškega računa *"
@@ -166,7 +190,9 @@
         "reviews": "recenzij",
         "searchByKeyword": "Išči po ključni besedi:",
         "writeReview": "Napiši recenzijo",
-        "workingHours": "Odpiralni čas"
+        "workingHours": "Odpiralni čas",
+        "by": "od",
+        "reviewedRestaurant": "Ocenjena restavracija"
     },
     "login": {
         "continueWithGoogle": "Nadaljuj z Google",
@@ -220,6 +246,16 @@
         "restaurantName": "Napiši ime restavracije...",
         "writeReview": "Delite svojo izkušnjo..."
     },
+    "popup": {
+        "statusChangeSuccess": {
+            "approve": "Recenzija je bila uspešno odobrena.",
+            "reject": "Recenzija je bila uspešno zavrnjena."
+        },
+        "statusChangeError": {
+            "approve": "Ni uspelo odobriti recenzije.",
+            "reject": "Ni uspelo zavrniti recenzije."
+        }
+    },
     "profile": {
         "accountInfo": "Podatki o računu",
         "changePassword": "Spremeni geslo"
@@ -272,9 +308,23 @@
         "lowestRating": "Najnižja ocena",
         "priceHigh": "Cena (padajoče)",
         "priceLow": "Cena (naraščajoče)",
-        "rating": "Najvišja ocena"
+        "rating": "Najvišja ocena",
+        "newest": "Najnovejše",
+        "oldest": "Najstarejše"
     },
     "titles": {
         "writeReview": "Napiši recenzijo"
+    },
+    "reviewStatus": {
+        "all": "Vse",
+        "approved": "Odobreno",
+        "pending": "V pregledu",
+        "rejected": "Zavrnjeno",
+        "undefined": "Nedefiniran"
+    },
+    "userStatus": {
+        "active": "Aktiven",
+        "suspended": "Suspendiran",
+        "banned": "Blokiran"
     }
 }

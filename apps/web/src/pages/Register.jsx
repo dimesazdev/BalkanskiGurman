@@ -6,11 +6,12 @@ import "../styles/Login.css";
 import logo from "../../public/dark-logo.svg";
 import { Link } from "react-router-dom";
 import FormInput from "../components/FormInput";
-import FormSelect from "../components/FormSelect";
 import Button from "../components/Button";
 import { useTranslation } from "react-i18next";
 import i18n from "../i18n";
 import PhoneNumberPicker from "../components/PhoneNumberPicker";
+import CountryPicker from "../components/CountryPicker";
+import CityPicker from "../components/CityPicker";
 
 const Register = () => {
   const { t } = useTranslation();
@@ -26,81 +27,6 @@ const Register = () => {
     retypePassword: "",
     countryCode: "+389",
   });
-
-  const [countryList, setCountryList] = useState([]);
-  const [cityList, setCityList] = useState([]);
-  const [allTranslatedCities, setAllTranslatedCities] = useState([]);
-
-  useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const res = await fetch("/translatedCountries.json");
-        const data = await res.json();
-        const lang = i18n.language || "en";
-        const translated = data.map((c) => ({
-          label: c.translations[lang] || c.name,
-          value: c.isoCode,
-          originalName: c.name,
-        }));
-        setCountryList(translated.sort((a, b) => a.label.localeCompare(b.label)));
-      } catch (err) {
-        console.error("Failed to load country list:", err);
-      }
-    };
-
-    const loadCityData = async () => {
-      try {
-        const res = await fetch("/translatedCities.json");
-        const data = await res.json();
-        setAllTranslatedCities(data);
-      } catch (err) {
-        console.error("Failed to load city translations:", err);
-      }
-    };
-
-    fetchCountries();
-    loadCityData();
-  }, [i18n.language]);
-
-  useEffect(() => {
-    if (formData.countryIso) {
-      handleCountryChange({ target: { value: formData.countryIso } });
-    }
-  }, [i18n.language]);
-
-  const countryOptions = countryList.map((c) => ({
-    label: c.label,
-    value: c.value,
-  }));
-
-  const cityOptions = cityList;
-
-  const handleCountryChange = (e) => {
-    const isoCode = e.target.value;
-    const selectedCountry = countryList.find((c) => c.value === isoCode);
-    const lang = i18n.language || "en";
-
-    setFormData((prev) => ({
-      ...prev,
-      countryIso: isoCode,
-      country: selectedCountry?.originalName || "",
-      city: "",
-    }));
-
-    const translated = allTranslatedCities
-      .filter((c) => c.countryCode === isoCode)
-      .map((c) => ({
-        label: c.translations[lang] || c.name,
-        value: c.name,
-      }))
-      .sort((a, b) => a.label.localeCompare(b.label));
-
-    setCityList(translated);
-  };
-
-  const handleCityChange = (e) => {
-    setFormData((prev) => ({ ...prev, city: e.target.value }));
-  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -160,7 +86,18 @@ const Register = () => {
               <div className="form-column">
                 <FormInput id="name" label={t("register.name") + " *"} name="name" type="text" value={formData.name} onChange={handleInputChange} placeholder={t("register.namePlaceholder")} />
                 <FormInput id="email" label={t("register.email") + " *"} name="email" type="email" value={formData.email} onChange={handleInputChange} placeholder={t("register.emailPlaceholder")} />
-                <FormSelect label={t("register.country") + " *"} name="countryIso" value={formData.countryIso} onChange={handleCountryChange} options={[{ value: "", label: t("register.countryPlaceholder") }, ...countryOptions]} placeholder={t("register.countryPlaceholder")} />
+                <CountryPicker
+                  value={formData.countryIso}
+                  onChange={({ countryIso, countryName }) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      countryIso,
+                      country: countryName,
+                      city: "",
+                    }))
+                  }
+                  required
+                />
                 <FormInput id="password" label={t("register.password") + " *"} name="password" type="password" value={formData.password} onChange={handleInputChange} placeholder={t("register.passwordPlaceholder")} />
               </div>
 
@@ -176,7 +113,18 @@ const Register = () => {
                     }))
                   }
                 />
-                <FormSelect label={t("register.city") + " *"} name="city" value={formData.city} onChange={handleCityChange} options={formData.country ? cityOptions.length > 0 ? [{ label: t("register.cityPlaceholder"), value: "" }, ...cityOptions] : [{ label: t("register.noCities"), value: "" }] : []} placeholder={t("register.cityPlaceholder")} required disabled={!formData.country} />
+                <CityPicker
+                  countryIso={formData.countryIso}
+                  value={formData.city}
+                  onChange={(city) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      city,
+                    }))
+                  }
+                  required
+                  disabled={!formData.countryIso}
+                />
                 <FormInput id="retypePassword" label={t("register.retypePassword") + " *"} name="retypePassword" type="password" value={formData.retypePassword} onChange={handleInputChange} placeholder={t("register.retypePasswordPlaceholder")} />
               </div>
             </div>

@@ -12,6 +12,7 @@ import RequireAdmin from './context/RequireAdmin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminRestaurants from './pages/admin/AdminRestaurants';
 import RestaurantFormPage from './pages/admin/RestaurantFormPage';
+import AdminReviews from './pages/admin/AdminReviews';
 
 const App = () => (
   <Router>
@@ -42,6 +43,11 @@ const App = () => (
         <Route path="/admin/restaurants/edit/:id" element={
           <RequireAdmin>
             <RestaurantFormPage />
+          </RequireAdmin>
+        } />
+        <Route path="/admin/reviews" element={
+          <RequireAdmin>
+            <AdminReviews />
           </RequireAdmin>
         } />
       </Route>

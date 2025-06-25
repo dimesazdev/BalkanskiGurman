@@ -77,4 +77,26 @@ router.delete('/:id', authenticate, requireRole('Admin'), async (req, res) => {
   }
 });
 
+// PUT suspend/ban user (Admin action)
+router.put('/:id/status', authenticate, requireRole("Admin"), async (req, res) => {
+  try {
+    const { StatusId } = req.body;
+
+    if (![1, 2, 3].includes(StatusId)) {
+      res.status(400).json({ error: "Invalid status for user" });
+      return;
+    }
+
+    const updated = await prisma.user.update({
+      where: { UserId: req.params.id },
+      data: { StatusId }
+    });
+
+    res.json(updated);
+  } catch (error) {
+    console.error("Error updating user status:", error);
+    res.status(400).json({ error: "Failed to update user status" });
+  }
+});
+
 export default router;

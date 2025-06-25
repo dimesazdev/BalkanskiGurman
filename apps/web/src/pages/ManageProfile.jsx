@@ -3,11 +3,9 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import FormInput from "../components/FormInput";
-import FormSelect from "../components/FormSelect";
 import Button from "../components/Button";
 import Alert from "../components/Alert";
 import Popup from "../components/Popup";
-import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import Icon from "@mdi/react";
 import { mdiMedal, mdiDiamondStone } from "@mdi/js";
@@ -16,6 +14,8 @@ import "../styles/ManageProfile.css";
 import Title from "../components/Title";
 import { Tooltip } from 'react-tooltip';
 import PhoneNumberPicker from "../components/PhoneNumberPicker";
+import CountryPicker from "../components/CountryPicker";
+import CityPicker from "../components/CityPicker";
 
 function ManageProfile() {
     const { t, i18n } = useTranslation();
@@ -35,43 +35,9 @@ function ManageProfile() {
 
     const [photoPreview, setPhotoPreview] = useState(null);
     const [profilePhoto, setProfilePhoto] = useState(null);
-    const [countryList, setCountryList] = useState([]);
-    const [cityList, setCityList] = useState([]);
-    const [translatedCountries, setTranslatedCountries] = useState([]);
-    const [translatedCities, setTranslatedCities] = useState([]);
     const [isSaving, setIsSaving] = useState(false);
     const [popup, setPopup] = useState(null);
     const [showAlert, setShowAlert] = useState(false);
-
-    useEffect(() => {
-        setCountryList(Country.getAllCountries());
-    }, []);
-
-    useEffect(() => {
-        fetch("/translatedCountries.json")
-            .then(res => res.json())
-            .then(setTranslatedCountries)
-            .catch(console.error);
-
-        fetch("/translatedCities.json")
-            .then(res => res.json())
-            .then(setTranslatedCities)
-            .catch(console.error);
-    }, [i18n.language]);
-
-    const getTranslatedCountry = (countryName) => {
-        const match = translatedCountries.find(
-            c => c.name.toLowerCase() === countryName?.toLowerCase()
-        );
-        return match?.translations?.[i18n.language] || countryName;
-    };
-
-    const getTranslatedCity = (cityName, countryCode) => {
-        const match = translatedCities.find(
-            c => c.name.toLowerCase() === cityName?.toLowerCase() && c.countryCode === countryCode
-        );
-        return match?.translations?.[i18n.language] || cityName;
-    };
 
     const fetchProfileData = async () => {
         try {
@@ -83,8 +49,8 @@ function ManageProfile() {
 
             setUserData({ ...data, reviewCount: data._count?.reviews || 0 });
 
-            const matchedCountry = countryList.find(c => c.name === data.Country);
-            const isoCode = matchedCountry?.isoCode || "";
+            const matched = Country.getAllCountries().find(c => c.name === data.Country);
+            const isoCode = matched?.isoCode || "";
 
             setFormData({
                 name: data.Name,
@@ -97,10 +63,6 @@ function ManageProfile() {
                 countryCode: ""
             });
 
-            if (isoCode) {
-                setCityList(City.getCitiesOfCountry(isoCode) || []);
-            }
-
             setPhotoPreview(data.ProfilePictureUrl || null);
         } catch (err) {
             setPopup({ message: t("manageProfile.fetchError"), variant: "error" });
@@ -108,24 +70,11 @@ function ManageProfile() {
     };
 
     useEffect(() => {
-        if (user?.token && countryList.length > 0) {
+        if (user?.token) {
             fetchProfileData();
         }
-    }, [user, countryList]);
+    }, [user]);
 
-    const handleCountryChange = (e) => {
-        const isoCode = e.target.value;
-        const selectedCountry = countryList.find(c => c.isoCode === isoCode);
-        setFormData(prev => ({
-            ...prev,
-            countryIso: isoCode,
-            country: selectedCountry?.name || "",
-            city: ""
-        }));
-        setCityList(City.getCitiesOfCountry(isoCode) || []);
-    };
-
-    const handleCityChange = (e) => setFormData(prev => ({ ...prev, city: e.target.value }));
     const handleInputChange = (e) => setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
 
     const handlePhotoChange = (e) => {
@@ -160,7 +109,7 @@ function ManageProfile() {
                 setPopup({ message: t("manageProfile.photoUploadSuccess"), variant: "success" });
             }
 
-            const selectedCountry = countryList.find(c => c.isoCode === formData.countryIso);
+            const selectedCountry = Country.getAllCountries().find(c => c.isoCode === formData.countryIso);
             const response = await fetch("http://localhost:3001/auth/me", {
                 method: "PUT",
                 headers: {
@@ -192,20 +141,6 @@ function ManageProfile() {
         await fetchProfileData();
         setIsSaving(false);
     };
-
-    const sortedCountryOptions = [...countryList]
-        .map(c => ({
-            label: getTranslatedCountry(c.name),
-            value: c.isoCode
-        }))
-        .sort((a, b) => a.label.localeCompare(b.label));
-
-    const sortedCityOptions = [...cityList]
-        .map(c => ({
-            label: getTranslatedCity(c.name, formData.countryIso),
-            value: c.name
-        }))
-        .sort((a, b) => a.label.localeCompare(b.label));
 
     if (!user || !user.token) return <div>{t("manageProfile.loadingUser")}</div>;
 
@@ -297,22 +232,22 @@ function ManageProfile() {
                         }))
                     }
                 />
-                <FormSelect
-                    label={t("register.country")}
-                    name="countryIso"
+                <CountryPicker
                     value={formData.countryIso}
-                    onChange={handleCountryChange}
-                    options={[{ value: "", label: t("register.countryPlaceholder") }, ...sortedCountryOptions]}
-                    placeholder={t("register.countryPlaceholder")}
+                    onChange={({ countryIso, countryName }) =>
+                        setFormData((prev) => ({
+                            ...prev,
+                            countryIso,
+                            country: countryName,
+                            city: "", // reset city
+                        }))
+                    }
                 />
-                <FormSelect
-                    label={t("register.city")}
-                    name="city"
+                <CityPicker
+                    countryIso={formData.countryIso}
                     value={formData.city}
-                    onChange={handleCityChange}
-                    options={formData.country ? (sortedCityOptions.length > 0 ? [{ label: t("register.cityPlaceholder"), value: "" }, ...sortedCityOptions] : [{ label: t("register.noCities"), value: "" }]) : []}
-                    placeholder={t("register.cityPlaceholder")}
-                    disabled={!formData.country}
+                    onChange={(city) => setFormData((prev) => ({ ...prev, city }))}
+                    disabled={!formData.countryIso}
                 />
             </div>
 

@@ -1,0 +1,95 @@
+.admin-reviews-page {
+    padding: 2rem;
+
+    .review-header-row {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .top-row,
+    .bottom-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .review-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .sort-bar,
+    .review-count-label {
+        width: fit-content;
+    }
+
+    .search-bar {
+        max-width: 300px;
+    }
+
+    .status-filter {
+        padding: 6px 14px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        font-family: 'Cormorant Garamond', serif;
+        border: none;
+        cursor: pointer;
+        background-color: #eee;
+        color: #333;
+        transition: all 0.2s ease;
+    }
+
+    .status-filter.pending {
+        background-color: #ffe0b2;
+        color: #ef6c00;
+    }
+
+    .status-filter.approved {
+        background-color: #c8e6c9;
+        color: #2e7d32;
+    }
+
+    .status-filter.rejected {
+        background-color: #ffcdd2;
+        color: #c62828;
+    }
+
+    .status-filter.active.pending {
+        background-color: #ef6c00;
+        color: #ffe0b2;
+    }
+
+    .status-filter.active.approved {
+        background-color: #2e7d32;
+        color: #c8e6c9;
+    }
+
+    .status-filter.active.rejected {
+        background-color: #c62828;
+        color: #ffcdd2;
+    }
+
+    .status-filter.active {
+        font-weight: 700;
+    }
+
+    .reviews-grid {
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+
+    .review-count-label {
+        margin-top: 1rem;
+        font-weight: 500;
+        text-align: right;
+        color: var(--beige);
+        font-size: 1.2rem;
+    }
+}

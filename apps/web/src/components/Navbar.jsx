@@ -138,7 +138,7 @@ const Navbar = () => {
                       alt={`${user.name} ${user.surname}`}
                       className="navbar-avatar"
                     />
-                    {user.name} {user.surname}
+                    {user.name} {user.surname?.charAt(0)}.
                   </div>
                 ) : (
                   <div className="navbar-link user-info" title={`${user.name} ${user.surname}`}>

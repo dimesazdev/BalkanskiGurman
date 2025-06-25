@@ -28,9 +28,9 @@
   color: #FFF;
 }
 
-.btn-red:hover {
-  background-color: #ed9b40;
-  color: #2f2f2f;
+.btn-red:hover,
+.btn-red-small:hover {
+  background-color: #8b2029;
 }
 
 .btn-red-outline {
@@ -52,4 +52,38 @@
 .btn-beige-outline:hover {
   border: 2px solid #f0dbc9;
   color: #2f2f2f;
+}
+
+.btn-red-small {
+  background-color: #BA3B46;
+  color: #FFF;
+  height: 2rem;
+  padding: 0 1rem;
+}
+
+.btn-yellow-small {
+  background-color: #F0A404;
+  color: #FFF;
+}
+
+.btn-yellow-small:hover {
+  background-color: #c18402;
+  color: #FFF;
+}
+
+.btn-red-small,
+.btn-yellow-small {
+  height: 2rem;
+  padding: 0 1rem;
+  border-radius: 10px;
+}
+
+.btn-green {
+  background-color: #008000;
+  color: #FFF;
+}
+
+.btn-green:hover {
+  background-color: #005000;
+  color: #FFF;
 }

@@ -32,7 +32,7 @@ function ImageGallery({ images, arrowColor="#FFEEDB", arrowSize=1.8 }) {
   };
 
   return (
-    <div className="image-gallery-wrapper">
+    <div className="image-gallery-wrapper" style={{ padding: showArrows ? "0 40px" : 0 }}>
       {showArrows && (
         <button className="gallery-arrow left" onClick={() => scroll("left")}>
           <Icon path={mdiArrowLeftThin} size={arrowSize} color={arrowColor} />

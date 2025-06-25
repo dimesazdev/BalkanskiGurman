@@ -182,7 +182,7 @@ router.post('/:id/reviews', authenticate, async (req, res) => {
           CreatedAt: new Date(),
           UpdatedAt: new Date(),
           IsEdited: false,
-          StatusId: 1
+          StatusId: 4
         }
       });
 
