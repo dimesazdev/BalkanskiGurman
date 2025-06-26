@@ -1,4 +1,4 @@
-.admin-review-card {
+.admin-user-card {
     border-radius: 20px;
     padding: 1rem;
     background-color: var(--beige);
@@ -8,16 +8,16 @@
     transition: transform 0.2s ease;
 }
 
-.admin-review-card:hover {
+.admin-user-card:hover {
     transform: translateY(-2px);
 }
 
-.admin-review-card h4 {
+.admin-user-card h5 {
     text-align: center;
     font-weight: 600;
 }
 
-.admin-review-card .review-user-row {
+.admin-user-card .user-row {
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -26,30 +26,14 @@
     border-radius: 20px;
 }
 
-.admin-review-card .review-user-row img {
+.admin-user-card .user-row img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.admin-review-card .review-user-info {
-    display: flex;
-    flex-direction: row;
-    gap: 0.3rem;
-    align-items: center;
-}
-
-.admin-review-card .review-user-name {
-    font-size: 1.2rem;
-}
-
-.admin-review-card .user-location {
-    font-size: 0.9rem;
-    color: #555;
-}
-
-.admin-review-card .user-avatar-placeholder {
+.admin-user-card .user-avatar-placeholder {
     width: 60px;
     height: 60px;
     background: white;
@@ -59,44 +43,52 @@
     justify-content: center;
 }
 
-.admin-review-card .review-info {
+.admin-user-card .user-info-row {
+    display: flex;
+    flex-direction: row;
+    gap: 0.3rem;
+    align-items: center;
+}
+
+.admin-user-card .user-location {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.admin-user-card .user-name {
+    font-size: 1.2rem;
+    font-weight: 800;
+    font-family: 'Cormorant SC', serif;
+}
+
+.admin-user-card .user-info {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
     font-size: 0.95rem;
 }
 
-.admin-review-card .review-info-line {
-    align-items: center;
-    display: flex;
-    gap: 0.25rem;
-}
-
-.admin-review-card .review-info-line .stars {
-    display: inline-flex;
-    gap: 0;
-}
-
-.admin-review-card .status {
+.admin-user-card .status {
     font-size: 0.85rem;
     font-weight: 500;
     padding: 3px 8px;
     border-radius: 12px;
+    font-family: 'Cormorant Garamond', serif;
     background-color: #eee;
     color: #333;
 }
 
-.admin-review-card .status.approved {
+.admin-user-card .status.active {
     background-color: #c8e6c9;
     color: #2e7d32;
 }
 
-.admin-review-card .status.pending {
+.admin-user-card .status.suspended {
     background-color: #ffe0b2;
     color: #ef6c00;
 }
 
-.admin-review-card .status.rejected {
+.admin-user-card .status.banned {
     background-color: #ffcdd2;
     color: #c62828;
 }

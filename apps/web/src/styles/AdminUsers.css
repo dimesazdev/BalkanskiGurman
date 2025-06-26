@@ -1,16 +1,16 @@
-.admin-reviews-page {
+.admin-users-page {
     padding: 2rem;
 }
 
-.admin-reviews-page .review-header-row {
+.admin-users-page .user-header-row {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     margin-bottom: 2rem;
 }
 
-.admin-reviews-page .top-row,
-.admin-reviews-page .bottom-row {
+.admin-users-page .top-row,
+.admin-users-page .bottom-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -18,22 +18,22 @@
     gap: 1rem;
 }
 
-.admin-reviews-page .review-filters {
+.admin-users-page .user-filters {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
 }
 
-.admin-reviews-page .sort-bar,
-.admin-reviews-page .review-count-label {
+.admin-users-page .sort-bar,
+.admin-users-page .user-count-label {
     width: fit-content;
 }
 
-.admin-reviews-page .search-bar {
+.admin-users-page .search-bar {
     max-width: 300px;
 }
 
-.admin-reviews-page .status-filter {
+.admin-users-page .status-filter {
     padding: 6px 14px;
     border-radius: 12px;
     font-weight: 600;
@@ -46,50 +46,60 @@
     transition: all 0.2s ease;
 }
 
-.admin-reviews-page .status-filter.pending {
+.admin-users-page .status-filter.suspended {
     background-color: #ffe0b2;
     color: #ef6c00;
 }
 
-.admin-reviews-page .status-filter.approved {
+.admin-users-page .status-filter.active {
     background-color: #c8e6c9;
     color: #2e7d32;
 }
 
-.admin-reviews-page .status-filter.rejected {
+.admin-users-page .status-filter.banned {
     background-color: #ffcdd2;
     color: #c62828;
 }
 
-.admin-reviews-page .status-filter.active.pending {
-    background-color: #ef6c00;
-    color: #ffe0b2;
-}
-
-.admin-reviews-page .status-filter.active.approved {
+.admin-users-page .status-filter.selected.active {
     background-color: #2e7d32;
     color: #c8e6c9;
 }
 
-.admin-reviews-page .status-filter.active.rejected {
+.admin-users-page .status-filter.selected.suspended {
+    background-color: #ef6c00;
+    color: #ffe0b2;
+}
+
+.admin-users-page .status-filter.selected.banned {
     background-color: #c62828;
     color: #ffcdd2;
 }
 
-.admin-reviews-page .status-filter.active {
+.admin-users-page .status-filter.selected.all {
+    background-color: var(--red);
+    color: white;
+}
+
+.admin-users-page .status-filter.selected {
     font-weight: 700;
 }
 
-.admin-reviews-page .reviews-grid {
+.admin-users-page .users-grid {
     display: grid;
     gap: 2rem;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
 }
 
-.admin-reviews-page .review-count-label {
+.admin-users-page .user-count-label {
     margin-top: 1rem;
     font-weight: 500;
     text-align: right;
     color: var(--beige);
     font-size: 1.2rem;
+}
+
+.admin-users-page .status-filter.all-active {
+    background-color: var(--red);
+    color: white;
 }

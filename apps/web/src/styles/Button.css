@@ -47,11 +47,12 @@
 .btn-beige-outline {
   border: 2px solid var(--beige);
   color: var(--beige);
+  background: none;
 }
 
 .btn-beige-outline:hover {
-  border: 2px solid #f0dbc9;
-  color: #2f2f2f;
+  border: 2px solid #f0cdae;
+  color: #f0cdae;
 }
 
 .btn-red-small {
@@ -61,12 +62,14 @@
   padding: 0 1rem;
 }
 
-.btn-yellow-small {
+.btn-yellow-small,
+.btn-yellow {
   background-color: #F0A404;
   color: #FFF;
 }
 
-.btn-yellow-small:hover {
+.btn-yellow-small:hover,
+.btn-yellow:hover {
   background-color: #c18402;
   color: #FFF;
 }

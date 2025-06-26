@@ -24,6 +24,22 @@
         "userStatus": "Status korisnika",
         "review": "Recenzija"
     },
+    "adminUser": {
+        "userId": "Korisnik #{{id}}",
+        "role": "Uloga",
+        "email": "Email",
+        "reviews": "Recenzije",
+        "status": "Status",
+        "reviewCount": "Br. recenzija",
+        "lastActive": "Poslednja aktivnost",
+        "createdAt": "Kreiran",
+        "statusUpdated": "Status je uspešno ažuriran.",
+        "statusUpdateFailed": "Neuspešno ažuriranje statusa.",
+        "emailStatus": "Status e-pošte",
+        "verified": "Verifikovana",
+        "notVerified": "Neverifikovana",
+        "suspendedUntil": "Suspendiran do"
+    },
     "alerts": {
         "deleteError": "Brisanje restorana nije uspelo.",
         "deleted": "Restoran je bio uspešno obrisan.",
@@ -71,6 +87,7 @@
         "understand": "Razumem",
         "writeReview": "Napiši recenziju",
         "manageReview": "Upravljaj recenzijom",
+        "manageUser": "Uredi korisnika",
         "approve": "Odobri",
         "reject": "Odbij",
         "suspend": "Suspenduj",
@@ -187,6 +204,11 @@
         "reviewCount_one": "{{count}} recenzija",
         "reviewCount_other": "{{count}} recenzija",
         "reviewCount_zero": "Nema recenzija",
+        "users": "Korisnici",
+        "users_one": "{{count}} korisnik",
+        "users_few": "{{count}} korisnika",
+        "users_other": "{{count}} korisnika",
+        "users_zero": "Nema korisnika",
         "reviews": "recenzija",
         "searchByKeyword": "Pretraži po ključnoj reči:",
         "writeReview": "Napiši recenziju",
@@ -249,11 +271,15 @@
     "popup": {
         "statusChangeSuccess": {
             "approve": "Recenzija je uspešno odobrena.",
-            "reject": "Recenzija je uspešno odbijena."
+            "reject": "Recenzija je uspešno odbijena.",
+            "suspend": "Korisnik je uspešno suspendovan.",
+            "ban": "Korisnik je uspešno banovan."
         },
         "statusChangeError": {
             "approve": "Nismo uspeli da odobrimo recenziju.",
-            "reject": "Nismo uspeli da odbijemo recenziju."
+            "reject": "Nismo uspeli da odbijemo recenziju.",
+            "suspend": "Neuspešno suspendovanje korisnika.",
+            "ban": "Neuspešno banovanje korisnika."
         }
     },
     "profile": {
@@ -310,7 +336,9 @@
         "priceLow": "Cena (rastuća)",
         "rating": "Najveća ocena",
         "newest": "Najnovije",
-        "oldest": "Najstarije"
+        "oldest": "Najstarije",
+        "reviewsAsc": "Najmanje recenzija",
+        "reviewsDesc": "Najviše recenzija"
     },
     "titles": {
         "writeReview": "Napiši recenziju"
@@ -322,7 +350,14 @@
         "rejected": "Odbijeno",
         "undefined": "Nedefiniran"
     },
+    "roles": {
+        "user": "Korisnik",
+        "admin": "Administrator",
+        "owner": "Vlasnik",
+        "undefined": "Nedefiniran"
+    },
     "userStatus": {
+        "all": "Sve",
         "active": "Aktivan",
         "suspended": "Suspendovan",
         "banned": "Blokiran"

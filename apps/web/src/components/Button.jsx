@@ -3,15 +3,16 @@ import "../styles/Button.css"
 
 const Button = ({ children, onClick, type = "button", variant = "beige", className = "", ...props }) => {
   const baseClass = "btn-base";
-  
+
   const variantMap = {
     red: "btn-red",
     beige: "btn-beige",
+    yellow: "btn-yellow",
+    green: "btn-green",
     "red-outline": "btn-red-outline",
     "beige-outline": "btn-beige-outline",
     "red-small": "btn-red-small",
     "yellow-small": "btn-yellow-small",
-    green: "btn-green"
   };
 
   const variantClass = variantMap[variant] || "";

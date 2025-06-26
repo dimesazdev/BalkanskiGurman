@@ -6,139 +6,143 @@
     align-items: center;
     justify-content: center;
     z-index: 1000;
+}
 
-    h2 {
-        text-align: center;
-        margin-bottom: 1rem;
-    }
+.admin-review-popup h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
 
-    .popup-inner {
-        background: var(--beige);
-        padding: 2rem 3rem;
-        border-radius: 12px;
-        width: fit-content;
-        position: relative;
-        overflow-y: auto;
-        max-height: 90vh;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        display: flex;
-        flex-direction: column;
-    }
+.admin-review-popup .popup-inner {
+    background: var(--beige);
+    padding: 2rem 3rem;
+    border-radius: 12px;
+    width: fit-content;
+    position: relative;
+    overflow-y: auto;
+    max-height: 90vh;
+    max-width: 800px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+}
 
-    .close-btn {
-        position: absolute;
-        right: 1rem;
-        top: 1rem;
-        border: none;
-        background: none;
-        cursor: pointer;
-    }
+.admin-review-popup .close-btn {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
 
-    .user-section {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-        margin-bottom: 1rem;
-        background-color: white;
-        padding: 1rem 1.5rem;
-        width: fit-content;
-        margin: 0 auto;
-        border-radius: 20px;
-    }
+.admin-review-popup .user-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    background-color: white;
+    padding: 1rem 1.5rem;
+    width: fit-content;
+    margin: 0 auto;
+    border-radius: 20px;
+}
 
-    .user-section img {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        object-fit: cover;
-    }
+.admin-review-popup .user-section img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
 
-    .user-info {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
+.admin-review-popup .user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
-    .username {
-        font-weight: bold;
-        font-size: 1.2rem;
-        font-family: 'Cormorant SC', serif;
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
-    }
+.admin-review-popup .username {
+    font-weight: bold;
+    font-size: 1.2rem;
+    font-family: 'Cormorant SC', serif;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
 
-    .user-meta {
-        color: #555;
-        font-size: 0.9rem;
-    }
+.admin-review-popup .user-meta {
+    color: #555;
+    font-size: 0.9rem;
+}
 
-    .user-status {
-        font-size: 0.9rem;
-    }
+.admin-review-popup .user-status {
+    font-size: 0.9rem;
+}
 
-    .admin-actions {
-        margin-top: 0.5rem;
-        display: flex;
-        gap: 0.5rem;
-    }
+.admin-review-popup .admin-actions {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+}
 
-    .review-section {
-        margin-top: 1rem;
-    }
+.admin-review-popup .review-section {
+    margin-top: 1rem;
+}
 
-    .review-section p {
-        margin: 0.4rem 0;
-        font-size: 1.1rem;
-    }
+.admin-review-popup .review-section p {
+    margin: 0.4rem 0;
+    font-size: 1.1rem;
+}
 
-    .review-section strong {
-        font-weight: 600;
-    }
+.admin-review-popup .review-section .comment-line {
+    align-items: start;
+}
 
-    .rating-line {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
+.admin-review-popup .review-section strong {
+    font-weight: 600;
+}
 
-    .rating-line .stars {
-        display: inline-flex;
-        gap: 0.1rem;
-    }
+.admin-review-popup .rating-line {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
 
-    .status {
-        font-size: 0.85rem;
-        font-weight: 500;
-        text-transform: capitalize;
-        padding: 3px 8px;
-        border-radius: 12px;
-        font-family: 'Cormorant Garamond', serif;
-    }
+.admin-review-popup .rating-line .stars {
+    display: inline-flex;
+    gap: 0.1rem;
+}
 
-    .status.approved,
-    .status.active {
-        background-color: #c8e6c9;
-        color: #2e7d32;
-    }
+.admin-review-popup .status {
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-family: 'Cormorant Garamond', serif;
+}
 
-    .status.pending,
-    .status.suspended {
-        background-color: #ffe0b2;
-        color: #ef6c00;
-    }
+.admin-review-popup .status.approved,
+.admin-review-popup .status.active {
+    background-color: #c8e6c9;
+    color: #2e7d32;
+}
 
-    .status.rejected,
-    .status.banned {
-        background-color: #ffcdd2;
-        color: #c62828;
-    }
+.admin-review-popup .status.pending,
+.admin-review-popup .status.suspended {
+    background-color: #ffe0b2;
+    color: #ef6c00;
+}
 
-    .popup-actions {
-        margin-top: 1.5rem;
-        display: flex;
-        justify-content: center;
-        gap: 0.5rem;
-    }
+.admin-review-popup .status.rejected,
+.admin-review-popup .status.banned {
+    background-color: #ffcdd2;
+    color: #c62828;
+}
+
+.admin-review-popup .popup-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
 }

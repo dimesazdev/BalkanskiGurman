@@ -210,7 +210,7 @@ function RestaurantPage() {
           </div>
         </div>
 
-        <Button variant={isFavorite ? "beige" : "red-outline"} onClick={handleToggleFavorite}>
+        <Button variant={isFavorite ? "red" : "beige-outline"} onClick={handleToggleFavorite}>
           <Icon path={isFavorite ? mdiHeart : mdiHeartOutline} size={0.9} />{" "}
           {isFavorite ? t("buttons.removeFromFavorites") : t("buttons.addToFavorites")}
         </Button>

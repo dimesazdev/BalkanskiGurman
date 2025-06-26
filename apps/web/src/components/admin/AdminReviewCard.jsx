@@ -63,7 +63,15 @@ const AdminReviewCard = ({ review, onManage }) => {
             <h4>{t("adminReview.reviewId", { id: ReviewId })}</h4>
 
             <div className="review-user-row">
-                <img src={user.ProfilePictureUrl || "/placeholder.jpg"} alt="User" />
+                {user.ProfilePictureUrl ? (
+                    <img src={user.ProfilePictureUrl} alt="User" />
+                ) : (
+                    <div className="user-avatar user-avatar-placeholder">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="var(--red)">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                        </svg>
+                    </div>
+                )}
                 <div>
                     <div className="review-user-info">
                         <span className="review-user-name">{user.Name} {user.Surname.charAt(0)}.</span>

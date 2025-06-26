@@ -24,6 +24,22 @@
         "userStatus": "User status",
         "review": "Review"
     },
+    "adminUser": {
+        "userId": "User #{{id}}",
+        "email": "Email",
+        "role": "Role",
+        "reviews": "No. of reviews",
+        "status": "Status",
+        "reviewCount": "Review count",
+        "lastActive": "Last active",
+        "createdAt": "Created at",
+        "statusUpdated": "User status updated successfully.",
+        "statusUpdateFailed": "Failed to update user status.",
+        "emailStatus": "Email status",
+        "verified": "Verified",
+        "notVerified": "Unverified",
+        "suspendedUntil": "Suspended until"
+    },
     "alerts": {
         "deleteError": "Failed to delete restaurant.",
         "deleted": "Restaurant successfully deleted.",
@@ -71,6 +87,7 @@
         "understand": "I understand",
         "writeReview": "Write a review",
         "manageReview": "Manage Review",
+        "manageUser": "Manage User",
         "approve": "Approve",
         "reject": "Reject",
         "suspend": "Suspend",
@@ -195,6 +212,10 @@
         "reviewCount_one": "{{count}} review",
         "reviewCount_other": "{{count}} reviews",
         "reviewCount_zero": "No reviews",
+        "users": "Users",
+        "users_one": "{{count}} user",
+        "users_other": "{{count}} users",
+        "users_zero": "No users",
         "reviews": "reviews",
         "searchByKeyword": "Search by keyword:",
         "by": "by",
@@ -256,11 +277,15 @@
     "popup": {
         "statusChangeSuccess": {
             "approve": "Review successfully approved.",
-            "reject": "Review successfully rejected."
+            "reject": "Review successfully rejected.",
+            "suspend": "User successfully suspended.",
+            "ban": "User successfully banned."
         },
         "statusChangeError": {
             "approve": "Failed to approve review.",
-            "reject": "Failed to reject review."
+            "reject": "Failed to reject review.",
+            "suspend": "Failed to suspend user.",
+            "ban": "Failed to ban user."
         }
     },
     "profile": {
@@ -310,6 +335,12 @@
     "review": {
         "dragDrop": "Drop images here or click to upload"
     },
+    "roles": {
+        "user": "User",
+        "admin": "Admin",
+        "owner": "Owner",
+        "undefined": "Undefined"
+    },
     "search": "Search...",
     "sort": {
         "highestRating": "Highest Rating",
@@ -320,7 +351,9 @@
         "priceLow": "Price (ascending)",
         "rating": "Highest Rating",
         "newest": "Newest",
-        "oldest": "Oldest"
+        "oldest": "Oldest",
+        "reviewsAsc": "Fewest Reviews",
+        "reviewsDesc": "Most Reviews"
     },
     "titles": {
         "writeReview": "Write a Review"
@@ -333,6 +366,7 @@
         "undefined": "Undefined"
     },
     "userStatus": {
+        "all": "All",
         "active": "Active",
         "suspended": "Suspended",
         "banned": "Banned"

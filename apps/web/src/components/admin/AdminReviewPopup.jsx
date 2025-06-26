@@ -34,8 +34,9 @@ const AdminReviewPopup = ({ review, onClose, onAction }) => {
     status
   } = review;
 
-  const statusLabel = status?.Name?.toLowerCase();
-  const userStatus = reviewer?.status?.Name?.toLowerCase();
+  const statusLabel = review.status?.Name?.toLowerCase();
+  const [reviewerState, setReviewerState] = useState(reviewer);
+  const userStatus = reviewerState?.status?.Name?.toLowerCase();
 
   const dayjsLocaleMap = { en: "en", mk: "mk", sr: "me", sl: "sl" };
   dayjs.locale(dayjsLocaleMap[i18n.language] || "en");
@@ -61,8 +62,21 @@ const AdminReviewPopup = ({ review, onClose, onAction }) => {
   };
 
   const handleAction = (actionType) => {
+    if (["suspend", "ban"].includes(actionType)) {
+      onAction(actionType, reviewer.UserId);
+
+      setReviewerState(prev => ({
+        ...prev,
+        status: {
+          ...prev.status,
+          Name: actionType === "suspend" ? "Suspended" : "Banned"
+        }
+      }));
+    } else {
       onAction(actionType, review.ReviewId);
+    }
   };
+
 
   return (
     <div className="admin-review-popup">
@@ -74,7 +88,15 @@ const AdminReviewPopup = ({ review, onClose, onAction }) => {
         <h2>{t("adminReview.reviewId", { id: ReviewId })}</h2>
 
         <div className="user-section">
-          <img src={reviewer.ProfilePictureUrl || "/placeholder.jpg"} alt="User" />
+          {reviewer.ProfilePictureUrl ? (
+            <img src={reviewer.ProfilePictureUrl} alt="User" />
+          ) : (
+            <div className="user-avatar user-avatar-placeholder">
+              <svg width="100" height="100" viewBox="0 0 24 24" fill="var(--red)">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+              </svg>
+            </div>
+          )}
           <div className="user-info">
             <div className="username">
               {reviewer.Name} {reviewer.Surname?.charAt(0)}.
@@ -106,7 +128,7 @@ const AdminReviewPopup = ({ review, onClose, onAction }) => {
           <p><strong>{t("adminReview.forRestaurant")}:</strong> {restaurant.Name}</p>
           <p><strong>{t("adminReview.location")}:</strong> {restaurant.address?.City}, {restaurant.address?.Country}</p>
           <p className="rating-line"><strong>{t("adminReview.rating")}:</strong> <span className="stars">{renderStars(Rating)}</span> ({Rating.toFixed(1)})</p>
-          <p><strong>{t("adminReview.review")}:</strong> {Comment}</p>
+          <p className="comment-line"><strong>{t("adminReview.review")}:</strong> {Comment}</p>
         </div>
 
         <div className="popup-actions">

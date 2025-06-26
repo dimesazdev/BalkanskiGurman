@@ -24,6 +24,22 @@
         "userStatus": "Status uporabnika",
         "review": "Recenzija"
     },
+    "adminUser": {
+        "userId": "Uporabnik #{{id}}",
+        "role": "Vloga",
+        "email": "E-naslov",
+        "reviews": "Recenzije",
+        "status": "Status",
+        "reviewCount": "Št. recenzij",
+        "lastActive": "Zadnja aktivnost",
+        "createdAt": "Ustvarjen dne",
+        "statusUpdated": "Status uspešno posodobljen.",
+        "statusUpdateFailed": "Neuspešna posodobitev statusa.",
+        "emailStatus": "Status e-pošte",
+        "verified": "Potrjena",
+        "notVerified": "Nepotrjena",
+        "suspendedUntil": "Suspendovan do"
+    },
     "alerts": {
         "deleteError": "Brisanje restavracije ni uspelo.",
         "deleted": "Restavracija je bila uspešno izbrisana.",
@@ -71,6 +87,7 @@
         "understand": "Razumem",
         "writeReview": "Napiši recenzijo",
         "manageReview": "Uredi recenzijo",
+        "manageUser": "Uredi uporabnika",
         "approve": "Odobri",
         "reject": "Zavrni",
         "suspend": "Suspendiraj",
@@ -187,6 +204,12 @@
         "reviewCount_other": "{{count}} recenzij",
         "reviewCount_two": "{{count}} recenziji",
         "reviewCount_zero": "Ni recenzij",
+        "users": "Uporabniki",
+        "users_one": "{{count}} uporabnik",
+        "users_two": "{{count}} uporabnika",
+        "users_few": "{{count}} uporabniki",
+        "users_other": "{{count}} uporabnikov",
+        "users_zero": "Ni uporabnikov",
         "reviews": "recenzij",
         "searchByKeyword": "Išči po ključni besedi:",
         "writeReview": "Napiši recenzijo",
@@ -237,7 +260,7 @@
         "login": "Prijava",
         "logout": "Odjava",
         "restaurants": "Restavracije",
-        "reviews": "Ocene",
+        "reviews": "Recenzije",
         "users": "Uporabniki"
     },
     "noResults": "Nobena restavracija ne ustreza vašemu iskanju.",
@@ -249,11 +272,15 @@
     "popup": {
         "statusChangeSuccess": {
             "approve": "Recenzija je bila uspešno odobrena.",
-            "reject": "Recenzija je bila uspešno zavrnjena."
+            "reject": "Recenzija je bila uspešno zavrnjena.",
+            "suspend": "Uporabnik je bil uspešno suspendiran.",
+            "ban": "Uporabnik je bil uspešno blokiran."
         },
         "statusChangeError": {
             "approve": "Ni uspelo odobriti recenzije.",
-            "reject": "Ni uspelo zavrniti recenzije."
+            "reject": "Ni uspelo zavrniti recenzije.",
+            "suspend": "Prekinitev uporabnika ni uspela.",
+            "ban": "Blokiranje uporabnika ni uspelo."
         }
     },
     "profile": {
@@ -310,7 +337,9 @@
         "priceLow": "Cena (naraščajoče)",
         "rating": "Najvišja ocena",
         "newest": "Najnovejše",
-        "oldest": "Najstarejše"
+        "oldest": "Najstarejše",
+        "reviewsAsc": "Najmanj recenzij",
+        "reviewsDesc": "Največ recenzij"
     },
     "titles": {
         "writeReview": "Napiši recenzijo"
@@ -322,7 +351,14 @@
         "rejected": "Zavrnjeno",
         "undefined": "Nedefiniran"
     },
+    "roles": {
+        "user": "Uporabnik",
+        "admin": "Administrator",
+        "owner": "Lastnik",
+        "undefined": "Nedefiniran"
+    },
     "userStatus": {
+        "all": "Vse",
         "active": "Aktiven",
         "suspended": "Suspendiran",
         "banned": "Blokiran"

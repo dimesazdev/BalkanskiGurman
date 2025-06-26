@@ -9,7 +9,20 @@ const prisma = new PrismaClient();
 // GET all users
 router.get('/', authenticate, requireRole('Admin'), async (req, res) => {
   try {
-    const users = await prisma.user.findMany();
+    const users = await prisma.user.findMany({
+      include: {
+        status: true,
+        userRoles: {
+          include: {
+            role: true
+          }
+        },
+        _count: {
+          select: { reviews: true }
+        }
+      }
+    });
+
     res.json(users);
   } catch (error) {
     console.error('Error fetching users:', error);
@@ -87,9 +100,14 @@ router.put('/:id/status', authenticate, requireRole("Admin"), async (req, res) =
       return;
     }
 
+    const dataToUpdate = {
+      StatusId,
+      SuspendedUntil: StatusId === 2 ? new Date(Date.now() + 14 * 24 * 60 * 60 * 1000) : null
+    };
+
     const updated = await prisma.user.update({
       where: { UserId: req.params.id },
-      data: { StatusId }
+      data: dataToUpdate
     });
 
     res.json(updated);
