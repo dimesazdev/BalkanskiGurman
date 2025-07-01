@@ -24,13 +24,8 @@
     gap: 0.5rem;
 }
 
-.admin-users-page .sort-bar,
 .admin-users-page .user-count-label {
     width: fit-content;
-}
-
-.admin-users-page .search-bar {
-    max-width: 300px;
 }
 
 .admin-users-page .status-filter {
@@ -74,11 +69,6 @@
 .admin-users-page .status-filter.selected.banned {
     background-color: #c62828;
     color: #ffcdd2;
-}
-
-.admin-users-page .status-filter.selected.all {
-    background-color: var(--red);
-    color: white;
 }
 
 .admin-users-page .status-filter.selected {

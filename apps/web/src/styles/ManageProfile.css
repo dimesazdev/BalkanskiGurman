@@ -60,16 +60,12 @@
   justify-content: center;
 }
 
-@media (min-width: 600px) {
-  .form-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .form-grid > *:nth-child(odd) {
+@media (min-width: 790px) {
+  .form-grid>*:nth-child(odd) {
     grid-column: 1;
   }
 
-  .form-grid > *:nth-child(even) {
+  .form-grid>*:nth-child(even) {
     grid-column: 2;
   }
 }
@@ -116,4 +112,9 @@
   padding: 0.6rem;
   border-radius: 8px;
   z-index: 10000;
+}
+
+.tooltip-earned {
+  background: #3BBA3B !important;
+  color: white !important;
 }

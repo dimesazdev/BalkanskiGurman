@@ -90,3 +90,13 @@
   background-color: #005000;
   color: #FFF;
 }
+
+.btn-blue {
+  background-color: #1565c0;
+  color: #FFF;
+}
+
+.btn-blue:hover {
+  background-color: #044691;
+  color: #FFF;
+}

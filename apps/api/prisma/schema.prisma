@@ -56,15 +56,16 @@ model Issue {
   RestaurantId Int?
   IssueType    String
   Explanation  String
-  PhotoUrl1    String
-  PhotoUrl2    String
-  PhotoUrl3    String
+  PhotoUrl1    String?
+  PhotoUrl2    String?
+  PhotoUrl3    String?
   CreatedAt    DateTime @default(now())
   StatusId     Int
 
-  user   User     @relation(fields: [UserId], references: [UserId])
-  status Status   @relation(fields: [StatusId], references: [StatusId])
-  review Review?  @relation("ReviewIssues", fields: [ReviewId], references: [ReviewId], onDelete: Cascade)
+  user       User        @relation(fields: [UserId], references: [UserId])
+  status     Status      @relation(fields: [StatusId], references: [StatusId])
+  review     Review?     @relation("ReviewIssues", fields: [ReviewId], references: [ReviewId], onDelete: Cascade)
+  restaurant Restaurant? @relation(fields: [RestaurantId], references: [RestaurantId], onDelete: Cascade)
 }
 
 model Status {
@@ -100,6 +101,7 @@ model Restaurant {
   amenities    RestaurantAmenity[]
   reviews      Review[]
   favorites    Favorite[]
+  issues       Issue[]
 }
 
 model Address {
@@ -179,19 +181,21 @@ model RestaurantAmenity {
 }
 
 model Review {
-  ReviewId     Int       @id @default(autoincrement())
-  RestaurantId Int
-  UserId       String
-  Rating       Int
-  Comment      String
-  CreatedAt    DateTime  @default(now())
-  UpdatedAt    DateTime  @updatedAt
-  IsEdited     Boolean
-  EditedAt     DateTime?
-  StatusId     Int
-  PhotoUrl1    String?
-  PhotoUrl2    String?
-  PhotoUrl3    String?
+  ReviewId            Int       @id @default(autoincrement())
+  RestaurantId        Int
+  UserId              String
+  Rating              Int
+  Comment             String
+  CreatedAt           DateTime  @default(now())
+  UpdatedAt           DateTime  @updatedAt
+  IsEdited            Boolean
+  EditedAt            DateTime?
+  StatusId            Int
+  PhotoUrl1           String?
+  PhotoUrl2           String?
+  PhotoUrl3           String?
+  HasRequestedRecheck Boolean @default(false)
+  RecheckExplanation  String? 
 
   restaurant Restaurant @relation(fields: [RestaurantId], references: [RestaurantId])
   user       User       @relation(fields: [UserId], references: [UserId])

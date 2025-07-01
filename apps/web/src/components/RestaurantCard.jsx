@@ -114,30 +114,51 @@ function RestaurantCard({ restaurant, isFavorite, onToggleFavorite, searchTerm =
         );
     };
 
+    const approvedReviewsCount = restaurant.reviews
+        ? restaurant.reviews.filter(r => r.StatusId === 5 || 7).length
+        : 0;
+
     return (
         <div className="restaurant-card" onClick={() => navigate(`/restaurants/${RestaurantId}`)}>
             <div className="card-image-section">
                 <img src={firstImage} alt={Name} className="restaurant-image" />
                 {adminActions ? (
                     <div className="stacked-buttons">
-                        <div className="favorite-btn" onClick={(e) => e.stopPropagation()}>
-                            <Icon
-                                path={mdiPencil}
-                                size={1.3}
-                                color="var(--red)"
-                                title="Edit"
-                                onClick={() => adminActions.onEdit(RestaurantId)}
-                                style={{ cursor: "pointer" }} />
-                        </div>
-                        <div className="favorite-btn" style={{ marginTop: "4rem" }} onClick={(e) => e.stopPropagation()}>
-                            <Icon
-                                path={mdiDelete}
-                                size={1.3}
-                                color="var(--red)"
-                                title="Delete"
-                                onClick={() => adminActions.onDelete(RestaurantId)}
-                                style={{ cursor: "pointer" }} />
-                        </div>
+                        {adminActions.onEdit && (
+                            <div
+                                className="favorite-btn"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    adminActions.onEdit(RestaurantId);
+                                }}
+                            >
+                                <Icon
+                                    path={mdiPencil}
+                                    size={1.3}
+                                    color="var(--red)"
+                                    title="Edit"
+                                    style={{ cursor: "pointer" }}
+                                />
+                            </div>
+                        )}
+                        {adminActions.onDelete && (
+                            <div
+                                className="favorite-btn"
+                                style={{ marginTop: "4rem" }}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    adminActions.onDelete(RestaurantId);
+                                }}
+                            >
+                                <Icon
+                                    path={mdiDelete}
+                                    size={1.3}
+                                    color="var(--red)"
+                                    title="Delete"
+                                    style={{ cursor: "pointer" }}
+                                />
+                            </div>
+                        )}
                     </div>
                 ) : (
                     <div
@@ -177,7 +198,7 @@ function RestaurantCard({ restaurant, isFavorite, onToggleFavorite, searchTerm =
                     <span className="stars-red">{renderStars()}<span className="rating-value"> {AverageRating.toFixed(2)}</span></span>
                     {restaurant.reviews && (
                         <span className="review-count-card" style={{ color: "ba3b46" }}>
-                            ({t("labels.reviewCount", { count: restaurant.reviews.length })})
+                            ({t("labels.reviewCount", { count: approvedReviewsCount })})
                         </span>
                     )}
                 </div>

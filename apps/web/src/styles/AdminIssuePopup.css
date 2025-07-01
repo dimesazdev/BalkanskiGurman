@@ -1,0 +1,168 @@
+.admin-issue-popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.admin-issue-popup .popup-inner {
+  background: var(--beige);
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  width: fit-content;
+  position: relative;
+  overflow-y: auto;
+  max-height: 90vh;
+  max-width: 1000px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-issue-popup .close-btn {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.admin-issue-popup h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.admin-issue-popup .user-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  background-color: white;
+  padding: 1rem 1.5rem;
+  width: fit-content;
+  margin: 0 auto;
+  border-radius: 20px;
+}
+
+.admin-issue-popup .user-section img,
+.admin-issue-popup .user-avatar-placeholder {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.admin-issue-popup .user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.admin-issue-popup .username {
+  font-weight: bold;
+  font-size: 1.2rem;
+  font-family: 'Cormorant SC', serif;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.admin-issue-popup .user-meta {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.admin-issue-popup .review-section {
+  margin-top: 1rem;
+}
+
+.admin-issue-popup .review-section p {
+  margin: 0.4rem 0;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  word-break: break-word; 
+}
+
+.admin-issue-popup .review-section strong {
+  font-weight: 600;
+}
+
+.admin-issue-popup .popup-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.admin-issue-popup .status {
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.admin-issue-popup .status.active {
+  background-color: #c8e6c9;
+  color: #2e7d32;
+}
+
+.admin-issue-popup .status.suspended {
+  background-color: #ffe0b2;
+  color: #ef6c00;
+}
+
+.admin-issue-popup .status.banned {
+  background-color: #ffcdd2;
+  color: #c62828;
+}
+
+.admin-issue-popup .status.resolved {
+  background-color: #c8e6c9;
+  color: #2e7d32;
+}
+
+.admin-issue-popup .status.pending {
+  background-color: #ffe0b2;
+  color: #ef6c00;
+}
+
+.admin-issue-popup .related-restaurant-card {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 2px dashed var(--red);
+  border-radius: 12px;
+  padding: 0.75rem;
+  gap: 1rem;
+  max-width: 500px;
+}
+
+.admin-issue-popup .related-restaurant-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.admin-issue-popup .related-restaurant-card .restaurant-info {
+  flex: 1;
+}
+
+.admin-issue-popup .related-restaurant-card .restaurant-name {
+  font-weight: 600;
+  margin: 0 0 0.3rem 0;
+}
+
+.admin-issue-popup .related-restaurant-card .restaurant-address {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0;
+}

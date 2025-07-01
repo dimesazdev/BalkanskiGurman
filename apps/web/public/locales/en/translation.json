@@ -22,7 +22,8 @@
         "approve": "Approve",
         "reject": "Reject",
         "userStatus": "User status",
-        "review": "Review"
+        "review": "Review",
+        "recheckExplanation": "Recheck Explanation"
     },
     "adminUser": {
         "userId": "User #{{id}}",
@@ -40,7 +41,28 @@
         "notVerified": "Unverified",
         "suspendedUntil": "Suspended until"
     },
+    "adminIssue": {
+        "status": "Issue status",
+        "createdAt": "Created at",
+        "forRestaurant": "For restaurant",
+        "issueId": "Issue #{{id}}",
+        "type": "Issue type",
+        "explanation": "Explanation",
+        "images": "Images",
+        "resolved": "Issue marked as resolved.",
+        "resolveFailed": "Failed to resolve issue."
+    },
+    "issueStatus": {
+        "pending": "Pending",
+        "resolved": "Resolved",
+        "all": "All"
+    },
     "alerts": {
+        "explanationRequired": "Please provide an explanation before submitting.",
+        "reviewAgreementRequired": "You must agree to the guidelines before submitting your review.",
+        "reviewRatingRequired": "Please select a rating before submitting.",
+        "reviewTextRequired": "Please write your review before submitting.",
+        "reviewModerationNotice": "Please note: It may take some time before your review is published, as it must be approved by our team.",
         "deleteError": "Failed to delete restaurant.",
         "deleted": "Restaurant successfully deleted.",
         "favoriteAdded": "Successfully added to Favourites",
@@ -56,7 +78,10 @@
         "creatingRestaurant": "Creating restaurant... Please wait.",
         "restaurantCreated": "Restaurant created successfully.",
         "restaurantUpdated": "Restaurant updated successfully.",
-        "restaurantError": "An error occurred. Please check the data and try again."
+        "restaurantError": "An error occurred. Please check the data and try again.",
+        "registerError": "Registration failed. Please try again.",
+        "recheckRejected": "Your recheck request was rejected. You cannot request again.",
+        "recheckAccepted": "Your recheck request was successful. The review has been removed."
     },
     "amenities": {
         "CARD": "Card payment",
@@ -71,9 +96,11 @@
         "VEGE": "Vegetarian options"
     },
     "buttons": {
+        "activate": "Activate",
         "addToFavorites": "Add to favorites",
         "backToRestaurants": "Back to Restaurants",
         "cancel": "Cancel",
+        "changeSelection": "Change selection",
         "choosePhoto": "Choose new photo",
         "close": "Close",
         "confirm": "Confirm",
@@ -84,14 +111,19 @@
         "removeFromFavorites": "Remove from favorites",
         "saveChanges": "Save changes",
         "saving": "Saving...",
+        "submitRequest": "Submit Request",
         "understand": "I understand",
         "writeReview": "Write a review",
         "manageReview": "Manage Review",
         "manageUser": "Manage User",
+        "manageIssue": "Manage issue",
         "approve": "Approve",
         "reject": "Reject",
         "suspend": "Suspend",
-        "ban": "Ban"
+        "ban": "Ban",
+        "resolve": "Resolve",
+        "requestRecheck": "Request Recheck",
+        "view": "View"
     },
     "checkbox": {
         "agree": "I agree to the review writing guidelines and understand that violations may result in account suspension or ban *"
@@ -102,7 +134,7 @@
         "INT": "International",
         "ME": "Montenegrin",
         "MK": "Macedonian",
-        "SI": "Slovenian",
+        "SL": "Slovenian",
         "SR": "Serbian"
     },
     "days": {
@@ -183,6 +215,17 @@
         "website": "Website URL",
         "workingHours": "Working Hours"
     },
+    "formErrors": {
+        "nameRequired": "Restaurant name is required.",
+        "priceRangeRequired": "Price range is required.",
+        "detailsRequired": "Details are required.",
+        "addressRequired": "Complete address is required.",
+        "phoneRequired": "Phone number is required.",
+        "cuisineRequired": "You must select a cuisine.",
+        "imageRequired": "You must add at least one image.",
+        "noWorkingHoursConfirm": "All days are marked as closed. Are you sure you want to proceed?",
+        "noAmenitiesConfirm": "You have not selected any amenities. Are you sure you want to continue?"
+    },
     "home": {
         "button": "See restaurants"
     },
@@ -197,6 +240,10 @@
         "closedAllWeek": "Closed all week",
         "cuisines": "Cuisine",
         "dietary": "Dietary",
+        "issues": "Issues",
+        "issueCount_zero": "No issues",
+        "issueCount_one": "{{count}} issue",
+        "issueCount_other": "{{count}} issues",
         "notAvailable": "Not available",
         "on": "on",
         "openUntil": "Open until",
@@ -266,26 +313,31 @@
         "logout": "Logout",
         "restaurants": "Restaurants",
         "reviews": "Reviews",
-        "users": "Users"
+        "users": "Users",
+        "logoutConfirm": "Are you sure you want to logout?"
     },
     "noResults": "No restaurants match your search.",
     "placeholders": {
         "restaurantDetails": "Type restaurant details...",
         "restaurantName": "Type restaurant name...",
-        "writeReview": "Share your experience..."
+        "writeReview": "Share your experience...",
+        "recheckExplanation": "Please explain why you believe this review should be rechecked...",
+        "searchRestaurants": "Search restaurants..."
     },
     "popup": {
         "statusChangeSuccess": {
             "approve": "Review successfully approved.",
             "reject": "Review successfully rejected.",
             "suspend": "User successfully suspended.",
-            "ban": "User successfully banned."
+            "ban": "User successfully banned.",
+            "requestRecheck": "Review successfully sent for rechecking."
         },
         "statusChangeError": {
             "approve": "Failed to approve review.",
             "reject": "Failed to reject review.",
             "suspend": "Failed to suspend user.",
-            "ban": "Failed to ban user."
+            "ban": "Failed to ban user.",
+            "requestRecheck": "Failed to request recheck."
         }
     },
     "profile": {
@@ -310,9 +362,17 @@
         "register": "Register",
         "retypePassword": "Retype Password",
         "retypePasswordPlaceholder": "Retype your password...",
-        "success": "Registration successful! Redirecting to login...",
         "surname": "Surname",
-        "surnamePlaceholder": "Type your surname..."
+        "surnamePlaceholder": "Type your surname...",
+        "errorName": "Name must contain only letters.",
+        "errorSurname": "Surname must contain only letters.",
+        "errorEmail": "Please enter a valid email address.",
+        "errorPhone": "Phone number must contain only digits.",
+        "errorPassword": "Password must be at least 8 characters long and include a number, a lowercase and an uppercase letter.",
+        "errorPasswordsMatch": "Passwords do not match.",
+        "errorCountry": "Country is required.",
+        "errorCity": "City is required.",
+        "success": "Registration successful!"
     },
     "restaurant": {
         "about": "About",
@@ -335,6 +395,27 @@
     "review": {
         "dragDrop": "Drop images here or click to upload"
     },
+    "report": {
+        "chooseRestaurant": "Choose a restaurant",
+        "title": "Report an Issue",
+        "issueType": "Issue Type *",
+        "selectIssueType": "Select issue type...",
+        "explanation": "Explanation *",
+        "explanationPlaceholder": "Describe the issue...",
+        "addPhotos": "Add photos (max. 3)",
+        "submit": "Report Issue",
+        "submitting": "Submitting...",
+        "success": "Issue successfully submitted!",
+        "errorSubmit": "Failed to submit issue.",
+        "errorRequired": "Please fill all required fields.",
+        "errorRestaurant": "Please select a restaurant.",
+        "errorReview": "Please specify the review in question.",
+        "issueTypes": {
+            "bugReport": "Something is not working properly",
+            "wrongInfo": "Wrong restaurant info",
+            "other": "Other (specify in explanation)"
+        }
+    },
     "roles": {
         "user": "User",
         "admin": "Admin",
@@ -353,7 +434,8 @@
         "newest": "Newest",
         "oldest": "Oldest",
         "reviewsAsc": "Fewest Reviews",
-        "reviewsDesc": "Most Reviews"
+        "reviewsDesc": "Most Reviews",
+        "issueType": "Issue Type"
     },
     "titles": {
         "writeReview": "Write a Review"
@@ -363,12 +445,45 @@
         "approved": "Approved",
         "pending": "Pending",
         "rejected": "Rejected",
-        "undefined": "Undefined"
+        "undefined": "Undefined",
+        "recheck": "Recheck"
     },
     "userStatus": {
         "all": "All",
         "active": "Active",
         "suspended": "Suspended",
         "banned": "Banned"
+    },
+    "restaurantPage": {
+        "reviewLogin": "To write a review, you must be logged in.",
+        "notNow": "Not now"
+    },
+    "owner": {
+        "dashboardTitle": "Dashboard",
+        "myRestaurants": "My Restaurants",
+        "myReviews": "Manage Reviews",
+        "reviews": "Reviews"
+    },
+    "restaurantForm": {
+        "labels": {
+            "restaurantName": "Restaurant Name *",
+            "priceRange": "Price Range *",
+            "details": "Details *",
+            "cuisine": "Cuisine *",
+            "website": "Website",
+            "menuUrl": "Menu URL",
+            "street": "Street *",
+            "postalCode": "Postal Code *",
+            "country": "Country *",
+            "city": "City *"
+        },
+        "placeholder": {
+            "website": "https://example.com",
+            "menuUrl": "https://example.com/menu",
+            "street": "e.g. 123 Main Street",
+            "postalCode": "e.g. 1000",
+            "hh": "hh",
+            "mm": "mm"
+        }
     }
 }

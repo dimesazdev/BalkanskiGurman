@@ -100,3 +100,8 @@
     background-color: #ffcdd2;
     color: #c62828;
 }
+
+.admin-review-card .status.recheck {
+    background-color: #bbdefb; 
+    color: #1565c0;     
+}

@@ -2,81 +2,67 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-}
+  min-height: 150vh;
 
-.register-card {
-  width: 100%;
-  max-width: 800px;
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
+  .register-card {
+    width: 100%;
+    max-width: 800px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
 
-.register-header {
-  background-color: var(--beige);
-  padding: 32px 48px;
-  text-align: center;
-}
+  .register-header {
+    background-color: var(--beige);
+    padding: 32px 48px;
+    text-align: center;
+  }
 
-.register-form-section {
-  background-color: #c94b4b;
-  padding: 48px;
-}
+  .register-form-section {
+    background-color: #c94b4b;
+    padding: 48px;
+  }
 
-.register-form {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
 
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-}
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    max-width: 800px;
+    align-items: center;
+  }
 
-.form-column {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
+  .form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .login-redirect {
+    text-align: center;
+    margin-top: 24px;
+  }
 
-.register-btn {
-  height: 56px;
-  border: none;
-  border-radius: 28px;
-  background-color: var(--beige);
-  color: #333;
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  margin-top: 16px;
-}
+  .login-link {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
 
-.register-btn:hover {
-  background-color: #f0dbc9;
-}
-
-.login-redirect {
-  text-align: center;
-  margin-top: 24px;
-}
-
-.login-link {
-  background: none;
-  border: none;
-  font-size: 16px;
-  font-weight: 500;
-  color: white;
-  text-decoration: underline;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-}
-
-.login-link:hover {
-  opacity: 0.8;
+  .login-link:hover {
+    opacity: 0.8;
+  }
 }
 
 /* Custom select and input styles */
@@ -117,99 +103,39 @@ select.custom-select {
   background-repeat: no-repeat;
   background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
 }
-
-/* PhoneInput */
-.custom-phone-container {
-  width: 100% !important;
-}
-
-.custom-phone-input {
-  width: 100% !important;
-  height: 3.5rem !important;
-  border-radius: 20px !important;
-  background-color: var(--beige) !important;
-  color: black !important;
-  font-size: 1.2rem !important;
-  font-family: 'Cormorant Garamond', sans-serif !important;
-  border: none !important;
-  outline: none !important;
-}
-
-.custom-phone-button {
-  background: var(--beige) !important;
-  border: none !important;
-  border-radius: 20px 0 0 20px !important;
-}
-
-.react-tel-input .country-list {
-  background-color: var(--beige) !important;
-  font-family: 'Cormorant Garamond', sans-serif !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 1000 !important;
-}
-
-.react-tel-input .country-list .country {
-  font-size: 1rem;
-  color: black !important;
-  background-color: var(--beige) !important;
-  font-family: 'Cormorant Garamond', serif !important;
-}
-
-.react-tel-input .selected-flag {
-  outline: none;
-  height: 100%;
-  border-radius: 20px 0 0 20px !important;
-  padding: 0 15px !important;
-}
-
-.react-tel-input .selected-flag:hover,
-.react-tel-input .selected-flag.open {
-  background-color: var(--beige) !important;
-}
-
-.react-tel-input .country-list .country:hover {
-  background-color: #f0dbc9 !important;
-  color: black !important;
-}
-
-/* Responsive */
 @media (max-width: 768px) {
-  .register-card {
-    max-width: 500px;
+  .register-container {
+    padding: 0 3rem;
+    min-height: 110vh;
   }
 
-  .register-header {
-    padding: 24px 32px;
+  .register-container .register-header {
+    padding: 24px;
   }
 
-  .register-form-section {
-    padding: 32px;
+  .register-container .register-form-section {
+    padding: 24px;
   }
 
-  .form-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-
-  .form-column {
-    gap: 20px;
+  .register-container .form-column {
+    gap: 16px;
   }
 }
 
 @media (max-width: 480px) {
   .register-container {
-    padding: 10px;
+    padding: 5rem 3rem;
+  }
+  .register-container .form-grid {
+    gap: 1.5rem;
   }
 
-  .register-header {
-    padding: 20px 24px;
+  .register-container .register-btn {
+    font-size: 16px;
+    height: 48px;
   }
 
-  .register-form-section {
-    padding: 24px;
-  }
-
-  .form-column {
-    gap: 16px;
+  .register-container .login-link {
+    font-size: 14px;
   }
 }

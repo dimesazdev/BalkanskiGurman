@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './Layout';
-import Home from './pages/Home';
 import Restaurants from './pages/Restaurants';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -14,18 +13,27 @@ import AdminRestaurants from './pages/admin/AdminRestaurants';
 import RestaurantFormPage from './pages/admin/RestaurantFormPage';
 import AdminReviews from './pages/admin/AdminReviews';
 import AdminUsers from './pages/admin/AdminUsers';
+import ReportAnIssue from './pages/ReportAnIssue';
+import AdminIssues from './pages/admin/AdminIssues';
+import HomeRedirect from './components/HomeRedirect';
+import ScrollToTop from './components/ScrollToTop';
+import RequireOwner from './context/RequireOwner';
+import OwnerDashboard from './pages/owner/OwnerDashboard';
+import OwnerRestaurants from './pages/owner/OwnerRestaurants';
+import OwnerReviews from './pages/owner/OwnerReviews';
+import RequireAdminOrOwner from './context/RequireAdminOrOwner';
 
 const App = () => (
   <Router>
+    <ScrollToTop />
     <Routes>
       <Route element={<Layout />}> {/* using the layout of navbar + footer */}
         <Route path="/restaurants" element={<Restaurants />} />
-        <Route path="/auth/login" element={<Login />} />
-        <Route path="/auth/register" element={<Register />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/restaurants/:id" element={<RestaurantPage />} />
         <Route path="/me" element={<ManageProfile />} />
         <Route path="/restaurants/:id/reviews" element={<WriteReview />} />
+        <Route path="/issues" element={<ReportAnIssue />} />
         <Route path="/admin" element={
           <RequireAdmin>
             <AdminDashboard />
@@ -42,9 +50,9 @@ const App = () => (
           </RequireAdmin>
         } />
         <Route path="/admin/restaurants/edit/:id" element={
-          <RequireAdmin>
+          <RequireAdminOrOwner>
             <RestaurantFormPage />
-          </RequireAdmin>
+          </RequireAdminOrOwner>
         } />
         <Route path="/admin/reviews" element={
           <RequireAdmin>
@@ -56,8 +64,30 @@ const App = () => (
             <AdminUsers />
           </RequireAdmin>
         } />
+        <Route path="/admin/issues" element={
+          <RequireAdmin>
+            <AdminIssues />
+          </RequireAdmin>
+        } />
+        <Route path="/owner" element={
+          <RequireOwner>
+            <OwnerDashboard />
+          </RequireOwner>
+        } />
+        <Route path="/owner/restaurants" element={
+          <RequireOwner>
+            <OwnerRestaurants />
+          </RequireOwner>
+        } />
+        <Route path="/owner/reviews" element={
+          <RequireOwner>
+            <OwnerReviews />
+          </RequireOwner>
+        } />
       </Route>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<HomeRedirect />} />
+      <Route path="/auth/login" element={<Login />} />
+      <Route path="/auth/register" element={<Register />} />
       <Route path="/unauthorized" element={<div style={{ padding: "2rem", textAlign: "center", color: "#FFEEDB" }}><h1>403 - Not Authorized</h1><p>You do not have access to this page.</p></div>} />
     </Routes>
   </Router>

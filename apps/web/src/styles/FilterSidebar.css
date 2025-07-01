@@ -81,15 +81,6 @@
 }
 
 .filter-toggle-btn {
-    background-color: #BA3B46;
-    color: #FFEEDB;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-size: 1.2rem;
-    border-radius: 10px;
-    cursor: pointer;
-    font-family: 'Cormorant Garamond', serif;
-    margin: 1rem auto;
     display: none;
 }
 
@@ -100,8 +91,8 @@
     font-size: 2rem;
     cursor: pointer;
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 0.5rem;
+    right: 1.5rem;
     display: none;
 }
 
@@ -109,39 +100,59 @@
     margin-right: 0.5rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1070px) {
     .filter-toggle-btn {
         display: block;
+        flex: 1 1 auto;
+        min-width: max-content;
+        max-width: 100%;
     }
 
-    .filter-sidebar {
+    .filter-overlay {
         display: none;
     }
 
-    input#filter-toggle:checked ~ .filter-sidebar {
-        display: flex;
+    input#filter-toggle:checked~.filter-overlay {
+        display: block;
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: var(--beige);
-        padding: 2rem;
-        padding-top: 15%;
-        border-radius: 0;
-        z-index: 2000;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1500;
+        cursor: pointer;
+    }
+
+    .filter-sidebar {
+        display: flex;
         flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: -400px;
+        width: 90%;
+        max-width: 400px;
+        height: 100vh;
+        background: var(--beige);
+        padding: 2rem 1rem 1rem 1rem;
+        overflow-y: auto;
+        z-index: 2000;
+        transition: left 0.3s ease;
+        border-radius: 0;
     }
 
-    input#filter-toggle:checked ~ .filter-close-btn {
-        display: block;
-    }
-
-    input#filter-toggle {
-        display: none;
+    input#filter-toggle:checked~.filter-sidebar {
+        left: 0;
     }
 
     .filter-close-btn {
-        display: none;
+        display: block;
+        font-size: 2rem;
+        position: absolute;
+        cursor: pointer;
+    }
+
+    .filter-header {
+        margin-top: 2.5rem;
     }
 }

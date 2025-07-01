@@ -16,11 +16,10 @@ import "dayjs/locale/en";
 import "dayjs/locale/mk";
 import "dayjs/locale/me";
 import "dayjs/locale/sl";
-import { useAuth } from "../../context/AuthContext";
+import { useAzureTranslation } from "../../hooks/useAzureTranslation";
 
 const AdminReviewPopup = ({ review, onClose, onAction }) => {
   const { t, i18n } = useTranslation();
-  const { user } = useAuth();
 
   if (!review) return null;
 
@@ -30,9 +29,12 @@ const AdminReviewPopup = ({ review, onClose, onAction }) => {
     Rating,
     Comment,
     user: reviewer,
-    restaurant,
-    status
+    restaurant
   } = review;
+
+  const translationResult = useAzureTranslation(Comment);
+  const [translatedText, setTranslatedText] = useState("");
+  const [detectedLanguage, setDetectedLanguage] = useState("");
 
   const statusLabel = review.status?.Name?.toLowerCase();
   const [reviewerState, setReviewerState] = useState(reviewer);
@@ -77,6 +79,15 @@ const AdminReviewPopup = ({ review, onClose, onAction }) => {
     }
   };
 
+  useEffect(() => {
+    setTranslatedText(translationResult.translatedText);
+    setDetectedLanguage(translationResult.detectedLanguage);
+  }, [translationResult]);
+
+  const shouldTranslate =
+    detectedLanguage &&
+    detectedLanguage !== i18n.language &&
+    translatedText;
 
   return (
     <div className="admin-review-popup">
@@ -128,7 +139,32 @@ const AdminReviewPopup = ({ review, onClose, onAction }) => {
           <p><strong>{t("adminReview.forRestaurant")}:</strong> {restaurant.Name}</p>
           <p><strong>{t("adminReview.location")}:</strong> {restaurant.address?.City}, {restaurant.address?.Country}</p>
           <p className="rating-line"><strong>{t("adminReview.rating")}:</strong> <span className="stars">{renderStars(Rating)}</span> ({Rating.toFixed(1)})</p>
-          <p className="comment-line"><strong>{t("adminReview.review")}:</strong> {Comment}</p>
+          <div className="comment-line">
+            <p>{Comment}</p>
+            {shouldTranslate && (
+              <div style={{ marginTop: "8px", opacity: 0.9 }}>
+                <hr
+                  style={{
+                    border: "none",
+                    borderTop: "1px solid var(--red)",
+                    opacity: 0.5,
+                  }}
+                />
+                <p style={{ fontStyle: "italic", textAlign: "justify" }}>
+                  {translatedText}
+                </p>
+                <span style={{ fontSize: "0.85em", color: "var(--red)" }}>
+                  {t("labels.aiTranslated")}
+                </span>
+              </div>
+            )}
+          </div>
+          {review.RecheckExplanation && statusLabel === "recheck" && (
+            <div className="recheck-explanation" style={{ marginTop: "1rem", background: "white", padding: "0.75rem", borderRadius: "8px", border: "2px dashed var(--red)" }}>
+              <strong>{t("adminReview.recheckExplanation")}:</strong>
+              <p style={{ marginTop: "0.5rem" }}>{review.RecheckExplanation}</p>
+            </div>
+          )}
         </div>
 
         <div className="popup-actions">

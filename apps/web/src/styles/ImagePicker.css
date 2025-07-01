@@ -4,8 +4,7 @@
   flex-wrap: wrap;
   background-color: #FFEEDB;
   padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
+  border-radius: 20px;
 }
 
 .image-drop-zone label {

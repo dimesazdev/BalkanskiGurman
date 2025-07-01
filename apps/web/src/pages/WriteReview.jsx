@@ -5,9 +5,13 @@ import Title from "../components/Title";
 import Button from "../components/Button";
 import "../styles/WriteReview.css";
 import Icon from "@mdi/react";
-import { mdiImage, mdiStar, mdiStarOutline } from "@mdi/js";
+import { mdiStar, mdiStarOutline } from "@mdi/js";
 import { useAuth } from "../context/AuthContext";
 import Alert from "../components/Alert";
+import Popup from "../components/Popup";
+import { motion } from "framer-motion";
+import ImagePicker from "../components/ImagePicker";
+import Loading from "../components/Loading";
 
 function WriteReview() {
     const { id } = useParams();
@@ -20,100 +24,102 @@ function WriteReview() {
     const [comment, setComment] = useState("");
     const [images, setImages] = useState([]);
     const [agreed, setAgreed] = useState(false);
-    const [dragOver, setDragOver] = useState(false);
     const [restaurant, setRestaurant] = useState(null);
-    const [showAlert, setShowAlert] = useState(false);
     const [showGuidelines, setShowGuidelines] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
+    const [popup, setPopup] = useState(null);
+    const [showAlert, setShowAlert] = useState(null);
 
     useEffect(() => {
-        fetch(`http://localhost:3001/restaurants/${id}`)
-            .then(res => res.json())
-            .then(data => setRestaurant(data))
-            .catch(console.error);
+        const fetchRestaurant = async () => {
+            try {
+                const res = await fetch(`http://localhost:3001/restaurants/${id}`);
+                const data = await res.json();
+                setRestaurant(data);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        fetchRestaurant();
     }, [id]);
 
-    const isValidImage = (file) => {
-        const validTypes = ["image/png", "image/jpeg", "image/jpg"];
-        return validTypes.includes(file.type);
-    };
-
-    const handleImageDrop = (e) => {
-        e.preventDefault();
-        setDragOver(false);
-        const files = Array.from(e.dataTransfer.files);
-        if (!files.every(isValidImage)) {
-            setShowAlert(true);
-            return;
-        }
-
-        const newImages = files.slice(0, 3 - images.length).map(file => ({
-            file,
-            url: URL.createObjectURL(file)
-        }));
-        setImages(prev => [...prev, ...newImages]);
-    };
-
-    const handleImageUpload = (e) => {
-        const files = Array.from(e.target.files);
-        if (!files.every(isValidImage)) {
-            setShowAlert(true);
-            return;
-        }
-
-        const newImages = files.slice(0, 3 - images.length).map(file => ({
-            file,
-            url: URL.createObjectURL(file)
-        }));
-        setImages(prev => [...prev, ...newImages]);
-    };
-
     const handleSubmit = async () => {
-        if (!rating || !comment.trim() || !agreed) return;
+        if (!rating) {
+            setPopup({ message: t("alerts.reviewRatingRequired"), variant: "error" });
+            return;
+        }
+        if (!comment.trim()) {
+            setPopup({ message: t("alerts.reviewTextRequired"), variant: "error" });
+            return;
+        }
+        if (!agreed) {
+            setPopup({ message: t("alerts.reviewAgreementRequired"), variant: "error" });
+            return;
+        }
         if (!user) return;
 
-        const formData = new FormData();
-        images.forEach(img => formData.append("files", img.file));
+        setShowAlert({
+            message: t("alerts.reviewModerationNotice"),
+            buttonText: t("buttons.confirm"),
+            cancelText: t("buttons.cancel"),
+            onButtonClick: async () => {
+                setShowAlert(null);
+                setSubmitting(true);
 
-        try {
-            const uploadRes = await fetch("http://localhost:3001/upload/review-photos", {
-                method: "POST",
-                body: formData,
-            });
+                const formData = new FormData();
+                images.forEach(img => formData.append("files", img.file));
 
-            const uploadData = await uploadRes.json();
-            const urls = uploadData.urls || [];
+                try {
+                    const uploadRes = await fetch("http://localhost:3001/upload/review-photos", {
+                        method: "POST",
+                        body: formData,
+                    });
 
-            await fetch(`http://localhost:3001/restaurants/${id}/reviews`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${user.token}`
-                },
-                body: JSON.stringify({
-                    rating,
-                    comment,
-                    photoUrl1: urls[0] || null,
-                    photoUrl2: urls[1] || null,
-                    photoUrl3: urls[2] || null,
-                }),
-            });
+                    const uploadData = await uploadRes.json();
+                    const urls = uploadData.urls || [];
 
-            navigate(`/restaurants/${id}`, {
-                state: { popup: t("alerts.reviewSuccess") },
-            });
-        } catch (err) {
-            console.error("Error submitting review:", err);
-        }
+                    await fetch(`http://localhost:3001/restaurants/${id}/reviews`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${user.token}`
+                        },
+                        body: JSON.stringify({
+                            rating,
+                            comment,
+                            photoUrl1: urls[0] || null,
+                            photoUrl2: urls[1] || null,
+                            photoUrl3: urls[2] || null,
+                        }),
+                    });
+
+                    navigate(`/restaurants/${id}`, {
+                        state: { popup: t("alerts.reviewSuccess") },
+                    });
+                } catch (err) {
+                    console.error("Error submitting review:", err);
+                } finally {
+                    setSubmitting(false);
+                }
+            },
+            onClose: () => setShowAlert(null),
+        });
     };
 
-    if (!restaurant) return <div>Loading...</div>;
+    if (submitting) return <Loading />;
+    if (!restaurant) return <div>{t("alerts.notFound")}</div>;
 
     return (
         <div className="write-review-container">
             <Title className="write-review-title">{t("titles.writeReview")}</Title>
 
             <div className="review-grid">
-                <div className="restaurant-card-preview">
+                <motion.div
+                    className="restaurant-card-preview"
+                    initial={{ x: -100, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                >
                     <img src={restaurant?.images?.[0]?.Url} alt={restaurant?.Name} />
                     <div className="restaurant-bottom">
                         <h3 className="restaurant-name">{restaurant.Name}</h3>
@@ -121,9 +127,14 @@ function WriteReview() {
                             {restaurant.address?.Street}, {restaurant.address?.City}, {restaurant.address?.Country}
                         </p>
                     </div>
-                </div>
+                </motion.div>
 
-                <div className="review-form">
+                <motion.div
+                    className="review-form"
+                    initial={{ x: 100, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                >
                     <label>{t("labels.rating")} *</label>
                     <div className="stars-row">
                         {[1, 2, 3, 4, 5].map(i => (
@@ -146,51 +157,22 @@ function WriteReview() {
                         rows={6}
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}
-                        style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "1.1rem", marginBottom: "2rem" }}
+                        style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "1.1rem", marginBottom: "1rem" }}
                         placeholder={t("placeholders.writeReview")}
                     />
 
-                    <label>{t("labels.addPhotos")}</label>
-                    <div
-                        className={`image-drop-zone ${dragOver ? "drag-over" : ""}`}
-                        onDrop={handleImageDrop}
-                        onDragOver={(e) => {
-                            e.preventDefault();
-                            setDragOver(true);
-                        }}
-                        onDragLeave={() => setDragOver(false)}
-                    >
-                        {images.map((img, i) => (
-                            <div
-                                key={i}
-                                className="image-wrapper"
-                                onMouseEnter={(e) => e.currentTarget.classList.add("hover")}
-                                onMouseLeave={(e) => e.currentTarget.classList.remove("hover")}
-                            >
-                                <img src={img.url} alt={`Upload ${i}`} />
-                                <Button
-                                    variant="red"
-                                    className="remove-btn"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        setImages(prev => prev.filter((_, index) => index !== i));
-                                    }}
-                                >
-                                    {t("buttons.remove")}
-                                </Button>
-                            </div>
-                        ))}
-
-                        {images.length < 3 && (
-                            <label className="upload-placeholder">
-                                <input type="file" accept="image/*" multiple hidden onChange={handleImageUpload} />
-                                <div className="upload-square" style={{ textAlign: "center" }}>
-                                    <Icon path={mdiImage} size={1.5} color="var(--red)" />
-                                    <div>{t("labels.chooseOrDrop")}</div>
-                                </div>
-                            </label>
-                        )}
-                    </div>
+                    <label>{t("form.photos")}</label>
+                    <ImagePicker
+                        images={images}
+                        setImages={setImages}
+                        onInvalid={() =>
+                            setPopup({
+                                message: t("alerts.unsupportedFile"),
+                                variant: "error",
+                            })
+                        }
+                        maxImages={3}
+                    />
 
                     <span className="checkbox-wrapper">
                         <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
@@ -202,7 +184,7 @@ function WriteReview() {
                     <Button variant="red" onClick={handleSubmit}>
                         {t("buttons.postReview")}
                     </Button>
-                </div>
+                </motion.div>
             </div>
 
             {showGuidelines && (
@@ -215,13 +197,22 @@ function WriteReview() {
                 />
             )}
 
+            {popup && (
+                <Popup
+                    message={popup.message}
+                    variant={popup.variant}
+                    onClose={() => setPopup(null)}
+                    onConfirm={popup.onConfirm}
+                />
+            )}
+
             {showAlert && (
                 <Alert
-                    message={t("alerts.unsupportedFile")}
-                    buttonText={t("buttons.close")}
-                    onButtonClick={() => setShowAlert(false)}
-                    onClose={() => setShowAlert(false)}
-                    showCancel={false}
+                    message={showAlert.message}
+                    buttonText={showAlert.buttonText}
+                    cancelText={showAlert.cancelText}
+                    onButtonClick={showAlert.onButtonClick}
+                    onClose={showAlert.onClose}
                 />
             )}
         </div>

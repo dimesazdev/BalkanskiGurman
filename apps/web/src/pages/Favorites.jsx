@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import RestaurantCard from "../components/RestaurantCard";
 import FilterSidebar from "../components/FilterSidebar";
 import Popup from "../components/Popup";
@@ -9,6 +9,24 @@ import Alert from "../components/Alert";
 import { useAuth } from "../context/AuthContext";
 import "../styles/Restaurants.css";
 import "../styles/General.css";
+import SortBar from "../components/SortBar";
+import SearchBar from "../components/SearchBar";
+
+const FadeIn = ({ children }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "0px 0px -50px 0px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 function Favorites() {
   const { t } = useTranslation();
@@ -27,8 +45,16 @@ function Favorites() {
   const [popup, setPopup] = useState(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const [sortOption, setSortOption] = useState("rating");
-  const [showSortDropdown, setShowSortDropdown] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 1070);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobileView(window.innerWidth <= 1070);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -39,8 +65,11 @@ function Favorites() {
         .then(data => {
           setRawFavorites(data);
           setFavorites(data.map(fav => fav.RestaurantId));
+          setLoading(false);
         })
         .catch(console.error);
+    } else {
+      setLoading(false);
     }
   }, [user]);
 
@@ -140,7 +169,7 @@ function Favorites() {
         />
       )}
 
-      {favorites.length === 0 && (
+      {!loading && favorites.length === 0 && (
         <Alert
           message={t("alerts.noFavorites")}
           buttonText={t("buttons.backToRestaurants")}
@@ -149,9 +178,15 @@ function Favorites() {
         />
       )}
 
-      <motion.div initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.8 }}>
-        <FilterSidebar filters={filters} onChange={setFilters} />
-      </motion.div>
+      {!isMobileView && (
+        <motion.div
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <FilterSidebar filters={filters} onChange={setFilters} />
+        </motion.div>
+      )}
 
       <motion.div
         className="restaurants-right"
@@ -160,34 +195,33 @@ function Favorites() {
         transition={{ duration: 0.8 }}
       >
         <div className="settings-bar">
-          <div className="search-bar">
-            <input placeholder={t("search")} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-            <button type="submit"><i className="fa fa-search" /></button>
-          </div>
-          <div className="sort-bar">
-            <label>{t("sort.label")}</label>
-            <div className={`sort-select ${showSortDropdown ? "open" : ""}`} onClick={() => setShowSortDropdown(!showSortDropdown)}>
-              {t(`sort.${sortOption}`)} {showSortDropdown ? "▾" : "▸"}
-              {showSortDropdown && (
-                <ul className="sort-dropdown">
-                  <li onClick={() => setSortOption("rating")}>{t("sort.rating")}</li>
-                  <li onClick={() => setSortOption("priceLow")}>{t("sort.priceLow")}</li>
-                  <li onClick={() => setSortOption("priceHigh")}>{t("sort.priceHigh")}</li>
-                </ul>
-              )}
-            </div>
-          </div>
+          <SearchBar
+            placeholder={t("labels.searchByKeyword")}
+            value={searchTerm}
+            onChange={setSearchTerm}
+          />
+          <SortBar
+            label={t("sort.label")}
+            sortOptions={["rating", "priceLow", "priceHigh"]}
+            selected={sortOption}
+            onSelect={setSortOption}
+            t={t}
+          />
+          {isMobileView && (
+            <FilterSidebar filters={filters} onChange={setFilters} />
+          )}
         </div>
 
         <div className="restaurant-cards">
           {filteredRestaurants.map((restaurant) => (
-            <RestaurantCard
-              key={restaurant.RestaurantId}
-              restaurant={restaurant}
-              isFavorite={favorites.includes(restaurant.RestaurantId)}
-              onToggleFavorite={toggleFavorite}
-              searchTerm={searchTerm}
-            />
+            <FadeIn key={restaurant.RestaurantId}>
+              <RestaurantCard
+                restaurant={restaurant}
+                isFavorite={favorites.includes(restaurant.RestaurantId)}
+                onToggleFavorite={toggleFavorite}
+                searchTerm={searchTerm}
+              />
+            </FadeIn>
           ))}
         </div>
       </motion.div>

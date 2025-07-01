@@ -17,6 +17,7 @@ import FormTextarea from "../../components/FormTextarea";
 import CountryPicker from "../../components/CountryPicker";
 import CityPicker from "../../components/CityPicker";
 import "../../styles/RestaurantForm.css";
+import { motion } from "framer-motion";
 
 const amenityOptions = [
     { code: "DELIV", label: "filters.delivery" },
@@ -37,6 +38,10 @@ const RestaurantFormPage = () => {
     const navigate = useNavigate();
     const { user } = useAuth();
     const isEdit = !!id;
+
+    const [showNoWorkingHoursAlert, setShowNoWorkingHoursAlert] = useState(false);
+    const [showNoAmenitiesAlert, setShowNoAmenitiesAlert] = useState(false);
+    const ALLOWED_COUNTRY_ISOS = ["SI", "HR", "BA", "RS", "ME", "MK"];
 
     const [formData, setFormData] = useState({
         name: "",
@@ -74,7 +79,7 @@ const RestaurantFormPage = () => {
             .then(data => {
                 const cuisineOptions = data.map(c => ({
                     value: c.CuisineId,
-                    label: c.Name
+                    code: c.Code
                 }));
                 setFormData(prev => ({ ...prev, cuisineOptions }));
             });
@@ -193,21 +198,84 @@ const RestaurantFormPage = () => {
         return data.urls;
     };
 
-    const handleSave = async () => {
+    const validateForm = ({ allowNoWorkingHours = false, allowNoAmenities = false } = {}) => {
+        if (!formData.name.trim()) {
+            setPopup({ message: t("formErrors.nameRequired"), variant: "error" });
+            return "error";
+        }
+        if (!formData.priceRange) {
+            setPopup({ message: t("formErrors.priceRangeRequired"), variant: "error" });
+            return "error";
+        }
+        if (!formData.details.trim()) {
+            setPopup({ message: t("formErrors.detailsRequired"), variant: "error" });
+            return "error";
+        }
+        if (!formData.phoneNumber.trim()) {
+            setPopup({ message: t("formErrors.phoneRequired"), variant: "error" });
+            return "error";
+        }
+        if (!formData.cuisine) {
+            setPopup({ message: t("formErrors.cuisineRequired"), variant: "error" });
+            return "error";
+        }
+        if (!formData.country || !formData.city || !formData.street || !formData.postalCode) {
+            setPopup({ message: t("formErrors.addressRequired"), variant: "error" });
+            return "error";
+        }
+        if (!isEdit && images.length === 0) {
+            setPopup({ message: t("formErrors.imageRequired"), variant: "error" });
+            return "error";
+        }
+
+        const isEntryEmpty = (entry) => {
+            return (
+                entry.IsClosed ||
+                (
+                    (entry.OpenHour === "" || entry.OpenHour === null) &&
+                    (entry.OpenMinute === "" || entry.OpenMinute === null) &&
+                    (entry.CloseHour === "" || entry.CloseHour === null) &&
+                    (entry.CloseMinute === "" || entry.CloseMinute === null)
+                )
+            );
+        };
+
+        const allEmptyOrClosed = formData.workingHours.every(isEntryEmpty);
+        if (!allowNoWorkingHours && allEmptyOrClosed) {
+            return "workingHours";
+        }
+
+        if (!allowNoAmenities && formData.amenities.length === 0) {
+            return "amenities";
+        }
+
+        return "valid";
+    };
+
+    const handleSave = async ({ allowNoWorkingHours = false, allowNoAmenities = false } = {}) => {
+        const validationResult = validateForm({ allowNoWorkingHours, allowNoAmenities });
+
+        if (validationResult === "valid") {
+            await performSave();
+        } else if (validationResult === "workingHours") {
+            setShowNoWorkingHoursAlert(true);
+        } else if (validationResult === "amenities") {
+            setShowNoAmenitiesAlert(true);
+        }
+    };
+
+    const performSave = async () => {
         setShowAlert(true);
         const fullPhone = `${formData.countryCode}${formData.phoneNumber}`.replace(/\D/g, "");
         const cleanedCode = formData.countryCode.replace(/\D/g, "");
-
         const phoneNumberToSend =
             formData.phoneNumber.trim() === "" || fullPhone === cleanedCode
                 ? null
                 : `${formData.countryCode}${formData.phoneNumber}`;
-
         const relationWithOptionalDelete = (createArray) => {
             if (!createArray || createArray.length === 0) return undefined;
             return isEdit ? { deleteMany: {}, create: createArray } : { create: createArray };
         };
-
         const workingHourData = formData.workingHours.map(entry => ({
             DayOfWeek: entry.DayOfWeek,
             OpenHour: entry.IsClosed || entry.OpenHour === "" ? null : Number(entry.OpenHour),
@@ -216,18 +284,14 @@ const RestaurantFormPage = () => {
             CloseMinute: entry.IsClosed || entry.CloseMinute === "" ? null : Number(entry.CloseMinute),
             IsClosed: entry.IsClosed
         }));
-
         const cuisineData = formData.cuisine
             ? [{ cuisine: { connect: { CuisineId: Number(formData.cuisine) } } }]
             : [];
-
         const amenityData = formData.amenities.map(code => ({
             amenity: { connect: { Code: code } }
         }));
-
         const imageUrls = await uploadImages();
         const imageData = imageUrls.map(url => ({ Url: url }));
-
         try {
             const payload = {
                 Name: formData.name,
@@ -258,7 +322,6 @@ const RestaurantFormPage = () => {
                         }
                     }
             };
-
             const res = await fetch(`http://localhost:3001/restaurants${isEdit ? `/${id}` : ""}`, {
                 method: isEdit ? "PUT" : "POST",
                 headers: {
@@ -268,20 +331,28 @@ const RestaurantFormPage = () => {
                 body: JSON.stringify(payload)
             });
 
+            const ADMIN_ROLE_ID = "644f2db4-9bbb-40a2-8b7d-963623c0c64a";
+            const OWNER_ROLE_ID = "34fuihi4-5vj8-3v4e-43v5-3jfismy876s5";
+
             if (!res.ok) throw new Error();
 
             setPopup({
-                message: isEdit ? "Restaurant updated successfully" : "Restaurant created successfully",
+                message: t(isEdit ? "alerts.restaurantUpdated" : "alerts.restaurantCreated"),
                 variant: "success"
             });
 
             setTimeout(() => {
-                navigate("/admin/restaurants");
-            }, 2000);
+                if (user.role === ADMIN_ROLE_ID) {
+                    navigate("/admin/restaurants");
+                } else if (user.role === OWNER_ROLE_ID) {
+                    navigate("/owner/restaurants");
+                } else {
+                    navigate("/");
+                }
+            }, 1500);
         } catch (err) {
-            console.error("❌ Failed to save restaurant:", err);
             setPopup({
-                message: "An error occurred. Please check the data and try again.",
+                message: t("alerts.restaurantError"),
                 variant: "error"
             });
         } finally {
@@ -290,11 +361,41 @@ const RestaurantFormPage = () => {
     };
 
     return (
-        <div className="restaurant-form-page">
+        <motion.div
+            className="restaurant-form-page"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+        >
             {popup && <Popup {...popup} onClose={() => setPopup(null)} />}
+            {showNoWorkingHoursAlert && (
+                <Alert
+                    message={t("formErrors.noWorkingHoursConfirm")}
+                    buttonText={t("buttons.confirm")}
+                    onButtonClick={() => {
+                        setShowNoWorkingHoursAlert(false);
+                        handleSave({ allowNoWorkingHours: true });
+                    }}
+                    onClose={() => setShowNoWorkingHoursAlert(false)}
+                    cancelText={t('buttons.cancel')}
+                />
+            )}
+
+            {showNoAmenitiesAlert && (
+                <Alert
+                    message={t("formErrors.noAmenitiesConfirm")}
+                    buttonText={t("buttons.confirm")}
+                    onButtonClick={() => {
+                        setShowNoAmenitiesAlert(false);
+                        handleSave({ allowNoWorkingHours: true, allowNoAmenities: true });
+                    }}
+                    onClose={() => setShowNoAmenitiesAlert(false)}
+                    cancelText={t('buttons.cancel')}
+                />
+            )}
             {showAlert && (
                 <Alert
-                    message={isEdit ? "Saving changes..." : "Creating restaurant..."}
+                    message={isEdit ? t("alerts.savingRestaurant") : t("alerts.creatingRestaurant")}
                     buttonText="Close"
                     onButtonClick={() => setShowAlert(false)}
                     showCancel={false}
@@ -306,14 +407,14 @@ const RestaurantFormPage = () => {
                 <div id="first-grid">
                     <FormInput
                         id="name"
-                        label={t("form.name")}
+                        label={t("restaurantForm.labels.restaurantName")}
                         value={formData.name}
                         onChange={handleChange}
                         placeholder={t("placeholders.restaurantName")}
                     />
                     <FormSelect
                         name="priceRange"
-                        label={t("form.priceRange")}
+                        label={t("restaurantForm.labels.priceRange")}
                         value={formData.priceRange}
                         onChange={handleChange}
                         options={[
@@ -326,7 +427,7 @@ const RestaurantFormPage = () => {
                     <div id="details-wrapper">
                         <FormTextarea
                             id="details"
-                            label={t("form.details")}
+                            label={t("restaurantForm.labels.details")}
                             value={formData.details}
                             onChange={handleChange}
                             placeholder={t("placeholders.restaurantDetails")}
@@ -338,14 +439,29 @@ const RestaurantFormPage = () => {
                     <PhoneNumberPicker value={formData} onChange={handlePhoneChange} />
                     <FormSelect
                         name="cuisine"
-                        label={t("form.cuisines")}
+                        label={t("restaurantForm.labels.cuisine")}
                         value={formData.cuisine}
                         onChange={handleChange}
-                        options={formData.cuisineOptions || []}
+                        options={(formData.cuisineOptions || []).map(option => ({
+                            value: option.value,
+                            label: t(`cuisines.${option.code}`)
+                        }))}
                         placeholder={t("form.selectCuisine")}
                     />
-                    <FormInput id="website" label={t("form.website")} value={formData.website} onChange={handleChange} placeholder="https://example.com" />
-                    <FormInput id="menuUrl" label={t("form.menuUrl")} value={formData.menuUrl} onChange={handleChange} placeholder="https://example.com/menu" />
+                    <FormInput
+                        id="website"
+                        label={t("restaurantForm.labels.website")}
+                        value={formData.website}
+                        onChange={handleChange}
+                        placeholder={t("restaurantForm.placeholder.website")}
+                    />
+                    <FormInput
+                        id="menuUrl"
+                        label={t("restaurantForm.labels.menuUrl")}
+                        value={formData.menuUrl}
+                        onChange={handleChange}
+                        placeholder={t("restaurantForm.placeholder.menuUrl")}
+                    />
                 </div>
 
                 {/* Section 2: Image Gallery */}
@@ -357,12 +473,25 @@ const RestaurantFormPage = () => {
                 {/* Section 3: Address */}
                 <Title>{t("form.address")}</Title>
                 <div className="form-grid two-col">
-                    <FormInput id="street" label={t("form.street")} value={formData.street} onChange={handleChange} placeholder="e.g. Bulevar Partizanski Odredi 23" />
-                    <FormInput id="postalCode" label={t("form.postalCode")} value={formData.postalCode} onChange={handleChange} placeholder="e.g. 1000" />
+                    <FormInput
+                        id="street"
+                        label={t("restaurantForm.labels.street")}
+                        value={formData.street}
+                        onChange={handleChange}
+                        placeholder={t("restaurantForm.placeholder.street")}
+                    />
+                    <FormInput
+                        id="postalCode"
+                        label={t("restaurantForm.labels.postalCode")}
+                        value={formData.postalCode}
+                        onChange={handleChange}
+                        placeholder={t("restaurantForm.placeholder.postalCode")}
+                    />
                     <CountryPicker
                         value={formData.countryIso}
                         onChange={handleCountryChange}
                         required
+                        allowedIsoCodes={ALLOWED_COUNTRY_ISOS}
                     />
                     <CityPicker
                         countryIso={formData.countryIso}
@@ -399,7 +528,7 @@ const RestaurantFormPage = () => {
                                                 }}
                                                 options={Array.from({ length: 24 }, (_, i) => ({ value: i, label: i.toString().padStart(2, "0") }))}
                                                 disabled={isClosed}
-                                                placeholder="hh"
+                                                placeholder={t("restaurantForm.placeholder.hh")}
                                             />
                                             <FormSelect
                                                 name="OpenMinute"
@@ -409,7 +538,7 @@ const RestaurantFormPage = () => {
                                                     handleWorkingHourChange(i, "OpenMinute", val);
                                                 }} options={Array.from({ length: 60 }, (_, i) => ({ value: i, label: i.toString().padStart(2, "0") }))}
                                                 disabled={isClosed}
-                                                placeholder="mm"
+                                                placeholder={t("restaurantForm.placeholder.mm")}
                                             />
                                         </div>
                                     </div>
@@ -425,7 +554,7 @@ const RestaurantFormPage = () => {
                                                     handleWorkingHourChange(i, "CloseHour", val);
                                                 }} options={Array.from({ length: 24 }, (_, i) => ({ value: i, label: i.toString().padStart(2, "0") }))}
                                                 disabled={isClosed}
-                                                placeholder="hh"
+                                                placeholder={t("restaurantForm.placeholder.hh")}
                                             />
                                             <FormSelect
                                                 name="CloseMinute"
@@ -436,7 +565,7 @@ const RestaurantFormPage = () => {
                                                 }}
                                                 options={Array.from({ length: 60 }, (_, i) => ({ value: i, label: i.toString().padStart(2, "0") }))}
                                                 disabled={isClosed}
-                                                placeholder="mm"
+                                                placeholder={t("restaurantForm.placeholder.mm")}
                                             />
                                         </div>
                                     </div>
@@ -578,7 +707,7 @@ const RestaurantFormPage = () => {
                     </Button>
                 </div>
             </form>
-        </div>
+        </motion.div>
     );
 };
 

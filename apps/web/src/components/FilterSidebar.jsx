@@ -3,11 +3,7 @@ import "../styles/FilterSidebar.css";
 import { useTranslation } from "react-i18next";
 import Icon from "@mdi/react";
 import Button from "./Button";
-import {
-  mdiStar,
-  mdiStarHalfFull,
-  mdiStarOutline
-} from "@mdi/js";
+import { mdiStar, mdiStarHalfFull, mdiStarOutline } from "@mdi/js";
 import mk from "../images/mk-flag-icon.svg";
 import sr from "../images/sr-flag-icon.svg";
 import sl from "../images/si-flag-icon.svg";
@@ -88,9 +84,19 @@ const FilterSidebar = ({ filters, onChange }) => {
   return (
     <>
       <input type="checkbox" id="filter-toggle" hidden />
-      <label htmlFor="filter-toggle" className="filter-toggle-btn">
+
+      <Button
+        variant="red"
+        onClick={() => {
+          document.getElementById("filter-toggle").checked = true;
+        }}
+        className="filter-toggle-btn"
+      >
         {t("filters.title")}
-      </label>
+      </Button>
+
+      {/* The overlay */}
+      <label htmlFor="filter-toggle" className="filter-overlay"></label>
 
       <div className="filter-sidebar">
         <label htmlFor="filter-toggle" className="filter-close-btn">×</label>
@@ -103,7 +109,7 @@ const FilterSidebar = ({ filters, onChange }) => {
         </div>
 
         <div className="filter-section">
-          <label>{t("filters.price")}</label>
+          <label>{t("filters.price")} ({t("labels.perPerson")})</label>
           {[{ code: 1, label: "filters.5-10€" }, { code: 2, label: "filters.10-20€" }, { code: 3, label: "filters.20€+" }]
             .map(p => renderCheckbox("price", p.code, p.label))}
         </div>

@@ -1,0 +1,116 @@
+.report-issue-page {
+  padding: 2rem 1rem;
+}
+
+.report-issue-form {
+  max-width: 750px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.report-issue-page .title {
+  width: 100%;
+  text-align: center;
+}
+
+.report-issue-page .submit-btn {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  display: block;
+}
+
+.report-issue-page .restaurant-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.report-issue-page .restaurant-picker-card {
+  background: rgba(255, 238, 219, 0.1);
+  border: 1px solid rgba(255, 238, 219, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, border 0.2s;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.report-issue-page .restaurant-picker-card:hover {
+  transform: scale(1.03);
+  border: 1px solid var(--red);
+}
+
+.report-issue-page .restaurant-picker-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.report-issue-page .restaurant-picker-name {
+  font-weight: bold;
+  margin-top: 0.5rem;
+  font-family: 'Cormorant Garamond', serif;
+  color: #FFEEDB;
+}
+
+.report-issue-page .restaurant-picker-address {
+  font-size: 0.9rem;
+  color: #cfcfcf;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* Carousel container and nav buttons */
+.report-issue-page .carousel-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  position: relative;
+}
+
+/* Arrows */
+.report-issue-page .carousel-nav {
+  background: none;
+  border: none;
+  color: #FFEEDB;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.2s;
+}
+
+.report-issue-page .carousel-nav:hover {
+  color: var(--red);
+}
+
+/* Scrollable carousel */
+.report-issue-page .carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 1rem;
+  flex: 1;
+  padding: 0.25rem;
+}
+
+/* Each card in carousel */
+.report-issue-page .carousel-item {
+  flex: 0 0 300px;
+  max-width: 300px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.report-issue-page .carousel-item:hover {
+  transform: scale(1.02);
+}
+
+/* If selected, make it full width */
+.report-issue-page .restaurant-card-preview.full-width {
+  width: 100%;
+  max-width: none;
+}

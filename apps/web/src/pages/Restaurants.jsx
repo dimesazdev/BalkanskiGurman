@@ -9,13 +9,39 @@ import Alert from "../components/Alert";
 import { useAuth } from "../context/AuthContext";
 import "../styles/Restaurants.css";
 import "../styles/General.css";
-import { Icon } from "@mdi/react";
-import { mdiMagnify } from "@mdi/js";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+import SortBar from "../components/SortBar";
+import SearchBar from "../components/SearchBar";
+
+const FadeInSection = ({ children, delay = 0 }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "0px 0px -50px 0px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, ease: "easeOut", delay }}
+      style={{ width: "100%" }}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 function Restaurants() {
   const { t } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
+
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 1070);
+  useEffect(() => {
+    const handleResize = () => setIsMobileView(window.innerWidth <= 1070);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const [restaurants, setRestaurants] = useState([]);
   const [favorites, setFavorites] = useState([]);
@@ -29,21 +55,28 @@ function Restaurants() {
   const [popup, setPopup] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("rating");
-  const [showSortDropdown, setShowSortDropdown] = useState(false);
   const [showLoginAlert, setShowLoginAlert] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:3001/restaurants")
-      .then(res => res.json())
-      .then(data => setRestaurants(data));
+    const fetchData = async () => {
+      try {
+        const res = await fetch("http://localhost:3001/restaurants");
+        const data = await res.json();
+        setRestaurants(data);
 
-    if (user) {
-      fetch("http://localhost:3001/favorites", {
-        headers: { Authorization: `Bearer ${user.token}` },
-      })
-        .then(res => res.json())
-        .then(data => setFavorites(data.map(f => f.RestaurantId)));
-    }
+        if (user) {
+          const favRes = await fetch("http://localhost:3001/favorites", {
+            headers: { Authorization: `Bearer ${user.token}` },
+          });
+          const favData = await favRes.json();
+          setFavorites(favData.map(f => f.RestaurantId));
+        }
+      } catch (err) {
+        console.error("Failed to fetch data:", err);
+      }
+    };
+
+    fetchData();
   }, [user]);
 
   const showPopup = (message, variant = "error") => {
@@ -132,59 +165,66 @@ function Restaurants() {
     });
 
   return (
-    <div className="restaurants">
-      {popup && <Popup message={popup.message} variant={popup.variant} onClose={() => setPopup(null)} />}
-      {showLoginAlert && (
-        <Alert
-          message={t("alerts.loginRequired")}
-          buttonText={t("navbar.login")}
-          onButtonClick={() => navigate("/auth/login")}
-          onClose={() => setShowLoginAlert(false)}
-        />
-      )}
+    <>
+      <div className="restaurants">
+        {popup && <Popup message={popup.message} variant={popup.variant} onClose={() => setPopup(null)} />}
+        {showLoginAlert && (
+          <Alert
+            message={t("alerts.loginRequired")}
+            buttonText={t("navbar.login")}
+            onButtonClick={() => navigate("/auth/login")}
+            onClose={() => setShowLoginAlert(false)}
+          />
+        )}
 
-      <motion.div initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.8 }}>
-        <FilterSidebar filters={filters} onChange={setFilters} />
-      </motion.div>
+        {!isMobileView && (
+          <motion.div
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <FilterSidebar filters={filters} onChange={setFilters} />
+          </motion.div>
+        )}
 
-      <motion.div className="restaurants-right" initial={{ x: 100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.8 }}>
-        <div className="settings-bar">
-          <div className="search-bar">
-            <input placeholder={t("labels.searchByKeyword")} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-            <button><Icon path={mdiMagnify} size={1} color="#2f2f2f" /></button>
+        <motion.div className="restaurants-right" initial={{ x: 100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.8 }}>
+          <div className="settings-bar">
+            <SearchBar
+              placeholder={t("labels.searchByKeyword")}
+              value={searchTerm}
+              onChange={setSearchTerm}
+            />
+            <SortBar
+              label={t("sort.label")}
+              sortOptions={["rating", "priceLow", "priceHigh"]}
+              selected={sortOption}
+              onSelect={setSortOption}
+              t={t}
+            />
+            {isMobileView && (
+              <FilterSidebar filters={filters} onChange={setFilters} />
+            )}
           </div>
-          <div className="sort-bar">
-            <label>{t("sort.label")}</label>
-            <div className={`sort-select ${showSortDropdown ? "open" : ""}`} onClick={() => setShowSortDropdown(!showSortDropdown)}>
-              {t(`sort.${sortOption}`)} {showSortDropdown ? "▾" : "▸"}
-              {showSortDropdown && (
-                <ul className="sort-dropdown">
-                  <li onClick={() => setSortOption("rating")}>{t("sort.rating")}</li>
-                  <li onClick={() => setSortOption("priceLow")}>{t("sort.priceLow")}</li>
-                  <li onClick={() => setSortOption("priceHigh")}>{t("sort.priceHigh")}</li>
-                </ul>
-              )}
-            </div>
-          </div>
-        </div>
 
-        <div className="restaurant-cards">
-          {filteredRestaurants.length === 0 ? (
-            <p style={{ color: "var(--beige)", marginTop: "2rem", fontSize: "1.1rem" }}>{t("noResults")}</p>
-          ) : (
-            filteredRestaurants.map((restaurant) => (
-              <RestaurantCard
-                key={restaurant.RestaurantId}
-                restaurant={restaurant}
-                isFavorite={favorites.includes(restaurant.RestaurantId)}
-                onToggleFavorite={toggleFavorite}
-                searchTerm={searchTerm}
-              />
-            ))
-          )}
-        </div>
-      </motion.div>
-    </div>
+          <div className="restaurant-cards">
+            {filteredRestaurants.length === 0 ? (
+              <p style={{ color: "var(--beige)", marginTop: "2rem", fontSize: "1.1rem" }}>{t("noResults")}</p>
+            ) : (
+              filteredRestaurants.map((restaurant, index) => (
+                <FadeInSection key={restaurant.RestaurantId} delay={index * 0.05}>
+                  <RestaurantCard
+                    restaurant={restaurant}
+                    isFavorite={favorites.includes(restaurant.RestaurantId)}
+                    onToggleFavorite={toggleFavorite}
+                    searchTerm={searchTerm}
+                  />
+                </FadeInSection>
+              ))
+            )}
+          </div>
+        </motion.div>
+      </div>
+    </>
   );
 }
 

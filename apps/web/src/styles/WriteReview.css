@@ -1,6 +1,7 @@
 .write-review-container {
   padding: 1rem;
   min-height: 100vh;
+  margin: 0 auto;
 
   body,
   html {
@@ -25,7 +26,7 @@
     flex: 1 1 300px;
     max-width: 300px;
     background-color: #FFEEDB;
-    border-radius: 12px;
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -79,78 +80,11 @@
 
   .review-form textarea {
     width: 100%;
-    border-radius: 8px;
+    border-radius: 20px;
     padding: 0.75rem;
     border: none;
     background-color: #FFEEDB;
     resize: vertical;
-  }
-
-  .image-drop-zone {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    background-color: #FFEEDB;
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-
-    label {
-      color: #333;
-      margin: 0;
-    }
-  }
-
-  .image-wrapper {
-    position: relative;
-    width: 150px;
-    height: 150px;
-    align-items: center;
-  }
-
-  .image-wrapper img {
-    height: 150px;
-    width: 150px;
-    object-fit: cover;
-    transition: opacity 0.2s ease;
-  }
-
-  .image-wrapper.hover img {
-    opacity: 0.5;
-  }
-
-  .remove-btn {
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--red);
-    color: white;
-    border: none;
-    padding: 0.2rem 0.6rem;
-    border-radius: 4px;
-    font-weight: bold;
-    cursor: pointer;
-    display: none;
-  }
-
-  .image-wrapper.hover .remove-btn {
-    display: flex;
-    align-items: center;
-  }
-
-  .upload-placeholder {
-    width: 150px;
-    height: 150px;
-    border: 2px dashed #ccc;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff0e0;
-    font-size: 0.85rem;
-    text-align: center;
-    cursor: pointer;
   }
 
   .checkbox-wrapper {
@@ -166,8 +100,8 @@
     background-color: #FFEEDB;
     border: 1px solid black;
     border-radius: 4px;
-    width: 25px;
-    height: 25px;
+    min-width: 25px;
+    min-height: 25px;
     cursor: pointer;
     display: inline-block;
     position: relative;

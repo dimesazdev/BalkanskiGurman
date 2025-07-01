@@ -4,118 +4,30 @@
     gap: 2rem;
 }
 
-.restaurant-cards {
+.restaurants .restaurant-cards {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
-.restaurants-right {
+.restaurants .restaurants-right {
     width: 100%;
 }
 
-.search-group {
+.restaurants .search-group {
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 
-.search-bar {
+.restaurants .settings-bar {
     display: flex;
-    align-items: center;
-    background-color: #FFEEDB;
-    padding: 0 1rem;
-    border-radius: 20px;
-    height: 3rem;
-    max-width: 600px;
-    width: 100%;
-}
-
-.search-bar input {
-    flex: 1;
-    font-size: 1.2rem;
-    font-family: 'Cormorant Garamond', sans-serif;
-    border: none;
-    background: none;
-    outline: none;
-    height: 100%;
-}
-
-.search-bar button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding-left: 0.5rem;
-    height: 100%;
-    display: flex;
-    align-items: center;
-}
-
-.sort-select {
-    background-color: #FFEEDB;
-    color: #2f2f2f;
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    position: relative;
-    cursor: pointer;
-    text-align: center;
-    font-family: 'Cormorant Garamond', sans-serif;
-}
-
-.sort-select.open {
-    border-radius: 20px 20px 0 0;
-}
-
-.sort-dropdown {
-    list-style: none;
-    margin: 0;
-    padding: 0.5rem 0;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #FFEEDB;
-    border-radius: 0 0 20px 20px;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.sort-dropdown li {
-    padding: 0.5rem;
-    font-size: 1rem;
-    color: #2f2f2f;
-    cursor: pointer;
-    text-align: center;
-}
-
-.sort-dropdown li:hover {
-    background-color: #BA3B46;
-    color: white;
-}
-
-.settings-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 1rem;
     margin-bottom: 10px;
-}
-
-.sort-bar {
-    display: flex;
-    align-items: center;
-    gap: 10px;
     width: 100%;
-}
-
-.sort-bar label {
-    color: #FFEEDB;
-    font-family: 'Cormorant Garamond', sans-serif;
-    font-size: 1.4rem;
 }
 
 @media (min-width: 768px) {
@@ -124,8 +36,24 @@
         flex-direction: row;
     }
 
-    .search-bar,
-    .sort-bar {
+    .restaurants .search-bar {
         margin-top: 0;
     }
 }
+
+@media (max-width: 780px) {
+    .restaurants .settings-bar {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 550px) {
+    .restaurants .search-bar {
+        margin-top: 1rem;
+    }
+}
+
+.admin-restaurants-page {
+    padding: 2rem 1rem;
+}
+

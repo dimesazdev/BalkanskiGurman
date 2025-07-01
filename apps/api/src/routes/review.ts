@@ -20,6 +20,15 @@ router.get('/:id', async (req, res) => {
       return;
     }
 
+    if (review.StatusId !== 5) {
+      const { userId, role } = req.user || {};
+      const isAdmin = role === 'ADMIN';
+      const isOwner = role === 'OWNER' && review.restaurant?.ClaimedByUserId === userId;
+      if (!isAdmin && !isOwner)
+        res.status(403).json({ error: 'Forbidden' });
+      return;
+    }
+
     res.json(review);
   } catch (error) {
     console.error('Error fetching review:', error);
@@ -99,7 +108,10 @@ router.put('/:id', authenticate, async (req, res) => {
 
       // Recalculate average
       const { _avg } = await tx.review.aggregate({
-        where: { RestaurantId: review.RestaurantId },
+        where: {
+          RestaurantId: review.RestaurantId,
+          StatusId: { in: [5, 7] }
+        },
         _avg: { Rating: true }
       });
 
@@ -116,15 +128,16 @@ router.put('/:id', authenticate, async (req, res) => {
   }
 });
 
-// PUT Approve/Reject review (Admin action)
-router.put('/:id/status', authenticate, requireRole("Admin"), async (req, res) => {
+// PUT Change review status
+router.put('/:id/status', authenticate, async (req, res) => {
   try {
     const id = Number(req.params.id);
-    const action = req.body.action as "approve" | "reject";
+    const action = req.body.action as "approve" | "reject" | "recheck";
 
-    const statusMap: Record<"approve" | "reject", number> = {
+    const statusMap: Record<"approve" | "reject" | "recheck", number> = {
       approve: 5,
       reject: 6,
+      recheck: 7,
     };
 
     if (!(action in statusMap)) {
@@ -132,14 +145,62 @@ router.put('/:id/status', authenticate, requireRole("Admin"), async (req, res) =
       return;
     }
 
+    const review = await prisma.review.findUnique({
+      where: { ReviewId: id },
+      select: {
+        RestaurantId: true,
+        restaurant: { select: { ClaimedByUserId: true } }
+      }
+    });
+
+    if (!review) {
+      res.status(404).json({ error: "Review not found" });
+      return;
+    }
+
+    const { userId, role } = req.user;
+    const isAdmin = role === "ADMIN";
+    const isOwner = role === "OWNER" && review.restaurant?.ClaimedByUserId === userId;
+
+    if (action === "recheck") {
+      if (!isOwner) {
+        res.status(403).json({ error: "Only the owner can request a recheck." });
+        return;
+      }
+    } else {
+      if (!isAdmin) {
+        res.status(403).json({ error: "Only admins can approve or reject." });
+        return;
+      }
+    }
+
     const updated = await prisma.review.update({
       where: { ReviewId: id },
       data: {
         StatusId: statusMap[action],
         UpdatedAt: new Date(),
+        ...(action === "recheck" && {
+          RecheckExplanation: req.body.recheckExplanation || null,
+          HasRequestedRecheck: true
+        })
       },
       include: { status: true }
     });
+
+    if (action === "approve" || action === "reject") {
+      const { _avg } = await prisma.review.aggregate({
+        where: {
+          RestaurantId: review.RestaurantId,
+          StatusId: { in: [5, 7] }
+        },
+        _avg: { Rating: true }
+      });
+
+      await prisma.restaurant.update({
+        where: { RestaurantId: review.RestaurantId },
+        data: { AverageRating: _avg.Rating ?? 0 }
+      });
+    }
 
     res.json(updated);
   } catch (err) {
@@ -166,7 +227,10 @@ router.delete('/:id', authenticate, async (req, res) => {
       await tx.review.delete({ where: { ReviewId: reviewId } });
 
       const { _avg } = await tx.review.aggregate({
-        where: { RestaurantId: review.RestaurantId },
+        where: {
+          RestaurantId: review.RestaurantId,
+          StatusId: { in: [5, 7] }
+        },
         _avg: { Rating: true }
       });
 

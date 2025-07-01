@@ -1,0 +1,31 @@
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #FFEEDB;
+    padding: 0 1rem;
+    border-radius: 20px;
+    height: 3rem;
+    flex: 1 1 250px;
+    min-width: 200px;
+    max-width: 480px;
+}
+
+.search-bar input {
+    flex: 1;
+    font-size: 1.2rem;
+    font-family: 'Cormorant Garamond', sans-serif;
+    border: none;
+    background: none;
+    outline: none;
+    height: 100%;
+}
+
+.search-bar button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding-left: 0.5rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}

@@ -1,18 +1,3 @@
-:root {
-  --beige: #FFEEDB;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: "Cormorant Garamond", serif;
-  font-size: 16px;
-}
-
 /* Shared Input Styling */
 .custom-select, .custom-phone-input {
   height: 3.5rem;

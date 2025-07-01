@@ -24,7 +24,8 @@ router.get('/', async (req, res) => {
           }
         },
         images: true,
-        reviews: true
+        reviews: true,
+        address: true
       }
     });
 
@@ -35,11 +36,13 @@ router.get('/', async (req, res) => {
       AverageRating: r.AverageRating,
       Details: r.Details,
       IsClaimed: r.IsClaimed,
+      ClaimedByUserId: r.ClaimedByUserId,
       cuisines: r.cuisines.map(rc => rc.cuisine),
       amenities: r.amenities.map(ra => ra.amenity),
       workingHours: r.workingHours,
       images: r.images,
-      reviews: r.reviews
+      reviews: r.reviews,
+      address: r.address
     }));
 
     res.json(transformed);
@@ -75,6 +78,63 @@ router.get('/:id', async (req, res) => {
     console.error('Error fetching restaurant:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
+});
+
+// GET reviews for owned restaurant (OWNER)
+router.get('/:id/reviews/owner', authenticate, async (req, res) => {
+  const restaurantId = Number(req.params.id);
+  const restaurant = await prisma.restaurant.findUnique({
+    where: { RestaurantId: restaurantId },
+    select: { ClaimedByUserId: true }
+  });
+
+  if (!restaurant) {
+    res.status(404).json({ error: 'Not found' });
+    return;
+  }
+
+  const { userId, role } = req.user;
+  const isAdmin = role === 'ADMIN';
+  const isOwner = role === 'OWNER' && restaurant.ClaimedByUserId === userId;
+
+  if (!isAdmin && !isOwner) {
+    res.status(403).json({ error: 'Forbidden' });
+    return;
+  }
+
+  const reviews = await prisma.review.findMany({
+    where: { RestaurantId: restaurantId },
+    include: {
+      user: {
+        select: {
+          UserId: true,
+          Name: true,
+          Surname: true,
+          ProfilePictureUrl: true,
+          City: true,
+          Country: true,
+          StatusId: true,
+          status: true,
+          _count: { select: { reviews: true } }
+        }
+      },
+      restaurant: {
+        select: {
+          Name: true,
+          address: {
+            select: {
+              City: true,
+              Country: true
+            }
+          },
+          Details: true
+        }
+      },
+      status: true
+    }
+  });
+
+  res.json(reviews);
 });
 
 // CREATE a restaurant
@@ -188,7 +248,10 @@ router.post('/:id/reviews', authenticate, async (req, res) => {
 
       // 2. Recalculate the average
       const { _avg } = await tx.review.aggregate({
-        where: { RestaurantId: restaurantId },
+        where: {
+          RestaurantId: restaurantId,
+          StatusId: { in: [5, 7] }
+        },
         _avg: { Rating: true }
       });
 

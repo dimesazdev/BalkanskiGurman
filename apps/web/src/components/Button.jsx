@@ -9,6 +9,7 @@ const Button = ({ children, onClick, type = "button", variant = "beige", classNa
     beige: "btn-beige",
     yellow: "btn-yellow",
     green: "btn-green",
+    blue: "btn-blue",
     "red-outline": "btn-red-outline",
     "beige-outline": "btn-beige-outline",
     "red-small": "btn-red-small",

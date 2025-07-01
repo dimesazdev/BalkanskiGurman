@@ -3,11 +3,12 @@ import Title from "../../components/Title";
 import AdminReviewCard from "../../components/admin/AdminReviewCard";
 import AdminReviewPopup from "../../components/admin/AdminReviewPopup";
 import "../../styles/AdminReviews.css";
-import { mdiMagnify } from "@mdi/js";
-import Icon from "@mdi/react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../context/AuthContext";
 import Popup from "../../components/Popup";
+import { motion } from "framer-motion";
+import SearchBar from "../../components/SearchBar";
+import SortBar from "../../components/SortBar";
 
 const AdminReviews = () => {
     const { t } = useTranslation();
@@ -17,7 +18,6 @@ const AdminReviews = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [sortOption, setSortOption] = useState("newest");
     const [statusFilter, setStatusFilter] = useState("all");
-    const [showSortDropdown, setShowSortDropdown] = useState(false);
     const [selectedReview, setSelectedReview] = useState(null);
     const [popup, setPopup] = useState(null);
 
@@ -130,15 +130,25 @@ const AdminReviews = () => {
     };
 
     return (
-        <div className="admin-reviews-page">
+        <motion.div
+            className="admin-reviews-page"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+        >
             {popup && <Popup {...popup} onClose={() => setPopup(null)} />}
 
             <Title>{t("labels.reviews")}</Title>
 
-            <div className="review-header-row">
+            <motion.div
+                className="review-header-row"
+                initial={{ y: -30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+            >
                 <div className="top-row">
                     <div className="review-filters">
-                        {["all", "pending", "approved", "rejected"].map((status) => (
+                        {["all", "pending", "approved", "rejected", "recheck"].map((status) => (
                             <button
                                 key={status}
                                 className={`status-filter ${status === statusFilter ? "active" : ""} ${status !== "all" ? status : ""}`}
@@ -149,43 +159,34 @@ const AdminReviews = () => {
                         ))}
                     </div>
 
-                    <div className="search-bar">
-                        <input
-                            placeholder={t("labels.searchByKeyword")}
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                        <button>
-                            <Icon path={mdiMagnify} size={1} color="#2f2f2f" />
-                        </button>
-                    </div>
+                    <SearchBar
+                        placeholder={t("labels.searchByKeyword")}
+                        value={searchTerm}
+                        onChange={setSearchTerm}
+                    />
                 </div>
 
                 <div className="bottom-row">
-                    <div className="sort-bar">
-                        <label>{t("sort.label")}</label>
-                        <div
-                            className={`sort-select ${showSortDropdown ? "open" : ""}`}
-                            onClick={() => setShowSortDropdown(!showSortDropdown)}
-                        >
-                            {t(`sort.${sortOption}`)} {showSortDropdown ? "▾" : "▸"}
-                            {showSortDropdown && (
-                                <ul className="sort-dropdown">
-                                    <li onClick={() => setSortOption("rating")}>{t("sort.rating")}</li>
-                                    <li onClick={() => setSortOption("newest")}>{t("sort.newest")}</li>
-                                    <li onClick={() => setSortOption("oldest")}>{t("sort.oldest")}</li>
-                                </ul>
-                            )}
-                        </div>
-                    </div>
+                    <SortBar
+                        label={t("sort.label")}
+                        sortOptions={["rating", "newest", "oldest"]}
+                        selected={sortOption}
+                        onSelect={setSortOption}
+                        t={t}
+                    />
 
                     <div className="review-count-label">
                         {t("labels.reviewCount", { count: filtered.length })}
                     </div>
                 </div>
-            </div>
+            </motion.div>
 
-            <div className="reviews-grid">
+            <motion.div
+                className="reviews-grid"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+            >
                 {filtered.map((review) => (
                     <AdminReviewCard
                         key={review.ReviewId}
@@ -193,7 +194,7 @@ const AdminReviews = () => {
                         onManage={() => setSelectedReview(review)}
                     />
                 ))}
-            </div>
+            </motion.div>
 
             {selectedReview && (
                 <AdminReviewPopup
@@ -210,7 +211,7 @@ const AdminReviews = () => {
                     }}
                 />
             )}
-        </div>
+        </motion.div>
     );
 };
 

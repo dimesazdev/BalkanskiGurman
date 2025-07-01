@@ -20,11 +20,24 @@ input.custom-input::placeholder {
   font-family: 'Cormorant Garamond', serif;
 }
 
-/*
-@media (max-width: 768px) {
-  input.custom-input {
-    height: 3.25rem;
-    font-size: 0.95rem;
-  }
+.form-group {
+  position: relative;
 }
-*/
+
+.input-error {
+  color: #ffbaba;
+  background: #900;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.form-group.has-error .custom-input {
+  border: 2px solid #900;
+}

@@ -113,6 +113,14 @@ const AdminUserPopup = ({ user: initialUser, onClose, onAction }) => {
 
                 <div className="popup-actions">
                     <Button
+                        variant="green"
+                        onClick={() => handleAction("activate")}
+                        disabled={user.status?.Name?.toLowerCase() === "active"}
+                        style={user.status?.Name?.toLowerCase() === "active" ? { opacity: 0.5, cursor: "not-allowed" } : {}}
+                    >
+                        {t("buttons.activate")}
+                    </Button>
+                    <Button
                         variant="yellow"
                         onClick={() => handleAction("suspend")}
                         disabled={user.status?.Name?.toLowerCase() === "suspended"}

@@ -22,7 +22,8 @@
         "approve": "Odobri",
         "reject": "Odbij",
         "userStatus": "Status korisnika",
-        "review": "Recenzija"
+        "review": "Recenzija",
+        "recheckExplanation": "Objašnenje za ponovnu proveru"
     },
     "adminUser": {
         "userId": "Korisnik #{{id}}",
@@ -40,7 +41,29 @@
         "notVerified": "Neverifikovana",
         "suspendedUntil": "Suspendiran do"
     },
+    "adminIssue": {
+        "status": "Status prijave",
+        "createdAt": "Kreirano",
+        "forRestaurant": "Za restoran",
+        "issueId": "Prijava br. {{id}}",
+        "type": "Tip prijave",
+        "explanation": "Objašnjenje",
+        "images": "Slike",
+        "resolved": "Težava je označena kot rešena.",
+        "resolveFailed": "Ni bilo mogoče rešiti težave."
+    },
+    "issueStatus": {
+        "pending": "Na čekanju",
+        "resolved": "Rešeno",
+        "all": "Sve"
+    },
     "alerts": {
+        "reviewAgreementRequired": "Morate da se složite sa pravilima pre slanja recenzije.",
+        "reviewRatingRequired": "Molimo vas da odaberete ocenu pre slanja recenzije.",
+        "reviewTextRequired": "Molimo vas da napišete recenziju pre slanja.",
+        "reviewModerationNotice": "Imajte na umu: Može proći neko vreme pre nego što vaša recenzija bude objavljena jer mora biti odobrena od strane našeg tima.",
+        "saving": "Čuvanje izmena...",
+        "creating": "Kreiranje restorana...",
         "deleteError": "Brisanje restorana nije uspelo.",
         "deleted": "Restoran je bio uspešno obrisan.",
         "favoriteAdded": "Uspešno dodato u omiljene",
@@ -56,7 +79,9 @@
         "creatingRestaurant": "Kreiranje restorana... Sačekajte.",
         "restaurantCreated": "Restoran je uspešno kreiran.",
         "restaurantUpdated": "Restoran je uspešno ažuriran.",
-        "restaurantError": "Došlo je do greške. Proverite podatke i pokušajte ponovo."
+        "restaurantError": "Došlo je do greške. Proverite podatke i pokušajte ponovo.",
+        "recheckRejected": "Vaš zahtev za ponovnu proveru je odbijen. Ne možete ponovo podneti zahtev.",
+        "recheckAccepted": "Vaš zahtev za ponovnu proveru je uspešan. Recenzija je uklonjena."
     },
     "amenities": {
         "CARD": "Plaćanje karticom",
@@ -71,9 +96,11 @@
         "VEGE": "Vegetarijanske opcije"
     },
     "buttons": {
+        "activate": "Aktiviraj",
         "addToFavorites": "Dodaj u omiljene",
         "backToRestaurants": "Nazad na restorane",
         "cancel": "Otkaži",
+        "changeSelection": "Promeni izbor",
         "choosePhoto": "Izaberi novu sliku",
         "close": "Zatvori",
         "confirm": "Potvrdi",
@@ -87,11 +114,15 @@
         "understand": "Razumem",
         "writeReview": "Napiši recenziju",
         "manageReview": "Upravljaj recenzijom",
+        "manageIssue": "Upravljaj prijavom",
         "manageUser": "Uredi korisnika",
         "approve": "Odobri",
         "reject": "Odbij",
         "suspend": "Suspenduj",
-        "ban": "Blokiraj"
+        "ban": "Blokiraj",
+        "resolve": "Reši",
+        "requestRecheck": "Potraži proveru",
+        "view": "Pogledaj"
     },
     "checkbox": {
         "agree": "Slažem se sa smernicama za pisanje recenzije i razumem da kršenja mogu dovesti do suspenzije ili blokiranje mojeg računa *"
@@ -102,7 +133,7 @@
         "INT": "Internacionalna",
         "ME": "Crnogorska",
         "MK": "Makedonska",
-        "SI": "Slovenačka",
+        "SL": "Slovenačka",
         "SR": "Sprska"
     },
     "days": {
@@ -164,6 +195,7 @@
         "openTime": "Otvara u",
         "postalCode": "Poštanski broj",
         "priceRange": "Cenovni opseg",
+        "photos": "Dodajte fotografije (maks. 3)",
         "restaurantDetails": "Detalji o restoranu",
         "selectCity": "Izaberi grad",
         "selectCountry": "Izaberi zemlju",
@@ -173,6 +205,17 @@
         "website": "Veb sajt",
         "workingHours": "Radno vreme",
         "country": "Zemlja"
+    },
+    "formErrors": {
+        "nameRequired": "Naziv restorana je obavezan.",
+        "priceRangeRequired": "Rang cena je obavezan.",
+        "detailsRequired": "Detalji su obavezni.",
+        "addressRequired": "Morate uneti kompletnu adresu.",
+        "cuisineRequired": "Morate odabrati kuhinju.",
+        "imageRequired": "Morate dodati bar jednu sliku.",
+        "noWorkingHoursConfirm": "Svi dani su označeni kao zatvoreni. Da li ste sigurni da želite da nastavite?",
+        "phoneRequired": "Broj telefona je obavezan.",
+        "noAmenitiesConfirm": "Niste izabrali nijednu pogodnost. Da li ste sigurni da želite da nastavite?"
     },
     "home": {
         "button": "Pogledaj restorane"
@@ -184,10 +227,15 @@
         "chooseOrDrop": "Izaberi ili prevuci sliku ovde",
         "clickToView": "Kliknite za pregled",
         "closed": "Zatvoreno",
-        "closedAllDay": "Closed all day",
-        "closedAllWeek": "Closed all week",
+        "closedAllDay": "Zatvoreno celi dan",
+        "closedAllWeek": "Zatvoreno celu sedmicu",
         "cuisines": "Kuhinja",
         "dietary": "Dijetalne opcije",
+        "issues": "Prijave",
+        "issueCount_zero": "Nema prijava",
+        "issueCount_one": "{{count}} prijava",
+        "issueCount_few": "{{count}} prijave",
+        "issueCount_other": "{{count}} prijava",
         "notAvailable": "Nedostupno",
         "on": "u",
         "openUntil": "Otvoreno do",
@@ -260,26 +308,31 @@
         "logout": "Odjava",
         "restaurants": "Restorani",
         "reviews": "Recenzije",
-        "users": "Korisnici"
+        "users": "Korisnici",
+        "logoutConfirm": "Da li ste sigurni da želite da se odjavite?"
     },
     "noResults": "Nijedan restoran ne odgovara vašoj pretrazi.",
     "placeholders": {
         "restaurantDetails": "Napiši opis restorana...",
         "restaurantName": "Napiši ime restorana...",
-        "writeReview": "Podeli svoje iskustvo..."
+        "writeReview": "Podeli svoje iskustvo...",
+        "recheckExplanation": "Molimo objasnite zašto smatrate da bi ova recenzija trebalo ponovo da se razmotri...",
+        "searchRestaurants": "Pretraži restorane..."
     },
     "popup": {
         "statusChangeSuccess": {
             "approve": "Recenzija je uspešno odobrena.",
             "reject": "Recenzija je uspešno odbijena.",
             "suspend": "Korisnik je uspešno suspendovan.",
-            "ban": "Korisnik je uspešno banovan."
+            "ban": "Korisnik je uspešno banovan.",
+            "requestRecheck": "Zahtev za ponovnu proveru je uspešno poslat."
         },
         "statusChangeError": {
             "approve": "Nismo uspeli da odobrimo recenziju.",
             "reject": "Nismo uspeli da odbijemo recenziju.",
             "suspend": "Neuspešno suspendovanje korisnika.",
-            "ban": "Neuspešno banovanje korisnika."
+            "ban": "Neuspešno banovanje korisnika.",
+            "requestRecheck": "Nije uspelo slanje zahteva za ponovnu proveru."
         }
     },
     "profile": {
@@ -304,6 +357,14 @@
         "register": "Registruj se",
         "retypePassword": "Ponovo unesite lozinku",
         "retypePasswordPlaceholder": "Ponovo unesite lozinku...",
+        "errorName": "Ime može sadržati samo slova.",
+        "errorSurname": "Prezime može sadržati samo slova.",
+        "errorEmail": "Unesite validnu email adresu.",
+        "errorPhone": "Telefon može sadržati samo brojeve.",
+        "errorPassword": "Lozinka mora imati najmanje 8 karaktera, broj, veliko i malo slovo.",
+        "errorPasswordsMatch": "Lozinke se ne poklapaju.",
+        "errorCountry": "Morate izabrati državu.",
+        "errorCity": "Morate izabrati grad.",
         "success": "Uspešna registracija! Preusmeravanje na prijavu...",
         "surname": "Prezime",
         "surnamePlaceholder": "Unesite prezime..."
@@ -338,7 +399,8 @@
         "newest": "Najnovije",
         "oldest": "Najstarije",
         "reviewsAsc": "Najmanje recenzija",
-        "reviewsDesc": "Najviše recenzija"
+        "reviewsDesc": "Najviše recenzija",
+        "issueType": "Tip problema"
     },
     "titles": {
         "writeReview": "Napiši recenziju"
@@ -346,9 +408,31 @@
     "reviewStatus": {
         "all": "Sve",
         "approved": "Odobreno",
-        "pending": "Za proveru",
+        "pending": "U pregledu",
         "rejected": "Odbijeno",
-        "undefined": "Nedefiniran"
+        "undefined": "Nedefiniran",
+        "recheck": "Proveri ponovo"
+    },
+    "report": {
+        "chooseRestaurant": "Izaberite restoran",
+        "title": "Prijavi problem",
+        "issueType": "Tip problema *",
+        "selectIssueType": "Izaberite tip problema...",
+        "explanation": "Objašnjenje *",
+        "explanationPlaceholder": "Opišite problem...",
+        "addPhotos": "Dodajte fotografije (maks. 3)",
+        "submit": "Prijavi problem",
+        "submitting": "Slanje...",
+        "success": "Problem je uspešno prijavljen!",
+        "errorSubmit": "Neuspešno slanje problema.",
+        "errorRequired": "Molimo popunite sva obavezna polja.",
+        "errorRestaurant": "Molimo izaberite restoran.",
+        "errorReview": "Molimo navedite recenziju.",
+        "issueTypes": {
+            "bugReport": "Nešto ne radi ispravno",
+            "wrongInfo": "Pogrešni podaci o restoranu",
+            "other": "Ostalo (navedite u objašnjenju)"
+        }
     },
     "roles": {
         "user": "Korisnik",
@@ -361,5 +445,37 @@
         "active": "Aktivan",
         "suspended": "Suspendovan",
         "banned": "Blokiran"
+    },
+    "restaurantPage": {
+        "reviewLogin": "Da biste napisali recenziju, morate biti prijavljeni.",
+        "notNow": "Ne sada"
+    },
+    "owner": {
+        "dashboardTitle": "Kontrolna tabla",
+        "myRestaurants": "Moji restorani",
+        "myReviews": "Upravljanje recenzijama",
+        "reviews": "Recenzije"
+    },
+    "restaurantForm": {
+        "labels": {
+            "restaurantName": "Naziv restorana *",
+            "priceRange": "Cenovni rang *",
+            "details": "Detalji *",
+            "cuisine": "Kuhinja *",
+            "website": "Veb-sajt",
+            "menuUrl": "URL menija",
+            "street": "Ulica *",
+            "postalCode": "Poštanski broj *",
+            "country": "Država *",
+            "city": "Grad *"
+        },
+        "placeholder": {
+            "website": "https://primer.rs",
+            "menuUrl": "https://primer.rs/meni",
+            "street": "npr. Bulevar Kralja Aleksandra 23",
+            "postalCode": "npr. 11000",
+            "hh": "hh",
+            "mm": "mm"
+        }
     }
 }

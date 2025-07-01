@@ -24,13 +24,8 @@
     gap: 0.5rem;
 }
 
-.admin-reviews-page .sort-bar,
 .admin-reviews-page .review-count-label {
     width: fit-content;
-}
-
-.admin-reviews-page .search-bar {
-    max-width: 300px;
 }
 
 .admin-reviews-page .status-filter {
@@ -74,6 +69,16 @@
 .admin-reviews-page .status-filter.active.rejected {
     background-color: #c62828;
     color: #ffcdd2;
+}
+
+.admin-reviews-page .status-filter.recheck {
+    background-color: #bbdefb;
+    color: #1565c0;
+}
+
+.admin-reviews-page .status-filter.active.recheck {
+    background-color: #1565c0; 
+    color: #bbdefb; 
 }
 
 .admin-reviews-page .status-filter.active {

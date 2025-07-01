@@ -9,7 +9,29 @@ const prisma = new PrismaClient();
 // GET all issues
 router.get('/', authenticate, requireRole('Admin'), async (req, res) => {
   try {
-    const result = await prisma.issue.findMany();
+    const result = await prisma.issue.findMany({
+      include: {
+        user: {
+          include: {
+            userRoles: {
+              include: { role: true }
+            },
+            status: true,
+            _count: {
+              select: { reviews: true }
+            }
+          }
+        },
+        status: true,
+        restaurant: {
+          include: {
+            images: true,
+            address: true
+          }
+        }
+      }
+    });
+
     res.json(result);
   } catch (error) {
     console.error('Error fetching issues:', error);
@@ -76,7 +98,12 @@ router.post('/', authenticate, async (req, res) => {
     res.status(201).json({ message: 'Issue reported', issue });
   } catch (error) {
     console.error('Error reporting issue:', error);
+    if (typeof error === 'object' && error !== null && 'code' in error && (error as any).code === 'P2003') {
+      res.status(400).json({ error: 'Foreign key constraint failed (missing User, Review, or Restaurant)' });
+      return;
+    }
     res.status(400).json({ error: 'Issue report failed' });
+    return;
   }
 });
 

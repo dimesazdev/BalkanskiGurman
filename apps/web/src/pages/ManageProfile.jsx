@@ -16,9 +16,10 @@ import { Tooltip } from 'react-tooltip';
 import PhoneNumberPicker from "../components/PhoneNumberPicker";
 import CountryPicker from "../components/CountryPicker";
 import CityPicker from "../components/CityPicker";
+import { motion } from "framer-motion";
 
 function ManageProfile() {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const { user, refreshUser } = useAuth();
 
     const [userData, setUserData] = useState({});
@@ -145,7 +146,12 @@ function ManageProfile() {
     if (!user || !user.token) return <div>{t("manageProfile.loadingUser")}</div>;
 
     return (
-        <div className="manage-profile">
+        <motion.div
+            className="manage-profile"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+        >
             {popup && <Popup {...popup} onClose={() => setPopup(null)} />}
             {showAlert && <Alert message={t("manageProfile.saving")} buttonText={t("manageProfile.forceClose")} onButtonClick={() => setShowAlert(false)} showCancel={false} />}
 
@@ -153,8 +159,14 @@ function ManageProfile() {
                 <Title>{t("profile.accountInfo")}</Title>
             </div>
 
-            <div className="photo-section">
-                <div className="photo-placeholder">
+
+            <motion.div
+                className="photo-section"
+                initial={{ x: -50, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+            >
+                <div className="photo-placeholder" style={{ marginBottom: "0.5rem" }}>
                     {photoPreview ? (
                         <img src={photoPreview} alt="Selected Profile" className="photo-preview" />
                     ) : (
@@ -165,6 +177,10 @@ function ManageProfile() {
                         </div>
                     )}
                 </div>
+
+                <Button variant="red-small" onClick={() => document.getElementById("photo-upload")?.click()}>
+                    {t("buttons.choosePhoto")}
+                </Button>
 
                 <div className="medals">
                     {[
@@ -189,7 +205,10 @@ function ManageProfile() {
                                     data-tooltip-id={`tooltip-${medal.id}`}
                                     data-tooltip-content={tooltipText}
                                 />
-                                <Tooltip id={`tooltip-${medal.id}`} />
+                                <Tooltip
+                                    id={`tooltip-${medal.id}`}
+                                    className={earned ? "tooltip-earned" : ""}
+                                />
                             </div>
                         );
                     })}
@@ -205,10 +224,6 @@ function ManageProfile() {
                     </div>
                 )}
 
-                <Button variant="red" onClick={() => document.getElementById("photo-upload")?.click()}>
-                    {t("buttons.choosePhoto")}
-                </Button>
-
                 <input
                     id="photo-upload"
                     type="file"
@@ -216,9 +231,14 @@ function ManageProfile() {
                     onChange={handlePhotoChange}
                     style={{ display: "none" }}
                 />
-            </div>
+            </motion.div>
 
-            <div className="form-grid">
+            <motion.div
+                className="form-grid"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
+            >
                 <FormInput id="name" label={t("register.name")} value={formData.name} onChange={handleInputChange} name="name" placeholder={t("register.namePlaceholder")} />
                 <FormInput id="surname" label={t("register.surname")} value={formData.surname} onChange={handleInputChange} name="surname" placeholder={t("register.surnamePlaceholder")} />
                 <FormInput id="email" label={t("register.email")} type="email" value={formData.email} onChange={handleInputChange} name="email" placeholder={t("register.emailPlaceholder")} />
@@ -239,7 +259,7 @@ function ManageProfile() {
                             ...prev,
                             countryIso,
                             country: countryName,
-                            city: "", // reset city
+                            city: "",
                         }))
                     }
                 />
@@ -249,18 +269,28 @@ function ManageProfile() {
                     onChange={(city) => setFormData((prev) => ({ ...prev, city }))}
                     disabled={!formData.countryIso}
                 />
-            </div>
+            </motion.div>
 
-            <div className="change-password-link">
+            <motion.div
+                className="change-password-link"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: 0.8 }}
+            >
                 <Link to="/auth/change-password">{t("profile.changePassword")}</Link>
-            </div>
+            </motion.div>
 
-            <div className="save-button">
+            <motion.div
+                className="save-button"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: 1 }}
+            >
                 <Button variant="red" onClick={handleSaveAndRefresh} disabled={isSaving}>
                     {isSaving ? t("buttons.saving") : t("buttons.saveChanges")}
                 </Button>
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
     );
 }
 

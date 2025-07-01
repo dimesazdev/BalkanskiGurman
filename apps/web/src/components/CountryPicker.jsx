@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import FormSelect from "./FormSelect";
 import i18n from "../i18n";
 
-const CountryPicker = ({ value, onChange, required = false, disabled = false }) => {
+const CountryPicker = ({ value, onChange, required = false, disabled = false, allowedIsoCodes }) => {
   const { t } = useTranslation();
   const [countryList, setCountryList] = useState([]);
 
@@ -15,11 +15,16 @@ const CountryPicker = ({ value, onChange, required = false, disabled = false }) 
       try {
         const res = await fetch("/translatedCountries.json");
         const data = await res.json();
-        const translated = data.map((c) => ({
+        const filtered = allowedIsoCodes
+          ? data.filter((c) => allowedIsoCodes.includes(c.isoCode))
+          : data;
+
+        const translated = filtered.map((c) => ({
           label: c.translations[lang] || c.name,
           value: c.isoCode,
           originalName: c.name,
         }));
+        
         setCountryList(translated.sort((a, b) => a.label.localeCompare(b.label)));
       } catch (err) {
         console.error("Failed to load country list:", err);
@@ -56,6 +61,7 @@ CountryPicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
   disabled: PropTypes.bool,
+  allowedIsoCodes: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default CountryPicker;

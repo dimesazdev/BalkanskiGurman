@@ -140,6 +140,11 @@
     color: #c62828;
 }
 
+.admin-review-popup .status.recheck {
+    background-color: #bbdefb;
+    color: #1565c0;     
+}
+
 .admin-review-popup .popup-actions {
     margin-top: 1.5rem;
     display: flex;

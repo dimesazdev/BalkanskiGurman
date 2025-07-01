@@ -4,10 +4,6 @@
     width: 100%;
 }
 
-.arrow-icon {
-    color: #FFEEDB;
-}
-
 .home-left {
     flex: 2;
     display: flex;
@@ -23,7 +19,7 @@
 .home-logo {
     margin-bottom: 3rem;
     max-width: 450px;
-    width: 100%;
+    width: 80%;
     height: auto;
 }
 
@@ -84,6 +80,6 @@
     }
 
     .home-plate img {
-        max-width: 80%;
+        max-width: 40%;
     }
 }

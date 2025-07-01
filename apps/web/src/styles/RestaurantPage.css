@@ -68,12 +68,12 @@
         color: var(--beige);
     }
 
-    .open {
+    .restaurant-subinfo .open {
         color: #08FF00;
         font-weight: 500;
     }
 
-    .closed {
+    .restaurant-subinfo .closed {
         color: var(--red);
         font-weight: 500;
     }
@@ -175,108 +175,40 @@
         }
     }
 
-    .settings-bar {
+    .review-bar {
         display: flex;
         flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
         gap: 1rem;
         margin-bottom: 2rem;
     }
 
-    .sort-group,
-    .search-group {
+    .review-bar>.review-cell {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-    }
-
-    .search-bar {
-        display: flex;
-        align-items: center;
-        background-color: #FFEEDB;
-        padding: 0 1rem;
-        border-radius: 20px;
-        height: 3rem;
-        max-width: 600px;
-        width: 100%;
-    }
-
-    .search-bar input {
-        flex: 1;
-        font-size: 1.2rem;
-        font-family: 'Cormorant Garamond', sans-serif;
-        border: none;
-        background: none;
-        outline: none;
-        height: 100%;
-    }
-
-    .search-bar button {
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding-left: 0.5rem;
-        height: 100%;
-        display: flex;
-        align-items: center;
-    }
-
-    .sort-label,
-    .search-label {
-        color: #FFEEDB;
-        font-family: 'Cormorant Garamond', sans-serif;
-        font-size: 1.3rem;
-        white-space: nowrap;
-    }
-
-    .sort-select {
-        background-color: #FFEEDB;
-        color: #2f2f2f;
-        padding: 0 1.2rem;
-        border-radius: 20px;
-        font-size: 1.2rem;
-        font-weight: 600;
-        position: relative;
-        cursor: pointer;
-        font-family: 'Cormorant Garamond', sans-serif;
-        height: 3rem;
-        display: flex;
-        align-items: center;
+        flex: 1 1 0;
         min-width: 200px;
+    }
+
+    .review-bar>.review-cell.left {
+        justify-content: flex-start;
+    }
+
+    .review-bar>.review-cell.center {
         justify-content: center;
     }
 
-    .sort-select.open {
-        border-radius: 20px 20px 0 0;
+    .review-bar>.review-cell.right {
+        justify-content: flex-end;
     }
 
-    .sort-dropdown {
-        list-style: none;
-        margin: 0;
-        padding: 0.5rem 0;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background-color: #FFEEDB;
-        border-radius: 0 0 20px 20px;
-        z-index: 100;
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
+    @media (max-width: 850px) {
+        .review-bar {
+            flex-direction: column;
+        }
 
-    .sort-dropdown li {
-        padding: 0.5rem;
-        font-size: 1rem;
-        color: #2f2f2f;
-        cursor: pointer;
-        text-align: center;
-    }
-
-    .sort-dropdown li:hover {
-        background-color: #BA3B46;
-        color: white;
+        .review-bar>.review-cell {
+            flex: 1 1 100%;
+            justify-content: left;
+        }
     }
 }

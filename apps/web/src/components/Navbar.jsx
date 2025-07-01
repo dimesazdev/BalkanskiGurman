@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import '../styles/Navbar.css';
 import ukFlag from "../images/uk-flag-icon.svg";
@@ -19,6 +19,8 @@ import {
   mdiAlertCircleOutline
 } from '@mdi/js';
 import { useAuth } from '../context/AuthContext';
+import { useLocation } from 'react-router-dom';
+import Alert from './Alert';
 
 const flagMap = {
   EN: ukFlag,
@@ -26,6 +28,10 @@ const flagMap = {
   SR: srFlag,
   SL: siFlag,
 };
+
+// 🔑 Role IDs (centralized)
+const ADMIN_ROLE_ID = "644f2db4-9bbb-40a2-8b7d-963623c0c64a";
+const OWNER_ROLE_ID = "34fuihi4-5vj8-3v4e-43v5-3jfismy876s5";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,6 +41,7 @@ const Navbar = () => {
   const [language, setLanguage] = useState(i18n.language.toUpperCase());
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [showLogoutAlert, setShowLogoutAlert] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const toggleLangDropdown = () => setShowLangDropdown(!showLangDropdown);
@@ -50,9 +57,14 @@ const Navbar = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleLogout = () => {
+  const handleLogoutClick = () => {
+    setShowLogoutAlert(true);
+  };
+
+  const handleConfirmLogout = () => {
     logout();
-    navigate('/');
+    setShowLogoutAlert(false);
+    navigate("/");
   };
 
   return (
@@ -60,48 +72,72 @@ const Navbar = () => {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 1.2, ease: 'easeOut', delay: 0.1 }}
-      className="navbar"
+      className={`navbar ${user?.role === ADMIN_ROLE_ID ? "admin" : "user"}`}
     >
       <div className="navbar-brand">
-        {!user?.role || user?.role !== "644f2db4-9bbb-40a2-8b7d-963623c0c64a" ? (
+        {/* PUBLIC USER */}
+        {!user?.role || (user.role !== ADMIN_ROLE_ID && user.role !== OWNER_ROLE_ID) ? (
           <>
-            <Link to="/" className="navbar-link">
+            <NavLink to="/" end className="navbar-link">
               <Icon path={mdiHomeOutline} size={1} className="navbar-icon" />
               {t('navbar.home')}
-            </Link>
-            <Link to="/restaurants" className="navbar-link">
+            </NavLink>
+            <NavLink to="/restaurants" className="navbar-link">
               <Icon path={mdiSilverwareForkKnife} size={1} className="navbar-icon" />
               {t('navbar.restaurants')}
-            </Link>
+            </NavLink>
             {user && (
-              <Link to="/favorites" className="navbar-link">
-                <Icon path={mdiHeartOutline} size={1} className="navbar-icon" />
-                {t('navbar.favourites')}
-              </Link>
+              <>
+                <NavLink to="/favorites" className="navbar-link">
+                  <Icon path={mdiHeartOutline} size={1} className="navbar-icon" />
+                  {t('navbar.favourites')}
+                </NavLink>
+                <NavLink to="/issues" className="navbar-link">
+                  <Icon path={mdiAlertCircleOutline} size={1} className="navbar-icon" />
+                  {t('navbar.issues')}
+                </NavLink>
+              </>
             )}
+          </>
+        ) : user.role === ADMIN_ROLE_ID ? (
+          <>
+            {/* ADMIN */}
+            <NavLink to="/admin" end className="navbar-link">
+              <Icon path={mdiHomeOutline} size={1} className="navbar-icon" />
+              {t('navbar.dashboard')}
+            </NavLink>
+            <NavLink to="/admin/restaurants" className="navbar-link">
+              <Icon path={mdiSilverwareForkKnife} size={1} className="navbar-icon" />
+              {t('navbar.restaurants')}
+            </NavLink>
+            <NavLink to="/admin/reviews" className="navbar-link">
+              <Icon path={mdiMessageDraw} size={1} className="navbar-icon" />
+              {t('navbar.reviews')}
+            </NavLink>
+            <NavLink to="/admin/users" className="navbar-link">
+              <Icon path={mdiAccountGroup} size={1} className="navbar-icon" />
+              {t('navbar.users')}
+            </NavLink>
+            <NavLink to="/admin/issues" className="navbar-link">
+              <Icon path={mdiAlertCircleOutline} size={1} className="navbar-icon" />
+              {t('navbar.issues')}
+            </NavLink>
           </>
         ) : (
           <>
-            <Link to="/admin" className="navbar-link">
+            {/* OWNER */}
+            <NavLink to="/owner" end className="navbar-link">
               <Icon path={mdiHomeOutline} size={1} className="navbar-icon" />
               {t('navbar.dashboard')}
-            </Link>
-            <Link to="/admin/restaurants" className="navbar-link">
+            </NavLink>
+            <NavLink to="/owner/restaurants" className="navbar-link">
               <Icon path={mdiSilverwareForkKnife} size={1} className="navbar-icon" />
-              {t('navbar.restaurants')}
-            </Link>
-            <Link to="/admin/reviews" className="navbar-link">
+              {t('owner.myRestaurants')}
+            </NavLink>
+            <NavLink to="/owner/reviews" className="navbar-link">
               <Icon path={mdiMessageDraw} size={1} className="navbar-icon" />
-              {t('navbar.reviews')}
-            </Link>
-            <Link to="/admin/users" className="navbar-link">
-              <Icon path={mdiAccountGroup} size={1} className="navbar-icon" />
-              {t('navbar.users')}
-            </Link>
-            <Link to="/admin/issues" className="navbar-link">
-              <Icon path={mdiAlertCircleOutline} size={1} className="navbar-icon" />
-              {t('navbar.issues')}
-            </Link>
+              {t('owner.reviews')}
+            </NavLink>
           </>
         )}
       </div>
@@ -124,13 +160,13 @@ const Navbar = () => {
           </div>
 
           {!user ? (
-            <Link to="/auth/login" className="navbar-link">
+            <NavLink to="/auth/login" className="navbar-link">
               <Icon path={mdiAccountCircleOutline} size={1} className='navbar-icon' />
               {t('navbar.login')}
-            </Link>
+            </NavLink>
           ) : (
             <>
-              <Link to="/me" className="navbar-user-info">
+              <NavLink to="/me" className="navbar-user-info">
                 {user.profilePicture ? (
                   <div className="navbar-link user-info">
                     <img
@@ -150,14 +186,23 @@ const Navbar = () => {
                     {user.name} {user.surname}
                   </div>
                 )}
-              </Link>
-              <div className="navbar-link logout-btn" onClick={handleLogout}>
+              </NavLink>
+              <div className="navbar-link logout-btn" onClick={handleLogoutClick}>
                 <Icon path={mdiLogout} size={1} className="navbar-icon" title={t('navbar.logout')} />
               </div>
             </>
           )}
         </div>
       </div>
+
+      {showLogoutAlert && (
+        <Alert
+          message={t("navbar.logoutConfirm") || "Are you sure you want to logout?"}
+          buttonText={t("navbar.logout") || "Logout"}
+          onButtonClick={handleConfirmLogout}
+          onClose={() => setShowLogoutAlert(false)}
+        />
+      )}
     </motion.div>
   );
 };
