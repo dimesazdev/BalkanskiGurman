@@ -58,7 +58,7 @@ const AdminUserCard = ({ user, onManage }) => {
                         })()}
                     </div>
                     <div className="user-location">
-                        {user.City}, {user.Country}
+                        {user.City ? `${user.City}, ${user.Country}` : user.Country}
                     </div>
                 </div>
             </div>

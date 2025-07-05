@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Icon from "@mdi/react";
 import { mdiClose, mdiMedal, mdiDiamondStone } from "@mdi/js";
 import Button from "../Button";
@@ -5,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import "../../styles/AdminIssuePopup.css";
 import ImageGallery from "../ImageGallery";
+import { useAzureTranslation } from "../../hooks/useAzureTranslation";
 
 const AdminIssuePopup = ({ issue, onClose, onResolve }) => {
   const { t, i18n } = useTranslation();
@@ -26,6 +28,21 @@ const AdminIssuePopup = ({ issue, onClose, onResolve }) => {
   const images = [issue.PhotoUrl1, issue.PhotoUrl2, issue.PhotoUrl3]
     .filter(Boolean)
     .map((url) => ({ Url: url }));
+
+  // Azure Translation for Explanation
+  const translationResult = useAzureTranslation(issue.Explanation || "");
+  const [translatedText, setTranslatedText] = useState("");
+  const [detectedLanguage, setDetectedLanguage] = useState("");
+
+  useEffect(() => {
+    setTranslatedText(translationResult.translatedText);
+    setDetectedLanguage(translationResult.detectedLanguage);
+  }, [translationResult]);
+
+  const shouldTranslate =
+    detectedLanguage &&
+    detectedLanguage !== i18n.language &&
+    translatedText;
 
   return (
     <div className="admin-issue-popup">
@@ -58,7 +75,9 @@ const AdminIssuePopup = ({ issue, onClose, onResolve }) => {
                 />
               )}
             </div>
-            <div className="user-meta">{user.City}, {user.Country}</div>
+            <div className="user-meta">
+              {user.City ? `${user.City}, ${user.Country}` : user.Country}
+            </div>
             <div className="user-status">
               {t("adminUser.status")}:{" "}
               <span className={`status ${userStatus}`}>
@@ -95,16 +114,13 @@ const AdminIssuePopup = ({ issue, onClose, onResolve }) => {
           {issue.IssueType === "Wrong Info" && issue.restaurant && (
             <>
               <p><strong>{t("adminIssue.forRestaurant")}:</strong></p>
-
               <div className="related-restaurant-card">
                 <img
                   src={issue.restaurant.images?.[0]?.Url || "/default-restaurant.jpg"}
                   alt={issue.restaurant.Name}
                 />
                 <div className="restaurant-info">
-                  <p className="restaurant-name">
-                    {issue.restaurant.Name}
-                  </p>
+                  <p className="restaurant-name">{issue.restaurant.Name}</p>
                   <p className="restaurant-address">
                     {issue.restaurant.address?.Street}, {issue.restaurant.address?.City}, {issue.restaurant.address?.Country}
                   </p>
@@ -119,8 +135,27 @@ const AdminIssuePopup = ({ issue, onClose, onResolve }) => {
             </>
           )}
 
-          <p><strong>{t("adminIssue.explanation")}:</strong></p>
-          <p>{issue.Explanation}</p>
+          <div className="comment-line">
+            <p><strong>{t("adminIssue.explanation")}:</strong></p>
+            <p>{issue.Explanation}</p>
+            {shouldTranslate && (
+              <div style={{ marginTop: "8px", opacity: 0.9 }}>
+                <hr
+                  style={{
+                    border: "none",
+                    borderTop: "1px solid var(--red)",
+                    opacity: 0.5,
+                  }}
+                />
+                <p style={{ fontStyle: "italic", textAlign: "justify" }}>
+                  {translatedText}
+                </p>
+                <span style={{ fontSize: "0.85em", color: "var(--red)" }}>
+                  {t("labels.aiTranslated")}
+                </span>
+              </div>
+            )}
+          </div>
 
           {images.length > 0 && (
             <>

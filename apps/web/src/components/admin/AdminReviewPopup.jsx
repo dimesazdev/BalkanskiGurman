@@ -117,7 +117,7 @@ const AdminReviewPopup = ({ review, onClose, onAction }) => {
               })()}
             </div>
             <div className="user-meta">
-              {reviewer.City}, {reviewer.Country} · {reviewer._count?.reviews || 0} {t("labels.reviews")}
+              {reviewer.City ? `${reviewer.City}, ${reviewer.Country}` : reviewer.Country} · {reviewer._count?.reviews || 0} {t("labels.reviews")}
             </div>
             <div className="user-status">
               {t("adminReview.userStatus")}: <span className={`status ${userStatus}`}>{t(`userStatus.${userStatus || "active"}`)}</span>

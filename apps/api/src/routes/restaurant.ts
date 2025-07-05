@@ -228,6 +228,24 @@ router.post('/:id/reviews', authenticate, async (req, res) => {
     const restaurantId = Number(req.params.id);
     const { rating, comment, photoUrl1, photoUrl2, photoUrl3 } = req.body;
 
+    const userEntity = await prisma.user.findUnique({
+      where: { UserId: req.user.userId },
+      select: {
+        status: true,
+        SuspendedUntil: true
+      }
+    });
+
+    if (userEntity?.status?.Name === "Banned") {
+      res.status(403).json({ error: "Your account is banned. You cannot post reviews." });
+      return; 
+    }
+
+    if (userEntity?.status?.Name === "Suspended") {
+      res.status(403).json({ error: "Your account is suspended. You cannot post reviews." });
+      return;
+    }
+
     await prisma.$transaction(async (tx) => {
       // 1. Create the review
       await tx.review.create({

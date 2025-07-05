@@ -158,7 +158,7 @@ const OwnerReviewPopup = ({ review, onClose, userToken, onRecheckSuccess }) => {
               })()}
             </div>
             <div className="user-meta">
-              {reviewer.City}, {reviewer.Country} · {reviewer._count?.reviews || 0} {t("labels.reviews")}
+              {reviewer.City ? `${reviewer.City}, ${reviewer.Country}` : reviewer.Country} · {reviewer._count?.reviews || 0} {t("labels.reviews")}
             </div>
           </div>
         </div>
@@ -202,25 +202,27 @@ const OwnerReviewPopup = ({ review, onClose, userToken, onRecheckSuccess }) => {
             </div>
           ) : null
         ) : (
-          <div className="recheck-explanation" style={{ marginTop: "1rem" }}>
-            <FormTextarea
-              id="recheckExplanation"
-              value={explanation}
-              onChange={(e) => setExplanation(e.target.value)}
-              placeholder={t("placeholders.recheckExplanation")}
-              rows={3}
-              dashed
-            />
-          </div>
+          status !== "pending" && (
+            <div className="recheck-explanation" style={{ marginTop: "1rem" }}>
+              <FormTextarea
+                id="recheckExplanation"
+                value={explanation}
+                onChange={(e) => setExplanation(e.target.value)}
+                placeholder={t("placeholders.recheckExplanation")}
+                rows={3}
+                dashed
+              />
+            </div>
+          )
         )}
 
         <div className="popup-actions">
           <Button
             variant="blue"
             onClick={handleRequestRecheck}
-            disabled={status === "recheck" || hasRequested}
+            disabled={status === "pending" || status === "recheck" || hasRequested}
             style={
-              status === "recheck" || hasRequested
+              status === "pending" || status === "recheck" || hasRequested
                 ? { opacity: 0.5, cursor: "not-allowed" }
                 : {}
             }

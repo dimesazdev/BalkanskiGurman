@@ -31,7 +31,7 @@ const AdminUserPopup = ({ user: initialUser, onClose, onAction }) => {
         City,
         Country,
         CreatedAt,
-        LastActiveAt,
+        UpdatedAt,
         SuspendedUntil,
         ProfilePictureUrl,
         _count
@@ -39,13 +39,10 @@ const AdminUserPopup = ({ user: initialUser, onClose, onAction }) => {
 
     const userStatus = user.status?.Name?.toLowerCase();
     const createdDate = dayjs(CreatedAt).format("D MMMM YYYY");
-    const lastActiveDate = LastActiveAt ? dayjs(LastActiveAt).format("D MMMM YYYY") : "-";
+    const lastUpdateDate = UpdatedAt ? dayjs(UpdatedAt).format("D MMMM YYYY") : "-";
     const role = initialUser?.userRoles?.[0]?.role?.Name?.toLowerCase();
 
     const isSuspended = userStatus === "suspended" && SuspendedUntil;
-    const suspendedDaysLeft = isSuspended
-        ? dayjs(SuspendedUntil).diff(dayjs(), "day")
-        : null;
 
     const getMedalIcon = (count) => {
         if (count > 50) return { icon: mdiDiamondStone, color: "#00bfff" };
@@ -80,14 +77,14 @@ const AdminUserPopup = ({ user: initialUser, onClose, onAction }) => {
                     )}
                     <div className="user-info">
                         <div className="username">
-                            {Name} {Surname?.charAt(0)}.
+                            {Name} {Surname}
                             {(() => {
                                 const { icon, color } = getMedalIcon(_count?.reviews || 0);
                                 return icon && <Icon path={icon} size={0.8} color={color} style={{ marginLeft: 6 }} />;
                             })()}
                         </div>
                         <div className="user-meta">
-                            {City}, {Country} · {_count?.reviews || 0} {t("labels.reviews")}
+                            {City ? `${City}, ${Country}` : Country} · {_count?.reviews || 0} {t("labels.reviews")}
                         </div>
                         <div className="user-status">
                             {t("adminUser.status")}: <span className={`status ${userStatus}`}>
@@ -107,32 +104,32 @@ const AdminUserPopup = ({ user: initialUser, onClose, onAction }) => {
                         {EmailConfirmed ? t("adminUser.verified") : t("adminUser.notVerified")}
                     </p>
                     <p><strong>{t("adminUser.reviewCount")}:</strong> {_count?.reviews || 0}</p>
-                    <p><strong>{t("adminUser.lastActive")}:</strong> {lastActiveDate}</p>
                     <p><strong>{t("adminUser.createdAt")}:</strong> {createdDate}</p>
+                    <p><strong>{t("adminUser.lastUpdate")}:</strong> {lastUpdateDate}</p>
                 </div>
 
                 <div className="popup-actions">
                     <Button
                         variant="green"
                         onClick={() => handleAction("activate")}
-                        disabled={user.status?.Name?.toLowerCase() === "active"}
-                        style={user.status?.Name?.toLowerCase() === "active" ? { opacity: 0.5, cursor: "not-allowed" } : {}}
+                        disabled={userStatus === "active"}
+                        style={userStatus === "active" ? { opacity: 0.5, cursor: "not-allowed" } : {}}
                     >
                         {t("buttons.activate")}
                     </Button>
                     <Button
                         variant="yellow"
                         onClick={() => handleAction("suspend")}
-                        disabled={user.status?.Name?.toLowerCase() === "suspended"}
-                        style={user.status?.Name?.toLowerCase() === "suspended" ? { opacity: 0.5, cursor: "not-allowed" } : {}}
+                        disabled={userStatus === "suspended"}
+                        style={userStatus === "suspended" ? { opacity: 0.5, cursor: "not-allowed" } : {}}
                     >
                         {t("buttons.suspend")}
                     </Button>
                     <Button
                         variant="red"
                         onClick={() => handleAction("ban")}
-                        disabled={user.status?.Name?.toLowerCase() === "banned"}
-                        style={user.status?.Name?.toLowerCase() === "banned" ? { opacity: 0.5, cursor: "not-allowed" } : {}}
+                        disabled={userStatus === "banned"}
+                        style={userStatus === "banned" ? { opacity: 0.5, cursor: "not-allowed" } : {}}
                     >
                         {t("buttons.ban")}
                     </Button>

@@ -16,7 +16,7 @@ import Popup from "../components/Popup";
 import { validateFields } from "../utils/validators";
 
 const Register = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -38,7 +38,6 @@ const Register = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const handleSubmit = async (e) => {
@@ -64,9 +63,10 @@ const Register = () => {
         surname: formData.surname,
         email: formData.email,
         phoneNumber: phoneNumberToSend,
-        city: formData.city,
+        city: formData.city.trim() === "" ? null : formData.city,
         country: formData.country,
         password: formData.password,
+        language: i18n.language
       };
 
       const res = await fetch("http://localhost:3001/auth/register", {
@@ -76,22 +76,31 @@ const Register = () => {
       });
 
       if (!res.ok) {
+        const data = await res.json();
+
+        let message = t("alerts.registerError") || "Registration failed.";
+
+        if (res.status === 409) {
+          message = t("register.emailExists") || "An account with this email already exists.";
+        }
+
         setActivePopup({
-          message: t("alerts.registerError") || "Registration failed.",
+          message,
           variant: "error",
         });
+
         setLoading(false);
         return;
       }
 
       setActivePopup({
-        message: t("register.success") || "Registration successful!",
+        message: t("register.success") || "Registration successful! Please check your email to verify your account before logging in.",
         variant: "success",
       });
 
       setTimeout(() => {
         navigate("/auth/login");
-      }, 2000);
+      }, 5000);
     } catch (err) {
       console.error("🔥 Error during registration:", err);
       setActivePopup({
@@ -113,11 +122,10 @@ const Register = () => {
     }, 5000);
   };
 
-  if (loading) return <Loading />;
-
   return (
     <>
       <Navbar />
+      {loading && <Loading />}
       <div className="register-container">
         {activePopup && (
           <Popup
@@ -226,7 +234,6 @@ const Register = () => {
                         city,
                       }))
                     }
-                    required
                     disabled={!formData.countryIso}
                   />
                   <FormInput

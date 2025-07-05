@@ -7,7 +7,6 @@ import LocationCard from "../components/LocationCard";
 import WorkingHoursCard from "../components/WorkingHoursCard";
 import Popup from "../components/Popup";
 import { getAmenityIcon } from "../utils/getAmenityIcon";
-import TranslatedReviewCard from "../components/TranslatedReviewCard";
 import Icon from "@mdi/react";
 import ImageGallery from "../components/ImageGallery";
 import {
@@ -25,6 +24,8 @@ import { motion, useInView } from "framer-motion";
 import SortBar from "../components/SortBar";
 import SearchBar from "../components/SearchBar";
 import Alert from "../components/Alert";
+import { Tooltip } from "react-tooltip";
+import ReviewCard from "../components/ReviewCard";
 
 const FadeInSection = ({ children, from = "bottom" }) => {
   const ref = useRef(null);
@@ -190,7 +191,19 @@ function RestaurantPage() {
     }
   };
 
+  const userStatus = user?.status?.toLowerCase();
   const OWNER_ROLE_ID = "34fuihi4-5vj8-3v4e-43v5-3jfismy876s5";
+
+  let disabledReason = "";
+  if (userStatus === "suspended") {
+    disabledReason = t("alerts.suspendedAction");
+  }
+  if (userStatus === "banned") {
+    disabledReason = t("alerts.bannedAction");
+  }
+  if (user?.role === OWNER_ROLE_ID) {
+    disabledReason = t("alerts.ownerCannotReview");
+  }
 
   return (
     <div className="restaurant-page">
@@ -259,18 +272,33 @@ function RestaurantPage() {
             label={t("restaurant.phone")}
             value={restaurant.PhoneNumber || t("labels.notAvailable")}
             style={{ opacity: restaurant.PhoneNumber ? 1 : 0.5 }}
+            onClick={
+              restaurant.PhoneNumber
+                ? () => window.open(`tel:${restaurant.PhoneNumber}`)
+                : undefined
+            }
           />
           <InfoCard
             icon={mdiWeb}
             label={t("restaurant.website")}
             value={restaurant.Website || t("labels.notAvailable")}
             style={{ opacity: restaurant.Website ? 1 : 0.5 }}
+            onClick={
+              restaurant.Website
+                ? () => window.open(restaurant.Website, "_blank")
+                : undefined
+            }
           />
           <InfoCard
             icon={mdiFileDocument}
             label={t("restaurant.menu")}
             value={restaurant.MenuUrl ? t("labels.clickToView") : t("labels.notAvailable")}
             style={{ opacity: restaurant.MenuUrl ? 1 : 0.5 }}
+            onClick={
+              restaurant.MenuUrl
+                ? () => window.open(restaurant.MenuUrl, "_blank")
+                : undefined
+            }
           />
         </div>
       </FadeInSection>
@@ -288,6 +316,14 @@ function RestaurantPage() {
             getDayName={getDayName}
             label={t("restaurant.workingHours")}
             buttonText={t("restaurant.suggestEdit")}
+            onSuggestEdit={() => {
+              navigate("/issues", {
+                state: {
+                  issueType: "Wrong Info",
+                  restaurantId: restaurant.RestaurantId
+                }
+              });
+            }}
           />
         </div>
       </FadeInSection>
@@ -325,22 +361,33 @@ function RestaurantPage() {
           <div className="review-cell center">
             <Button
               variant="red"
-              disabled={user?.role === OWNER_ROLE_ID}
+              disabled={
+                user?.role === OWNER_ROLE_ID ||
+                userStatus === "suspended" ||
+                userStatus === "banned"
+              }
               onClick={() => {
                 if (!user) {
                   setShowLoginAlert(true);
-                } else if (user.role !== OWNER_ROLE_ID) {
+                } else if (user?.role !== OWNER_ROLE_ID && userStatus !== "suspended" && userStatus !== "banned") {
                   navigate(`/restaurants/${id}/reviews`);
                 }
               }}
+              data-tooltip-id="write-review-tooltip"
               style={
-                user?.role === OWNER_ROLE_ID
+                user?.role === OWNER_ROLE_ID ||
+                  userStatus === "suspended" ||
+                  userStatus === "banned"
                   ? { opacity: 0.5, cursor: "not-allowed" }
                   : {}
               }
             >
               {t("buttons.writeReview")}
             </Button>
+
+            {(user?.role === OWNER_ROLE_ID || userStatus === "suspended" || userStatus === "banned") && (
+              <Tooltip id="write-review-tooltip" place="top" content={disabledReason} />
+            )}
           </div>
           <div className="review-cell right">
             <SearchBar
@@ -359,12 +406,39 @@ function RestaurantPage() {
           <div className="reviews-columns">
             <div className="reviews-column">
               {getSortedReviews().filter((_, i) => i % 2 === 0).map((r) => (
-                <TranslatedReviewCard key={r.ReviewId} review={r} />
+                <ReviewCard
+                  key={r.ReviewId}
+                  review={r}
+                  onDelete={(id, status) => {
+                    setReviews(prev => prev.filter(rev => rev.ReviewId !== id));
+                    setPopup({
+                      message:
+                        status === "success"
+                          ? t("alerts.reviewDeleted")
+                          : t("alerts.deleteReviewError"),
+                      variant: status === "success" ? "success" : "error"
+                    });
+                  }}
+                />
+
               ))}
             </div>
             <div className="reviews-column">
               {getSortedReviews().filter((_, i) => i % 2 !== 0).map((r) => (
-                <TranslatedReviewCard key={r.ReviewId} review={r} />
+                <ReviewCard
+                  key={r.ReviewId}
+                  review={r}
+                  onDelete={(id, status) => {
+                    setReviews(prev => prev.filter(rev => rev.ReviewId !== id));
+                    setPopup({
+                      message:
+                        status === "success"
+                          ? t("alerts.reviewDeleted")
+                          : t("alerts.deleteReviewError"),
+                      variant: status === "success" ? "success" : "error"
+                    });
+                  }}
+                />
               ))}
             </div>
           </div>

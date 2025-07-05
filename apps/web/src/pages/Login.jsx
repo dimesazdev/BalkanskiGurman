@@ -8,11 +8,13 @@ import { useTranslation } from "react-i18next";
 import Button from "../components/Button";
 import Navbar from "../components/Navbar";
 import { motion } from "framer-motion";
+import Popup from "../components/Popup";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [popup, setPopup] = useState(null);
   const { login } = useAuth();
   const navigate = useNavigate();
   const [rememberMe, setRememberMe] = useState(false);
@@ -29,7 +31,26 @@ const Login = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error || t("login.loginFailed"));
+        let message = t("login.loginFailed"); // default
+
+        if (res.status === 401) {
+          message = t("login.invalidCredentials") || "Invalid email or password.";
+        } else if (res.status === 403) {
+          if (data.code === "BANNED_ACCOUNT") {
+            message = t("login.banned");
+          } else if (data.error === "Please confirm your email before logging in.") {
+            message = t("login.emailNotConfirmed") || "Please confirm your email before logging in.";
+          } else {
+            message = data.error || t("login.loginFailed");
+          }
+        } else {
+          message = data.error || t("login.loginFailed");
+        }
+
+        setPopup({
+          message,
+          variant: "error",
+        });
         return;
       }
 
@@ -37,13 +58,25 @@ const Login = () => {
       navigate("/");
     } catch (err) {
       console.error(err);
-      setError(t("login.somethingWentWrong"));
+      setPopup({
+        message: t("login.somethingWentWrong"),
+        variant: "error",
+      });
     }
-  };
+  }
 
   return (
     <>
       <Navbar />
+
+      {popup && (
+        <Popup
+          message={popup.message}
+          variant={popup.variant}
+          onClose={() => setPopup(null)}
+        />
+      )}
+
       <div className="login-container">
         <motion.div
           className="login-card"

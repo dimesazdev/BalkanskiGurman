@@ -1,0 +1,11 @@
+.community-guidelines-page {
+  padding: 2rem 1rem;
+  text-align: justify;
+  color: var(--beige);
+  line-height: 1.65;
+}
+
+.community-guidelines-page p {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}

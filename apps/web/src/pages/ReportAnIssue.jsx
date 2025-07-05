@@ -11,21 +11,23 @@ import "../styles/ReportAnIssue.css";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 import RestaurantSelector from "../components/RestaurantSelector";
+import { useLocation } from "react-router-dom";
 
 const ReportAnIssue = () => {
     const { t } = useTranslation();
     const { user } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
 
-    const [issueType, setIssueType] = useState("");
     const [explanation, setExplanation] = useState("");
     const [images, setImages] = useState([]);
     const [popup, setPopup] = useState(null);
     const [submitting, setSubmitting] = useState(false);
 
-    const [selectedRestaurant, setSelectedRestaurant] = useState(null);
     const [restaurants, setRestaurants] = useState([]);
     const [loadingRestaurants, setLoadingRestaurants] = useState(false);
+    const [issueType, setIssueType] = useState(location.state?.issueType || "");
+    const [selectedRestaurant, setSelectedRestaurant] = useState(location.state?.restaurant || null);
 
     const issueOptions = [
         { value: "Bug Report", label: t("report.issueTypes.bugReport") },
@@ -38,11 +40,17 @@ const ReportAnIssue = () => {
             setLoadingRestaurants(true);
             fetch("http://localhost:3001/restaurants")
                 .then(res => res.json())
-                .then(data => setRestaurants(data))
+                .then(data => {
+                    setRestaurants(data);
+                    if (location.state?.restaurantId) {
+                        const found = data.find(r => r.RestaurantId === location.state.restaurantId);
+                        if (found) setSelectedRestaurant(found);
+                    }
+                })
                 .catch(console.error)
                 .finally(() => setLoadingRestaurants(false));
         }
-    }, [issueType]);
+    }, [issueType, location.state]);
 
     const uploadImages = async () => {
         const imageFiles = images.filter(img => img.file);

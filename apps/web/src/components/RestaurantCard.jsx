@@ -87,6 +87,8 @@ function RestaurantCard({ restaurant, isFavorite, onToggleFavorite, searchTerm =
     const nextOpeningText = getNextOpeningTime(workingHours, todayDayOfWeek, getDayName, t);
 
     const renderStars = () => {
+        if (typeof AverageRating !== "number") return null;
+
         const stars = [];
         const fullStars = Math.floor(AverageRating);
         const halfStar = AverageRating % 1 >= 0.25 && AverageRating % 1 < 0.75;
@@ -115,7 +117,7 @@ function RestaurantCard({ restaurant, isFavorite, onToggleFavorite, searchTerm =
     };
 
     const approvedReviewsCount = restaurant.reviews
-        ? restaurant.reviews.filter(r => r.StatusId === 5 || 7).length
+        ? restaurant.reviews.filter(r => r.StatusId === 5 || r.StatusId === 7).length
         : 0;
 
     return (
@@ -195,7 +197,12 @@ function RestaurantCard({ restaurant, isFavorite, onToggleFavorite, searchTerm =
 
                 <div className="restaurant-info-line rating-row">
                     <strong>{t("labels.rating")}:</strong>
-                    <span className="stars-red">{renderStars()}<span className="rating-value"> {AverageRating.toFixed(2)}</span></span>
+                    <span className="stars-red">
+                        {renderStars()}
+                        <span className="rating-value">
+                            {typeof AverageRating === "number" ? AverageRating.toFixed(2) : "-"}
+                        </span>
+                    </span>
                     {restaurant.reviews && (
                         <span className="review-count-card" style={{ color: "ba3b46" }}>
                             ({t("labels.reviewCount", { count: approvedReviewsCount })})
@@ -209,7 +216,7 @@ function RestaurantCard({ restaurant, isFavorite, onToggleFavorite, searchTerm =
 
                 <div className="restaurant-info-line">
                     <strong>{t("labels.cuisines")}:</strong>{" "}
-                    {cuisines.map(c => t(`cuisines.${c.Code}`)).join(", ")}
+                    {(cuisines ?? []).map(c => t(`cuisines.${c.Code}`)).join(", ")}
                 </div>
 
                 <div className="restaurant-info-line details-line">
@@ -217,7 +224,7 @@ function RestaurantCard({ restaurant, isFavorite, onToggleFavorite, searchTerm =
                 </div>
 
                 <div className="amenities-line">
-                    {[...amenities]
+                    {[...(amenities ?? [])]
                         .sort((a, b) => t(`amenities.${a.Code}`).localeCompare(t(`amenities.${b.Code}`)))
                         .map(a => (
                             <Icon key={a.Code} path={getAmenityIcon(a.Code)} size={1} title={t(`amenities.${a.Code}`)} />

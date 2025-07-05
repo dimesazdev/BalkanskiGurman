@@ -75,7 +75,9 @@ export const AuthProvider = ({ children }) => {
         city: data.City,
         profilePicture: data.ProfilePictureUrl,
         role: data.userRoles?.[0]?.RoleId || 'User',
-        reviewCount: data.reviewCount || 0
+        reviewCount: data.reviewCount || 0,
+        status: data.status?.Name,
+        suspendedUntil: data.SuspendedUntil
       };
 
       setUser(updatedUser);

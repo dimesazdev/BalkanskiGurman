@@ -39,7 +39,8 @@
         "emailStatus": "Status e-pošte",
         "verified": "Verifikovana",
         "notVerified": "Neverifikovana",
-        "suspendedUntil": "Suspendiran do"
+        "suspendedUntil": "Suspendovan do",
+        "lastUpdate": "Zadnja promena"
     },
     "adminIssue": {
         "status": "Status prijave",
@@ -81,7 +82,14 @@
         "restaurantUpdated": "Restoran je uspešno ažuriran.",
         "restaurantError": "Došlo je do greške. Proverite podatke i pokušajte ponovo.",
         "recheckRejected": "Vaš zahtev za ponovnu proveru je odbijen. Ne možete ponovo podneti zahtev.",
-        "recheckAccepted": "Vaš zahtev za ponovnu proveru je uspešan. Recenzija je uklonjena."
+        "recheckAccepted": "Vaš zahtev za ponovnu proveru je uspešan. Recenzija je uklonjena.",
+        "suspendedAction": "Vaš nalog je suspendovan. Ne možete da ostavljate recenzije.",
+        "bannedAction": "Vaš nalog je zabranjen. Ne možete da ostavljate recenzije.",
+        "ownerCannotReview": "Vlasnici ne mogu da pišu recenzije za svoje restorane.",
+        "notFound": "Traženi sadržaj nije pronađen.",
+        "confirmDeleteReview": "Da li ste sigurni da želite da obrišete ovu recenziju?",
+        "deleteReviewError": "Brisanje recenzije nije uspelo.",
+        "reviewDeleted": "Vaša recenzija je uspešno obrisana."
     },
     "amenities": {
         "CARD": "Plaćanje karticom",
@@ -122,7 +130,8 @@
         "ban": "Blokiraj",
         "resolve": "Reši",
         "requestRecheck": "Potraži proveru",
-        "view": "Pogledaj"
+        "view": "Pogledaj",
+        "deleteReview": "Obriši recenziju"
     },
     "checkbox": {
         "agree": "Slažem se sa smernicama za pisanje recenzije i razumem da kršenja mogu dovesti do suspenzije ili blokiranje mojeg računa *"
@@ -268,14 +277,17 @@
         "email": "Email",
         "forgotPassword": "Zaboravili ste lozinku?",
         "login": "Prijava",
-        "loginFailed": "Prijava nije uspela",
         "noAccount": "Nemate nalog?",
         "password": "Lozinka",
         "pleaseLogin": "Molimo vas da se prijavite.",
         "rememberMe": "Zapamti me",
         "registerNow": "Registrujte se!",
         "somethingWentWrong": "Došlo je do greške",
-        "welcomeBack": "Dobrodošli nazad!"
+        "welcomeBack": "Dobrodošli nazad!",
+        "banned": "Vaš račun je trajno blokiran. Ako mislite da je ovo greška, molimo kontaktirajte nas.",
+        "loginFailed": "Prijava nije uspela. Molimo proverite svoje podatke.",
+        "emailNotConfirmed": "Molimo vas da potvrdite svoju e-poštu pre prijave.",
+        "invalidCredentials": "Neispravna e-pošta ili lozinka."
     },
     "manageProfile": {
         "fetchError": "Neuspešno učitavanje podataka profila",
@@ -365,7 +377,8 @@
         "errorPasswordsMatch": "Lozinke se ne poklapaju.",
         "errorCountry": "Morate izabrati državu.",
         "errorCity": "Morate izabrati grad.",
-        "success": "Uspešna registracija! Preusmeravanje na prijavu...",
+        "emailExists": "Nalog sa ovom e-poštom već postoji.",
+        "success": "Registracija je uspešna! Molimo proverite svoj email da biste potvrdili nalog pre prijavljivanja.",
         "surname": "Prezime",
         "surnamePlaceholder": "Unesite prezime..."
     },
@@ -477,5 +490,70 @@
             "hh": "hh",
             "mm": "mm"
         }
+    },
+    "guidelines": {
+        "mainTitle": "Smernice zajednice",
+        "introduction": "Balkanski Gurman je zajednica koja neguje autentičnost, poštovanje i ljubav prema balkanskoj kuhinji. Da bismo očuvali prijateljsku i vrednu atmosferu, molimo vas da poštujete ove smernice.",
+        "respectTitle": "Poštovanje i Uključivanje",
+        "respectContent1": "Budite ljubazni prema svim članovima zajednice. Diskriminacija, govor mržnje, pretnje ili lični napadi su strogo zabranjeni.",
+        "respectContent2": "Cenimo raznolikost kultura i iskustava. Budite pažljivi i poštujte druge u svom izrazu.",
+        "authenticTitle": "Autentični Doprinosi",
+        "authenticContent1": "Recenzije treba da odražavaju vaše lično iskustvo. Izbegavajte preterivanja ili klevetu.",
+        "authenticContent2": "Ako ste povezani sa restoranom (vlasnik, zaposleni, porodica), molimo vas da se uzdržite od pisanja recenzija radi fer odnosa.",
+        "photosTitle": "Fotografije i Sadržaj",
+        "photosContent1": "Postavljajte samo fotografije na koje imate autorska prava.",
+        "photosContent2": "Nemojte objavljivati neprimeran, uvredljiv ili obmanjujući materijal.",
+        "reviewsTitle": "Pisanje Recenzija",
+        "reviewsContent1": "Vaše recenzije treba da budu konstruktivne, konkretne i vezane za iskustvo.",
+        "reviewsContent2": "Izbegavajte deljenje ličnih podataka zaposlenih ili gostiju.",
+        "prohibitedTitle": "Zabranjen Sadržaj",
+        "prohibitedContent1": "Svaki oblik spama, lažnih recenzija, promocije ili pokušaja manipulacije ocenama je zabranjen.",
+        "prohibitedContent2": "Kršenje pravila može dovesti do suspenzije ili trajnog uklanjanja naloga.",
+        "reportingTitle": "Prijavljivanje Problema",
+        "reportingContent": "Ako uočite sadržaj koji krši smernice, koristite opciju za prijavu ili nas kontaktirajte. Svaku prijavu pažljivo razmatramo.",
+        "consequencesTitle": "Posledice",
+        "consequencesContent": "Kršenje smernica može rezultirati uklanjanjem sadržaja, upozorenjem, suspenzijom ili trajnom zabranom.",
+        "contactTitle": "Pitanja i Povratne Informacije",
+        "contactContent": "Ako imate pitanja ili predloge, kontaktirajte nas. Vaše mišljenje unapređuje zajednicu."
+    },
+    "changePassword": {
+        "title": "Promeni lozinku",
+        "current": "Trenutna lozinka",
+        "currentPlaceholder": "Unesite trenutnu lozinku...",
+        "new": "Nova lozinka",
+        "newPlaceholder": "Unesite novu lozinku...",
+        "retype": "Ponovo unesite novu lozinku",
+        "retypePlaceholder": "Ponovo unesite novu lozinku...",
+        "forgot": "Zaboravili ste trenutnu lozinku?",
+        "button": "Promeni lozinku",
+        "changing": "Menjam...",
+        "mismatch": "Nove lozinke se ne podudaraju.",
+        "error": "Greška prilikom promene lozinke.",
+        "unexpected": "Došlo je do neočekivane greške.",
+        "success": "Lozinka je uspešno promenjena!"
+    },
+    "forgotPassword": {
+        "title": "Zaboravljena lozinka",
+        "email": "E-pošta",
+        "emailPlaceholder": "Unesite svoju e-poštu...",
+        "button": "Pošalji link za resetovanje",
+        "sending": "Slanje...",
+        "success": "Ako nalog postoji, link za resetovanje je poslat.",
+        "error": "Greška prilikom slanja e-pošte za resetovanje.",
+        "unexpected": "Došlo je do neočekivane greške."
+    },
+    "resetPassword": {
+        "title": "Resetuj lozinku",
+        "new": "Nova lozinka",
+        "newPlaceholder": "Unesite novu lozinku...",
+        "retype": "Ponovo unesite novu lozinku",
+        "retypePlaceholder": "Ponovo unesite novu lozinku...",
+        "button": "Resetuj lozinku",
+        "resetting": "Resetovanje...",
+        "mismatch": "Lozinke se ne podudaraju.",
+        "invalid": "Nevažeći link za resetovanje.",
+        "error": "Greška prilikom resetovanja lozinke.",
+        "unexpected": "Došlo je do neočekivane greške.",
+        "success": "Lozinka je uspešno resetovana! Preusmeravam na prijavu..."
     }
 }

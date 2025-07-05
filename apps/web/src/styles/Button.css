@@ -40,8 +40,8 @@
 }
 
 .btn-red-outline:hover {
-  border: 2px solid #ed9b40;
-  color: #ed9b40;
+  background-color: var(--red);
+  color: white;
 }
 
 .btn-beige-outline {
@@ -51,8 +51,8 @@
 }
 
 .btn-beige-outline:hover {
-  border: 2px solid #f0cdae;
-  color: #f0cdae;
+  background-color: var(--beige);
+  color: black;
 }
 
 .btn-red-small {

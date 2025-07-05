@@ -9,6 +9,10 @@ import { useTranslation } from "react-i18next";
  * @returns {Object} - { isOpen: boolean, closeFormatted: string }
  */
 export function getOpenCloseStatus(todayHours, now = dayjs(), t = (s) => s) {
+  if (!todayHours) {
+    return { isOpen: false, closeFormatted: null };
+  }
+  
   const { OpenHour, OpenMinute, CloseHour, CloseMinute } = todayHours;
 
   if (
@@ -41,6 +45,29 @@ export function getOpenCloseStatus(todayHours, now = dayjs(), t = (s) => s) {
  * @returns {String} - Translated opening time or fallback
  */
 export function getNextOpeningTime(workingHours, todayDayOfWeek, getDayName, t = (s) => s) {
+  const now = dayjs();
+  const todayHours = workingHours?.find(h => h.DayOfWeek === todayDayOfWeek);
+
+  // First check if it will open later today
+  if (
+    todayHours &&
+    !todayHours.IsClosed &&
+    typeof todayHours.OpenHour === "number" &&
+    typeof todayHours.OpenMinute === "number"
+  ) {
+    const openTimeToday = now.clone()
+      .set("hour", todayHours.OpenHour)
+      .set("minute", todayHours.OpenMinute)
+      .set("second", 0)
+      .set("millisecond", 0);
+
+    if (now.isBefore(openTimeToday)) {
+      const timeStr = openTimeToday.format("HH:mm");
+      return `${t("labels.opensAt")} ${timeStr}`;
+    }
+  }
+
+  // Otherwise find the next open day
   for (let i = 1; i <= 7; i++) {
     const nextDayIndex = (todayDayOfWeek + i - 1) % 7 + 1;
     const nextDayHours = workingHours?.find(h => h.DayOfWeek === nextDayIndex);

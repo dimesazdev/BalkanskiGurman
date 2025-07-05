@@ -10,12 +10,16 @@ datasource db {
 model User {
   UserId               String    @id @default(uuid())
   Email                String    @unique
-  EmailConfirmed       Boolean
+  EmailConfirmed       Boolean   @default(false)
+  emailVerificationToken      String?   
+  emailVerificationExpiresAt  DateTime? 
   PasswordHash         String
+  passwordResetToken        String?
+  passwordResetExpiresAt    DateTime?
   PhoneNumber          String?
   Name                 String
   Surname              String
-  City                 String
+  City                 String?
   Country              String
   ProfilePictureUrl    String?
   StatusId             Int

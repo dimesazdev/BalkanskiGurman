@@ -183,7 +183,7 @@ const Navbar = () => {
                       size={1}
                       className="navbar-icon"
                     />
-                    {user.name} {user.surname}
+                    {user.name} {user.surname?.charAt(0)}.
                   </div>
                 )}
               </NavLink>

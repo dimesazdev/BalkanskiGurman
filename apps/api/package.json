@@ -10,12 +10,14 @@
   },
   "dependencies": {
     "@prisma/client": "^6.8.2",
+    "@sendgrid/mail": "^8.1.5",
     "@types/jsonwebtoken": "^9.0.9",
     "bcrypt": "^6.0.0",
     "body-parser": "^1.20.3",
     "cloudinary": "^2.6.1",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
+    "country-state-city": "^3.2.1",
+    "dotenv": "^16.6.1",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.0"

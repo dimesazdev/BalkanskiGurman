@@ -4,7 +4,7 @@ import "../styles/WorkingHoursCard.css";
 import { useTranslation } from 'react-i18next';
 import Button from "./Button";
 
-const WorkingHoursCard = ({ hours, getDayName, label, buttonText }) => {
+const WorkingHoursCard = ({ hours, getDayName, label, buttonText, onSuggestEdit }) => {
   const orderedDays = [1, 2, 3, 4, 5, 6, 7];
   const { t } = useTranslation();
 
@@ -39,7 +39,7 @@ const WorkingHoursCard = ({ hours, getDayName, label, buttonText }) => {
         </tbody>
       </table>
 
-      <Button variant="red-outline">
+      <Button variant="red-outline" onClick={() => onSuggestEdit?.()}>
         {buttonText}
       </Button>
     </div>

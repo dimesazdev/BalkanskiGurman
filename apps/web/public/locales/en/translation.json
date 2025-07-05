@@ -39,7 +39,8 @@
         "emailStatus": "Email status",
         "verified": "Verified",
         "notVerified": "Unverified",
-        "suspendedUntil": "Suspended until"
+        "suspendedUntil": "Suspended until",
+        "lastUpdate": "Last update"
     },
     "adminIssue": {
         "status": "Issue status",
@@ -81,7 +82,14 @@
         "restaurantError": "An error occurred. Please check the data and try again.",
         "registerError": "Registration failed. Please try again.",
         "recheckRejected": "Your recheck request was rejected. You cannot request again.",
-        "recheckAccepted": "Your recheck request was successful. The review has been removed."
+        "recheckAccepted": "Your recheck request was successful. The review has been removed.",
+        "suspendedAction": "Your account is suspended. You cannot post reviews.",
+        "bannedAction": "Your account is banned. You cannot post reviews.",
+        "ownerCannotReview": "Owners cannot write reviews on their own restaurants.",
+        "notFound": "The requested content was not found.",
+        "confirmDeleteReview": "Are you sure you want to delete this review?",
+        "deleteReviewError": "Failed to delete the review.",
+        "reviewDeleted": "Your review was deleted successfully."
     },
     "amenities": {
         "CARD": "Card payment",
@@ -97,7 +105,7 @@
     },
     "buttons": {
         "activate": "Activate",
-        "addToFavorites": "Add to favorites",
+        "addToFavorites": "Add to Favorites",
         "backToRestaurants": "Back to Restaurants",
         "cancel": "Cancel",
         "changeSelection": "Change selection",
@@ -106,14 +114,14 @@
         "confirm": "Confirm",
         "goBack": "Go back",
         "login": "Login",
-        "postReview": "Post review",
+        "postReview": "Post Review",
         "remove": "Remove",
         "removeFromFavorites": "Remove from favorites",
         "saveChanges": "Save changes",
         "saving": "Saving...",
         "submitRequest": "Submit Request",
         "understand": "I understand",
-        "writeReview": "Write a review",
+        "writeReview": "Write a Review",
         "manageReview": "Manage Review",
         "manageUser": "Manage User",
         "manageIssue": "Manage issue",
@@ -123,7 +131,8 @@
         "ban": "Ban",
         "resolve": "Resolve",
         "requestRecheck": "Request Recheck",
-        "view": "View"
+        "view": "View",
+        "deleteReview": "Delete Review"
     },
     "checkbox": {
         "agree": "I agree to the review writing guidelines and understand that violations may result in account suspension or ban *"
@@ -273,14 +282,17 @@
         "email": "Email",
         "forgotPassword": "Forgot password?",
         "login": "Login",
-        "loginFailed": "Login failed",
         "noAccount": "Don't have an account?",
         "password": "Password",
         "pleaseLogin": "Please login to your account.",
         "registerNow": "Register now!",
         "rememberMe": "Remember me",
         "somethingWentWrong": "Something went wrong",
-        "welcomeBack": "Welcome back!"
+        "welcomeBack": "Welcome back!",
+        "banned": "Your account has been permanently banned. If you think this was a mistake, please contact us.",
+        "loginFailed": "Login failed. Please check your credentials.",
+        "emailNotConfirmed": "Please confirm your email before logging in.",
+        "invalidCredentials": "Invalid email or password."
     },
     "manageProfile": {
         "fetchError": "Failed to load profile data",
@@ -372,7 +384,8 @@
         "errorPasswordsMatch": "Passwords do not match.",
         "errorCountry": "Country is required.",
         "errorCity": "City is required.",
-        "success": "Registration successful!"
+        "emailExists": "An account with this email already exists.",
+        "success": "Registration successful! Please check your email to verify your account before logging in."
     },
     "restaurant": {
         "about": "About",
@@ -485,5 +498,70 @@
             "hh": "hh",
             "mm": "mm"
         }
+    },
+    "guidelines": {
+        "mainTitle": "Community Guidelines",
+        "introduction": "Balkanski Gurman is a community that celebrates authenticity, respect, and passion for Balkan cuisine. To maintain a welcoming and valuable space, please follow these guidelines.",
+        "respectTitle": "Respect and Inclusion",
+        "respectContent1": "Treat all members of our community with kindness. Discrimination, hate speech, threats, or personal attacks are strictly prohibited.",
+        "respectContent2": "We celebrate diversity of cultures and experiences. Please be mindful and considerate in your language.",
+        "authenticTitle": "Authentic Contributions",
+        "authenticContent1": "Reviews should reflect your personal experience. Avoid exaggeration or defamation.",
+        "authenticContent2": "If you have a connection to the business (owner, employee, family), please refrain from writing reviews to ensure fairness.",
+        "photosTitle": "Photos and Media",
+        "photosContent1": "Upload only photos you own and have the right to share.",
+        "photosContent2": "Do not post inappropriate, offensive, or misleading images.",
+        "reviewsTitle": "Writing Reviews",
+        "reviewsContent1": "Your reviews should be constructive, specific, and relevant to the dining experience.",
+        "reviewsContent2": "Avoid disclosing personal data of employees or other guests.",
+        "prohibitedTitle": "Prohibited Content",
+        "prohibitedContent1": "Any form of spam, fake reviews, promotional material, or attempts to manipulate ratings are forbidden.",
+        "prohibitedContent2": "Violations can lead to account suspension or removal.",
+        "reportingTitle": "Reporting Problems",
+        "reportingContent": "If you see content that violates these guidelines, use the report button or contact us. Reports are reviewed carefully.",
+        "consequencesTitle": "Consequences",
+        "consequencesContent": "Breach of these guidelines may result in content removal, warnings, suspension, or permanent ban.",
+        "contactTitle": "Questions and Feedback",
+        "contactContent": "If you have questions or suggestions, please reach out to us. Your feedback makes the community better."
+    },
+    "changePassword": {
+        "title": "Change Password",
+        "current": "Current password",
+        "currentPlaceholder": "Type current password...",
+        "new": "New password",
+        "newPlaceholder": "Type new password...",
+        "retype": "Retype new password",
+        "retypePlaceholder": "Retype new password...",
+        "forgot": "Forgot current password?",
+        "button": "Change password",
+        "changing": "Changing...",
+        "mismatch": "New passwords do not match.",
+        "error": "Error changing password.",
+        "unexpected": "An unexpected error occurred.",
+        "success": "Password changed successfully!"
+    },
+    "forgotPassword": {
+        "title": "Forgot Password",
+        "email": "Email",
+        "emailPlaceholder": "Type your email...",
+        "button": "Send Reset Link",
+        "sending": "Sending...",
+        "success": "If an account exists, a reset link has been sent.",
+        "error": "Error sending reset email.",
+        "unexpected": "An unexpected error occurred."
+    },
+    "resetPassword": {
+        "title": "Reset Password",
+        "new": "New password",
+        "newPlaceholder": "Type new password...",
+        "retype": "Retype new password",
+        "retypePlaceholder": "Retype new password...",
+        "button": "Reset Password",
+        "resetting": "Resetting...",
+        "mismatch": "Passwords do not match.",
+        "invalid": "Invalid reset link.",
+        "error": "Error resetting password.",
+        "unexpected": "An unexpected error occurred.",
+        "success": "Password reset successfully! Redirecting to login..."
     }
 }

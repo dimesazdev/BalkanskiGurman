@@ -5,6 +5,8 @@ import { City } from "country-state-city";
 import FormSelect from "./FormSelect";
 import i18n from "../i18n";
 
+const countriesWithStates = ["US", "CA", "AU"];
+
 const CityPicker = ({ countryIso, value, onChange, required = false, disabled = false }) => {
   const { t } = useTranslation();
   const [translatedCities, setTranslatedCities] = useState([]);
@@ -27,16 +29,25 @@ const CityPicker = ({ countryIso, value, onChange, required = false, disabled = 
 
   useEffect(() => {
     if (!countryIso) return;
+
     const fallbackCities = City.getCitiesOfCountry(countryIso);
+
     const localized = fallbackCities.map((city) => {
-      const override = translatedCities.find(
+      const baseLabel = translatedCities.find(
         (c) => c.countryCode === countryIso && c.name === city.name
-      );
-      return {
-        value: city.name,
-        label: override?.translations?.[lang] || city.name,
-      };
+      )?.translations?.[lang] || city.name;
+
+      const label = countriesWithStates.includes(countryIso)
+        ? `${baseLabel}, ${city.stateCode}`
+        : baseLabel;
+
+      const value = countriesWithStates.includes(countryIso)
+        ? `${city.name}, ${city.stateCode}`
+        : city.name;
+
+      return { value, label };
     });
+
     setCityOptions(localized.sort((a, b) => a.label.localeCompare(b.label)));
   }, [countryIso, translatedCities, lang]);
 
@@ -46,11 +57,17 @@ const CityPicker = ({ countryIso, value, onChange, required = false, disabled = 
 
   return (
     <FormSelect
-      label={t("register.city") + " *"}
+      label={t("register.city")}
       name="city"
       value={value}
       onChange={handleChange}
-      options={countryIso ? cityOptions.length > 0 ? [{ label: t("register.cityPlaceholder"), value: "" }, ...cityOptions] : [{ label: t("register.noCities"), value: "" }] : []}
+      options={
+        countryIso
+          ? cityOptions.length > 0
+            ? [{ label: t("register.cityPlaceholder"), value: "" }, ...cityOptions]
+            : [{ label: t("register.noCities"), value: "" }]
+          : []
+      }
       placeholder={t("register.cityPlaceholder")}
       required={required}
       disabled={!countryIso || disabled}

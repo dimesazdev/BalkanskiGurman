@@ -22,6 +22,11 @@ import OwnerDashboard from './pages/owner/OwnerDashboard';
 import OwnerRestaurants from './pages/owner/OwnerRestaurants';
 import OwnerReviews from './pages/owner/OwnerReviews';
 import RequireAdminOrOwner from './context/RequireAdminOrOwner';
+import CommunityGuidelines from './pages/CommunityGuidelines';
+import VerifyEmail from './pages/VerifyEmail';
+import ChangePassword from './pages/ChangePassword';
+import ResetPassword from './pages/ResetPassword';
+import ForgotPassword from './pages/ForgotPassword';
 
 const App = () => (
   <Router>
@@ -34,6 +39,12 @@ const App = () => (
         <Route path="/me" element={<ManageProfile />} />
         <Route path="/restaurants/:id/reviews" element={<WriteReview />} />
         <Route path="/issues" element={<ReportAnIssue />} />
+        <Route path="/community-guidelines" element={<CommunityGuidelines />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/auth/change-password" element={<ChangePassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/forgot-password" element={<ForgotPassword/>} />
+
         <Route path="/admin" element={
           <RequireAdmin>
             <AdminDashboard />

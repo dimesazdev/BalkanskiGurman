@@ -53,7 +53,9 @@ const AdminIssueCard = ({ issue, onManage }) => {
                         <span className="user-name">{user.Name} {user.Surname?.charAt(0)}.</span>
                         {icon && <Icon path={icon} size={0.8} color={color} />}
                     </div>
-                    <div className="user-location">{user.City}, {user.Country}</div>
+                    <div className="user-location">
+                        {user.City ? `${user.City}, ${user.Country}` : user.Country}
+                    </div>
                 </div>
             </div>
             <div className="user-info">
