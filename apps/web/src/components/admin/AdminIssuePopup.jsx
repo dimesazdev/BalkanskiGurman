@@ -8,6 +8,15 @@ import "../../styles/AdminIssuePopup.css";
 import ImageGallery from "../ImageGallery";
 import { useAzureTranslation } from "../../hooks/useAzureTranslation";
 
+const countryNameToCode = {
+  Macedonia: "MK",
+  Slovenia: "SI",
+  Croatia: "HR",
+  Serbia: "RS",
+  "Bosnia and Herzegovina": "BA",
+  Montenegro: "ME"
+};
+
 const AdminIssuePopup = ({ issue, onClose, onResolve }) => {
   const { t, i18n } = useTranslation();
   const user = issue.user;
@@ -23,13 +32,65 @@ const AdminIssuePopup = ({ issue, onClose, onResolve }) => {
     return { icon: null, color: "" };
   };
 
+  const [translatedCities, setTranslatedCities] = useState([]);
+  const [translatedCountries, setTranslatedCountries] = useState([]);
+
+  useEffect(() => {
+    fetch("/translatedCities.json")
+      .then(res => res.json())
+      .then(setTranslatedCities)
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    fetch("/translatedCountries.json")
+      .then(res => res.json())
+      .then(setTranslatedCountries)
+      .catch(console.error);
+  }, []);
+
+  const getTranslatedCountry = (countryName) => {
+    const match = translatedCountries.find(
+      c => c.name.toLowerCase() === countryName?.toLowerCase()
+    );
+    return match?.translations?.[i18n.language] || countryName;
+  };
+
+  const getFormattedUserLocation = () => {
+    const { City, Country } = user;
+    if (!City) return getTranslatedCountry(Country);
+
+    const isoCode = countryNameToCode[Country?.trim()] || Country?.trim();
+
+    const normalize = (s) =>
+      s
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+
+    const cityEntry = translatedCities.find(
+      (c) =>
+        c.countryCode === isoCode &&
+        normalize(c.name) === normalize(City)
+    );
+
+    const translatedCity = cityEntry?.translations?.[i18n.language] || City;
+    const translatedMetro = cityEntry?.metroTranslations?.[i18n.language] || cityEntry?.metro || null;
+    const translatedCountry = getTranslatedCountry(Country);
+
+    if (translatedMetro) {
+      return `${translatedMetro} (${translatedCity}), ${translatedCountry}`;
+    }
+    return `${translatedCity}, ${translatedCountry}`;
+  };
+
   const { icon, color } = getMedalIcon(user._count?.reviews || 0);
   const userStatus = user.status?.Name?.toLowerCase();
   const images = [issue.PhotoUrl1, issue.PhotoUrl2, issue.PhotoUrl3]
     .filter(Boolean)
     .map((url) => ({ Url: url }));
 
-  // Azure Translation for Explanation
   const translationResult = useAzureTranslation(issue.Explanation || "");
   const [translatedText, setTranslatedText] = useState("");
   const [detectedLanguage, setDetectedLanguage] = useState("");
@@ -76,7 +137,7 @@ const AdminIssuePopup = ({ issue, onClose, onResolve }) => {
               )}
             </div>
             <div className="user-meta">
-              {user.City ? `${user.City}, ${user.Country}` : user.Country}
+              {getFormattedUserLocation()} · {user._count?.reviews || 0} {t("labels.reviews")}
             </div>
             <div className="user-status">
               {t("adminUser.status")}:{" "}

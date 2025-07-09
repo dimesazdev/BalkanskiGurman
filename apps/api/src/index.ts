@@ -21,6 +21,8 @@ import uploadRoutes from './routes/upload';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import fetch from 'node-fetch';
+import passport from 'passport';
+import session from 'express-session';
 
 const app = express();
 const prisma = new PrismaClient();
@@ -29,10 +31,18 @@ dotenv.config();
 
 app.use(cors({
   origin: 'http://localhost:5173',
-  credentials: true, 
+  credentials: true,
 }));
 
 app.use(bodyParser.json());
+
+app.use(session({
+  secret: process.env.SESSION_SECRET!,
+  resave: false,
+  saveUninitialized: true,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/users', userRoutes);
 app.use('/restaurants', restaurantRoutes);
@@ -47,7 +57,7 @@ app.use('/working-hours', workingHoursRoutes);
 app.use('/issues', issueRoutes);
 app.use('/favorites', favoriteRoutes);
 app.use('/user-roles', userRoleRoutes);
-app.use('/restaurant-amenities', restaurantAmenityRoutes);  
+app.use('/restaurant-amenities', restaurantAmenityRoutes);
 app.use('/restaurant-cuisines', restaurantCuisineRoutes);
 app.use('/auth', authRoutes);
 app.use('/upload', uploadRoutes);

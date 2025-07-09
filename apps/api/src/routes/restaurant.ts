@@ -9,7 +9,35 @@ const prisma = new PrismaClient();
 // GET all restaurants
 router.get('/', async (req, res) => {
   try {
+    const { city, country } = req.query;
+
+    if (city && typeof city !== "string") {
+      res.status(400).json({ error: "Invalid city parameter" });
+      return;
+    }
+
+    if (country && typeof country !== "string") {
+      res.status(400).json({ error: "Invalid country parameter" });
+      return;
+    }
+
+    const whereClause: any = {};
+
+    if (city || country) {
+      whereClause.address = {
+        AND: [
+          city
+            ? { City: { equals: city, mode: "insensitive" } }
+            : undefined,
+          country
+            ? { Country: { equals: country, mode: "insensitive" } }
+            : undefined
+        ].filter(Boolean)
+      };
+    }
+
     const restaurants = await prisma.restaurant.findMany({
+      where: Object.keys(whereClause).length ? whereClause : undefined,
       include: {
         cuisines: { include: { cuisine: true } },
         amenities: { include: { amenity: true } },

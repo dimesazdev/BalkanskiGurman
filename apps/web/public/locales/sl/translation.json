@@ -107,6 +107,7 @@
         "activate": "Aktiviraj",
         "addToFavorites": "Dodaj med priljubljene",
         "backToRestaurants": "Nazaj na restavracije",
+        "backToCountries": "Nazaj na države",
         "cancel": "Prekliči",
         "changeSelection": "Spremeni izbiro",
         "choosePhoto": "Izberi novo sliko",
@@ -273,7 +274,8 @@
         "writeReview": "Napiši recenzijo",
         "workingHours": "Odpiralni čas",
         "by": "od",
-        "reviewedRestaurant": "Ocenjena restavracija"
+        "reviewedRestaurant": "Ocenjena restavracija",
+        "showingResultsFor": "Prikaz rezultatov za"
     },
     "login": {
         "continueWithGoogle": "Nadaljuj z Google",

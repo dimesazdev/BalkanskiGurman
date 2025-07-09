@@ -107,6 +107,7 @@
         "activate": "Aktiviraj",
         "addToFavorites": "Dodaj u omiljene",
         "backToRestaurants": "Nazad na restorane",
+        "backToCountries": "Nazad na države",
         "cancel": "Otkaži",
         "changeSelection": "Promeni izbor",
         "choosePhoto": "Izaberi novu sliku",
@@ -270,7 +271,8 @@
         "searchByKeyword": "Pretraži po ključnoj reči:",
         "writeReview": "Napiši recenziju",
         "by": "od",
-        "reviewedRestaurant": "Recenzirani restoran"
+        "reviewedRestaurant": "Recenzirani restoran",
+        "showingResultsFor": "Prikaz rezultata za"
     },
     "login": {
         "continueWithGoogle": "Nastavi sa Google",

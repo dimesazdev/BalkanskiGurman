@@ -6,6 +6,7 @@ import FormSelect from "./FormSelect";
 import i18n from "../i18n";
 
 const countriesWithStates = ["US", "CA", "AU"];
+const exYuCountries = ["MK", "RS", "HR", "BA", "ME", "SI"];
 
 const CityPicker = ({ countryIso, value, onChange, required = false, disabled = false }) => {
   const { t } = useTranslation();
@@ -30,26 +31,47 @@ const CityPicker = ({ countryIso, value, onChange, required = false, disabled = 
   useEffect(() => {
     if (!countryIso) return;
 
-    const fallbackCities = City.getCitiesOfCountry(countryIso);
+    const rawLang = i18n.language || "en";
+    const lang = rawLang.split("-")[0];
 
-    const localized = fallbackCities.map((city) => {
-      const baseLabel = translatedCities.find(
-        (c) => c.countryCode === countryIso && c.name === city.name
-      )?.translations?.[lang] || city.name;
+    if (exYuCountries.includes(countryIso)) {
+      const exYu = translatedCities
+        .filter((c) => c.countryCode === countryIso)
+        .map((c) => {
+          const cityLabel = c.translations?.[lang] || c.translations.en || c.name;
+          const metroLabel = c.metroTranslations?.[lang] || c.metro || null;
 
-      const label = countriesWithStates.includes(countryIso)
-        ? `${baseLabel}, ${city.stateCode}`
-        : baseLabel;
+          return {
+            value: c.name,
+            label: metroLabel ? `${metroLabel} (${cityLabel})` : cityLabel
+          };
+        })
+        .sort((a, b) => a.label.localeCompare(b.label));
 
-      const value = countriesWithStates.includes(countryIso)
-        ? `${city.name}, ${city.stateCode}`
-        : city.name;
+      setCityOptions(exYu);
+    } else {
+      const fallbackCities = City.getCitiesOfCountry(countryIso);
 
-      return { value, label };
-    });
+      const localized = fallbackCities.map((city) => {
+        const baseLabel =
+          translatedCities.find(
+            (c) => c.countryCode === countryIso && c.name === city.name
+          )?.translations?.[lang] || city.name;
 
-    setCityOptions(localized.sort((a, b) => a.label.localeCompare(b.label)));
-  }, [countryIso, translatedCities, lang]);
+        const label = countriesWithStates.includes(countryIso)
+          ? `${baseLabel}, ${city.stateCode}`
+          : baseLabel;
+
+        const value = countriesWithStates.includes(countryIso)
+          ? `${city.name}, ${city.stateCode}`
+          : city.name;
+
+        return { value, label };
+      });
+
+      setCityOptions(localized.sort((a, b) => a.label.localeCompare(b.label)));
+    }
+  }, [countryIso, translatedCities, i18n.language]);
 
   const handleChange = (e) => {
     onChange(e.target.value);

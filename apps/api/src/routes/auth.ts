@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import crypto from "crypto";
-import { sendEmail } from "../utils/sendEmail"
+import { sendEmail } from "../utils/sendEmail";
 import { generateEmailTemplate } from "../utils/emailTemplates";
 
 import authenticate from '../middleware/authenticate';
@@ -196,6 +196,11 @@ router.post('/login', async (req, res) => {
       return;
     }
 
+    if (!user.PasswordHash) {
+      res.status(401).json({ error: 'Invalid credentials' });
+      return;
+    }
+
     const isValid = await bcrypt.compare(password, user.PasswordHash);
     if (!isValid) {
       res.status(401).json({ error: 'Invalid credentials' });
@@ -298,6 +303,11 @@ router.patch('/change-password', authenticate, async (req, res) => {
     const user = await prisma.user.findUnique({ where: { UserId: req.user.userId } });
     if (!user) {
       res.status(404).json({ error: 'User not found' });
+      return;
+    }
+
+    if (!user.PasswordHash) {
+      res.status(401).json({ error: 'Current password is incorrect' });
       return;
     }
 

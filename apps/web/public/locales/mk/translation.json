@@ -107,6 +107,7 @@
         "activate": "Активирај",
         "addToFavorites": "Додади во омилени",
         "backToRestaurants": "Назад кон рестораните",
+        "backToCountries": "Назад кон држави",
         "cancel": "Откажи",
         "changeSelection": "Промени го изборот",
         "choosePhoto": "Избери нова слика",
@@ -267,7 +268,8 @@
         "workingHours": "Работно време",
         "addPhotos": "Додај фотографии",
         "by": "од",
-        "reviewedRestaurant": "Рецензиран ресторан"
+        "reviewedRestaurant": "Рецензиран ресторан",
+        "showingResultsFor": "Прикажани резултати за"
     },
     "login": {
         "continueWithGoogle": "Продолжи со Google",

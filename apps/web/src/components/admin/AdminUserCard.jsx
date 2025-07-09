@@ -4,6 +4,16 @@ import Button from "../Button";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import "../../styles/AdminUserCard.css";
+import { useState, useEffect } from "react";
+
+const countryNameToCode = {
+    Macedonia: "MK",
+    Slovenia: "SI",
+    Croatia: "HR",
+    Serbia: "RS",
+    "Bosnia and Herzegovina": "BA",
+    Montenegro: "ME"
+};
 
 const AdminUserCard = ({ user, onManage }) => {
     const { t, i18n } = useTranslation();
@@ -23,6 +33,23 @@ const AdminUserCard = ({ user, onManage }) => {
         ProfilePictureUrl
     } = user;
 
+    const [translatedCities, setTranslatedCities] = useState([]);
+    const [translatedCountries, setTranslatedCountries] = useState([]);
+
+    useEffect(() => {
+        fetch("/translatedCities.json")
+            .then(res => res.json())
+            .then(setTranslatedCities)
+            .catch(console.error);
+    }, []);
+
+    useEffect(() => {
+        fetch("/translatedCountries.json")
+            .then(res => res.json())
+            .then(setTranslatedCountries)
+            .catch(console.error);
+    }, []);
+
     const formattedDate = dayjs(CreatedAt).format("D MMMM YYYY");
     const statusLabel = user.status?.Name?.toLowerCase();
 
@@ -32,6 +59,41 @@ const AdminUserCard = ({ user, onManage }) => {
         if (count >= 11) return { icon: mdiMedal, color: "#c0c0c0" };
         if (count >= 1) return { icon: mdiMedal, color: "#cd7f32" };
         return { icon: null, color: "" };
+    };
+
+    const getTranslatedCountry = (countryName) => {
+        const match = translatedCountries.find(
+            c => c.name.toLowerCase() === countryName?.toLowerCase()
+        );
+        return match?.translations?.[i18n.language] || countryName;
+    };
+
+    const getFormattedUserLocation = () => {
+        if (!City) return getTranslatedCountry(Country);
+
+        const isoCode = countryNameToCode[Country?.trim()] || Country?.trim();
+
+        const normalize = (s) =>
+            s
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase()
+                .trim();
+
+        const cityEntry = translatedCities.find(
+            (c) =>
+                c.countryCode === isoCode &&
+                normalize(c.name) === normalize(City)
+        );
+
+        const translatedCity = cityEntry?.translations?.[i18n.language] || City;
+        const translatedMetro = cityEntry?.metroTranslations?.[i18n.language] || cityEntry?.metro || null;
+        const translatedCountry = getTranslatedCountry(Country);
+
+        if (translatedMetro) {
+            return `${translatedMetro} (${translatedCity}), ${translatedCountry}`;
+        }
+        return `${translatedCity}, ${translatedCountry}`;
     };
 
     const { icon, color } = getMedalIcon(_count?.reviews || 0);
@@ -58,7 +120,7 @@ const AdminUserCard = ({ user, onManage }) => {
                         })()}
                     </div>
                     <div className="user-location">
-                        {user.City ? `${user.City}, ${user.Country}` : user.Country}
+                        {getFormattedUserLocation()}
                     </div>
                 </div>
             </div>

@@ -31,8 +31,17 @@ const FadeInSection = ({ children, delay = 0 }) => {
   );
 };
 
+const countryNameToCode = {
+  Macedonia: "MK",
+  Slovenia: "SI",
+  Croatia: "HR",
+  Serbia: "RS",
+  "Bosnia and Herzegovina": "BA",
+  Montenegro: "ME"
+};
+
 function Restaurants() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -57,10 +66,80 @@ function Restaurants() {
   const [sortOption, setSortOption] = useState("rating");
   const [showLoginAlert, setShowLoginAlert] = useState(false);
 
+  const [translatedCities, setTranslatedCities] = useState([]);
+  const [translatedCountries, setTranslatedCountries] = useState([]);
+
+  useEffect(() => {
+    fetch("/translatedCities.json")
+      .then((res) => res.json())
+      .then(setTranslatedCities)
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    fetch("/translatedCountries.json")
+      .then((res) => res.json())
+      .then(setTranslatedCountries)
+      .catch(console.error);
+  }, []);
+
+  const query = new URLSearchParams(window.location.search);
+  const cityParam = query.get("city");
+  const countryParam = query.get("country");
+  const metroParam = query.get("metro");
+
+  const getTranslatedCountry = (countryName) => {
+    const match = translatedCountries.find(
+      (c) => c.name.toLowerCase() === countryName?.toLowerCase()
+    );
+    return match?.translations?.[i18n.language] || countryName;
+  };
+
+  const getFormattedLocation = () => {
+    if (!cityParam) return getTranslatedCountry(countryParam);
+
+    const isoCode = countryNameToCode[countryParam?.trim()] || countryParam?.trim();
+
+    const normalize = (s) =>
+      s
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+
+    const cityEntry = translatedCities.find((c) => {
+      const cityNorm = normalize(cityParam);
+      const nameNorm = normalize(c.name);
+      const enNorm = normalize(c.translations?.en || "");
+
+      return (
+        c.countryCode === isoCode &&
+        (cityNorm === nameNorm || cityNorm === enNorm)
+      );
+    });
+
+    const translatedCity = cityEntry?.translations?.[i18n.language] || cityParam;
+    const translatedMetro = cityEntry?.metroTranslations?.[i18n.language] || cityEntry?.metro || null;
+    const translatedCountry = getTranslatedCountry(countryParam);
+
+    if (translatedMetro) {
+      return `${translatedMetro} (${translatedCity}), ${translatedCountry}`;
+    }
+    return `${translatedCity}, ${translatedCountry}`;
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("http://localhost:3001/restaurants");
+        const url =
+          cityParam && countryParam
+            ? `http://localhost:3001/restaurants?city=${encodeURIComponent(cityParam)}&country=${encodeURIComponent(countryParam)}`
+            : cityParam
+              ? `http://localhost:3001/restaurants?city=${encodeURIComponent(cityParam)}`
+              : `http://localhost:3001/restaurants`;
+
+
+        const res = await fetch(url);
         const data = await res.json();
         setRestaurants(data);
 
@@ -205,6 +284,13 @@ function Restaurants() {
               <FilterSidebar filters={filters} onChange={setFilters} />
             )}
           </div>
+
+          {(cityParam || metroParam || countryParam) && (
+            <p style={{ color: "var(--beige)" }}>
+              {t("labels.showingResultsFor")}{" "}
+              <strong>{getFormattedLocation()}</strong>
+            </p>
+          )}
 
           <div className="restaurant-cards">
             {filteredRestaurants.length === 0 ? (

@@ -13,20 +13,21 @@ model User {
   EmailConfirmed       Boolean   @default(false)
   emailVerificationToken      String?   
   emailVerificationExpiresAt  DateTime? 
-  PasswordHash         String
+  PasswordHash         String?
   passwordResetToken        String?
   passwordResetExpiresAt    DateTime?
   PhoneNumber          String?
   Name                 String
   Surname              String
   City                 String?
-  Country              String
+  Country              String?
   ProfilePictureUrl    String?
   StatusId             Int
   BadgeLevel           Int
   CreatedAt            DateTime  @default(now())
   UpdatedAt            DateTime  @updatedAt
   SuspendedUntil       DateTime?
+  GoogleId             String?   @unique
 
   status             Status       @relation(fields: [StatusId], references: [StatusId])
   reviews            Review[]

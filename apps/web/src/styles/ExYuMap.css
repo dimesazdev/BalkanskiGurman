@@ -1,0 +1,11 @@
+.leaflet-interactive {
+  outline: none;
+}
+
+.leaflet-interactive:hover {
+  cursor: pointer;
+}
+
+.leaflet-container {
+  filter: brightness(0.95);
+}

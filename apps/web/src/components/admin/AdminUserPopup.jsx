@@ -15,6 +15,16 @@ import "dayjs/locale/en";
 import "dayjs/locale/mk";
 import "dayjs/locale/me";
 import "dayjs/locale/sl";
+import { useState, useEffect } from "react";
+
+const countryNameToCode = {
+    Macedonia: "MK",
+    Slovenia: "SI",
+    Croatia: "HR",
+    Serbia: "RS",
+    "Bosnia and Herzegovina": "BA",
+    Montenegro: "ME"
+};
 
 const AdminUserPopup = ({ user: initialUser, onClose, onAction }) => {
     const { t, i18n } = useTranslation();
@@ -36,6 +46,58 @@ const AdminUserPopup = ({ user: initialUser, onClose, onAction }) => {
         ProfilePictureUrl,
         _count
     } = initialUser;
+
+    const [translatedCities, setTranslatedCities] = useState([]);
+    const [translatedCountries, setTranslatedCountries] = useState([]);
+
+    useEffect(() => {
+        fetch("/translatedCities.json")
+            .then(res => res.json())
+            .then(setTranslatedCities)
+            .catch(console.error);
+    }, []);
+
+    useEffect(() => {
+        fetch("/translatedCountries.json")
+            .then(res => res.json())
+            .then(setTranslatedCountries)
+            .catch(console.error);
+    }, []);
+
+    const getTranslatedCountry = (countryName) => {
+        const match = translatedCountries.find(
+            c => c.name.toLowerCase() === countryName?.toLowerCase()
+        );
+        return match?.translations?.[i18n.language] || countryName;
+    };
+
+    const getFormattedUserLocation = () => {
+        if (!City) return getTranslatedCountry(Country);
+
+        const isoCode = countryNameToCode[Country?.trim()] || Country?.trim();
+
+        const normalize = (s) =>
+            s
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase()
+                .trim();
+
+        const cityEntry = translatedCities.find(
+            (c) =>
+                c.countryCode === isoCode &&
+                normalize(c.name) === normalize(City)
+        );
+
+        const translatedCity = cityEntry?.translations?.[i18n.language] || City;
+        const translatedMetro = cityEntry?.metroTranslations?.[i18n.language] || cityEntry?.metro || null;
+        const translatedCountry = getTranslatedCountry(Country);
+
+        if (translatedMetro) {
+            return `${translatedMetro} (${translatedCity}), ${translatedCountry}`;
+        }
+        return `${translatedCity}, ${translatedCountry}`;
+    };
 
     const userStatus = user.status?.Name?.toLowerCase();
     const createdDate = dayjs(CreatedAt).format("D MMMM YYYY");
@@ -84,7 +146,7 @@ const AdminUserPopup = ({ user: initialUser, onClose, onAction }) => {
                             })()}
                         </div>
                         <div className="user-meta">
-                            {City ? `${City}, ${Country}` : Country} · {_count?.reviews || 0} {t("labels.reviews")}
+                            {getFormattedUserLocation()} · {_count?.reviews || 0} {t("labels.reviews")}
                         </div>
                         <div className="user-status">
                             {t("adminUser.status")}: <span className={`status ${userStatus}`}>

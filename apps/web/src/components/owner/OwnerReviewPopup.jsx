@@ -20,6 +20,15 @@ import { useAzureTranslation } from "../../hooks/useAzureTranslation";
 import FormTextarea from "../FormTextarea";
 import Popup from "../Popup";
 
+const countryNameToCode = {
+  Macedonia: "MK",
+  Slovenia: "SI",
+  Croatia: "HR",
+  Serbia: "RS",
+  "Bosnia and Herzegovina": "BA",
+  Montenegro: "ME"
+};
+
 const OwnerReviewPopup = ({ review, onClose, userToken, onRecheckSuccess }) => {
   const { t, i18n } = useTranslation();
 
@@ -33,6 +42,45 @@ const OwnerReviewPopup = ({ review, onClose, userToken, onRecheckSuccess }) => {
     user: reviewer,
     restaurant
   } = review;
+
+  const [translatedCities, setTranslatedCities] = useState([]);
+  const [translatedCountries, setTranslatedCountries] = useState([]);
+
+  useEffect(() => {
+    fetch("/translatedCities.json").then(res => res.json()).then(setTranslatedCities).catch(console.error);
+    fetch("/translatedCountries.json").then(res => res.json()).then(setTranslatedCountries).catch(console.error);
+  }, []);
+
+  const getTranslatedCountry = (countryName) => {
+    const match = translatedCountries.find(
+      c => c.name.toLowerCase() === countryName?.toLowerCase()
+    );
+    return match?.translations?.[i18n.language] || countryName;
+  };
+
+  const getFormattedUserLocation = () => {
+    if (!reviewer.City) return getTranslatedCountry(reviewer.Country);
+
+    const isoCode = countryNameToCode[reviewer.Country?.trim()] || reviewer.Country?.trim();
+
+    const normalize = (s) =>
+      s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+
+    const cityEntry = translatedCities.find(
+      (c) =>
+        c.countryCode === isoCode &&
+        normalize(c.name) === normalize(reviewer.City)
+    );
+
+    const translatedCity = cityEntry?.translations?.[i18n.language] || reviewer.City;
+    const translatedMetro = cityEntry?.metroTranslations?.[i18n.language] || cityEntry?.metro || null;
+    const translatedCountry = getTranslatedCountry(reviewer.Country);
+
+    if (translatedMetro) {
+      return `${translatedMetro} (${translatedCity}), ${translatedCountry}`;
+    }
+    return `${translatedCity}, ${translatedCountry}`;
+  };
 
   const translationResult = useAzureTranslation(Comment);
   const [translatedText, setTranslatedText] = useState("");
@@ -101,7 +149,6 @@ const OwnerReviewPopup = ({ review, onClose, userToken, onRecheckSuccess }) => {
         throw new Error("Request failed");
       }
 
-      // Update local state to reflect the change
       setStatus("recheck");
       setHasRequested(true);
 
@@ -158,7 +205,7 @@ const OwnerReviewPopup = ({ review, onClose, userToken, onRecheckSuccess }) => {
               })()}
             </div>
             <div className="user-meta">
-              {reviewer.City ? `${reviewer.City}, ${reviewer.Country}` : reviewer.Country} · {reviewer._count?.reviews || 0} {t("labels.reviews")}
+              {getFormattedUserLocation()} · {reviewer._count?.reviews || 0} {t("labels.reviews")}
             </div>
           </div>
         </div>

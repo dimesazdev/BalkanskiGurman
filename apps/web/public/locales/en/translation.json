@@ -107,6 +107,7 @@
         "activate": "Activate",
         "addToFavorites": "Add to Favorites",
         "backToRestaurants": "Back to Restaurants",
+        "backToCountries": "Back to countries",
         "cancel": "Cancel",
         "changeSelection": "Change selection",
         "choosePhoto": "Choose new photo",
@@ -275,7 +276,8 @@
         "reviews": "reviews",
         "searchByKeyword": "Search by keyword:",
         "by": "by",
-        "reviewedRestaurant": "Reviewed restaurant"
+        "reviewedRestaurant": "Reviewed restaurant",
+        "showingResultsFor": "Showing results for"
     },
     "login": {
         "continueWithGoogle": "Continue with Google",

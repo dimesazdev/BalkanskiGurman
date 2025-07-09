@@ -129,6 +129,30 @@ const ReviewCard = ({ review, onDelete }) => {
         }
     };
 
+    const getFormattedLocation = () => {
+        if (!user?.City) {
+            return getTranslatedCountry(user.Country);
+        }
+
+        const isoCode = countryNameToCode[user.Country?.trim()] || user.Country?.trim();
+
+        const cityEntry = translatedCities.find(
+            (c) =>
+                c.countryCode === isoCode &&
+                c.name.toLowerCase() === user.City.toLowerCase()
+        );
+
+        const translatedCity = cityEntry?.translations?.[i18n.language] || user.City;
+        const translatedMetro = cityEntry?.metroTranslations?.[i18n.language] || cityEntry?.metro || null;
+        const translatedCountry = getTranslatedCountry(user.Country);
+
+        if (translatedMetro) {
+            return `${translatedMetro} (${translatedCity}), ${translatedCountry}`;
+        }
+
+        return `${translatedCity}, ${translatedCountry}`;
+    };
+
     return (
         <>
             <div className="review-card">
@@ -153,10 +177,9 @@ const ReviewCard = ({ review, onDelete }) => {
                             <Icon path={medalIcon} size={0.8} color={medalColor} />
                         </div>
                         <div className="review-user-meta">
-                            {user?.City
-                                ? `${getTranslatedCity(user.City, user.Country)}, ${getTranslatedCountry(user.Country)}`
-                                : getTranslatedCountry(user.Country)}
-                            {" "} · {reviewLabel}
+                            <div className="review-user-meta">
+                                {getFormattedLocation()} · {reviewLabel}
+                            </div>
                         </div>
                         <div className="review-stars">
                             {renderStars(Rating)}

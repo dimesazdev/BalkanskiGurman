@@ -8,6 +8,16 @@ import "dayjs/locale/en";
 import "dayjs/locale/mk";
 import "dayjs/locale/me";
 import "dayjs/locale/sl";
+import { useState, useEffect } from "react";
+
+const countryNameToCode = {
+    Macedonia: "MK",
+    Slovenia: "SI",
+    Croatia: "HR",
+    Serbia: "RS",
+    "Bosnia and Herzegovina": "BA",
+    Montenegro: "ME"
+};
 
 const AdminIssueCard = ({ issue, onManage }) => {
     const { t, i18n } = useTranslation();
@@ -22,6 +32,58 @@ const AdminIssueCard = ({ issue, onManage }) => {
     } = issue;
 
     if (!issue || !issue.user) return null;
+
+    const [translatedCities, setTranslatedCities] = useState([]);
+    const [translatedCountries, setTranslatedCountries] = useState([]);
+
+    useEffect(() => {
+        fetch("/translatedCities.json")
+            .then(res => res.json())
+            .then(setTranslatedCities)
+            .catch(console.error);
+    }, []);
+
+    useEffect(() => {
+        fetch("/translatedCountries.json")
+            .then(res => res.json())
+            .then(setTranslatedCountries)
+            .catch(console.error);
+    }, []);
+
+    const getTranslatedCountry = (countryName) => {
+        const match = translatedCountries.find(
+            c => c.name.toLowerCase() === countryName?.toLowerCase()
+        );
+        return match?.translations?.[i18n.language] || countryName;
+    };
+
+    const getFormattedUserLocation = () => {
+        if (!user.City) return getTranslatedCountry(user.Country);
+
+        const isoCode = countryNameToCode[user.Country?.trim()] || user.Country?.trim();
+
+        const normalize = (s) =>
+            s
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase()
+                .trim();
+
+        const cityEntry = translatedCities.find(
+            (c) =>
+                c.countryCode === isoCode &&
+                normalize(c.name) === normalize(user.City)
+        );
+
+        const translatedCity = cityEntry?.translations?.[i18n.language] || user.City;
+        const translatedMetro = cityEntry?.metroTranslations?.[i18n.language] || cityEntry?.metro || null;
+        const translatedCountry = getTranslatedCountry(user.Country);
+
+        if (translatedMetro) {
+            return `${translatedMetro} (${translatedCity}), ${translatedCountry}`;
+        }
+        return `${translatedCity}, ${translatedCountry}`;
+    };
 
     const statusLabel = issue.status?.Name?.trim().toLowerCase() || "unknown";
 
@@ -54,7 +116,7 @@ const AdminIssueCard = ({ issue, onManage }) => {
                         {icon && <Icon path={icon} size={0.8} color={color} />}
                     </div>
                     <div className="user-location">
-                        {user.City ? `${user.City}, ${user.Country}` : user.Country}
+                        {getFormattedUserLocation()}
                     </div>
                 </div>
             </div>
