@@ -27,6 +27,8 @@ import VerifyEmail from './pages/VerifyEmail';
 import ChangePassword from './pages/ChangePassword';
 import ResetPassword from './pages/ResetPassword';
 import ForgotPassword from './pages/ForgotPassword';
+import GoogleCallback from './pages/GoogleCallback';
+import CompleteProfile from './pages/CompleteProfile';
 
 const App = () => (
   <Router>
@@ -44,6 +46,8 @@ const App = () => (
         <Route path="/auth/change-password" element={<ChangePassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/forgot-password" element={<ForgotPassword/>} />
+        <Route path="/auth/google/callback" element={<GoogleCallback />} />
+        <Route path="/complete-profile" element={<CompleteProfile />} />
 
         <Route path="/admin" element={
           <RequireAdmin>

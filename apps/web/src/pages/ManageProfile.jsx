@@ -17,6 +17,7 @@ import PhoneNumberPicker from "../components/PhoneNumberPicker";
 import CountryPicker from "../components/CountryPicker";
 import CityPicker from "../components/CityPicker";
 import { motion } from "framer-motion";
+import Loading from "../components/Loading";
 
 function ManageProfile() {
     const { t } = useTranslation();
@@ -153,7 +154,7 @@ function ManageProfile() {
             transition={{ duration: 0.6, ease: "easeOut" }}
         >
             {popup && <Popup {...popup} onClose={() => setPopup(null)} />}
-            {showAlert && <Alert message={t("manageProfile.saving")} buttonText={t("manageProfile.forceClose")} onButtonClick={() => setShowAlert(false)} showCancel={false} />}
+            {showAlert && <Loading />}
 
             <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
                 <Title>{t("profile.accountInfo")}</Title>

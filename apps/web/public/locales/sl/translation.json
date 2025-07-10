@@ -59,10 +59,10 @@
         "all": "Vse"
     },
     "alerts": {
-        "reviewAgreementRequired": "Pred oddajo mnenja se morate strinjati s pravili.",
-        "reviewRatingRequired": "Prosimo, izberite oceno pred oddajo mnenja.",
-        "reviewTextRequired": "Prosimo, napišite mnenje pred oddajo.",
-        "reviewModerationNotice": "Prosimo, upoštevajte: Lahko traja nekaj časa, preden bo vaše mnenje objavljeno, saj ga mora odobriti naša ekipa.",
+        "reviewAgreementRequired": "Pred oddajo recenzije se morate strinjati s pravili.",
+        "reviewRatingRequired": "Prosimo, izberite oceno pred oddajo recenzije.",
+        "reviewTextRequired": "Prosimo, napišite komentar pred oddajo.",
+        "reviewModerationNotice": "Prosimo, upoštevajte: Lahko traja nekaj časa, preden bo vaša recenzija objavljena, saj ga mora odobriti naša ekipa.",
         "saving": "Shranjevanje sprememb...",
         "creating": "Ustvarjanje restavracije...",
         "deleteError": "Brisanje restavracije ni uspelo.",
@@ -278,6 +278,7 @@
         "showingResultsFor": "Prikaz rezultatov za"
     },
     "login": {
+        "googleLoginFailed": "Prijava z Googlom ni uspela. Poskusite znova.",
         "continueWithGoogle": "Nadaljuj z Google",
         "email": "E-naslov",
         "forgotPassword": "Ste pozabili geslo?",
@@ -396,7 +397,7 @@
         "location": "Lokacija",
         "locationHours": "Lokacija in Delovni čas",
         "menu": "Meni",
-        "noReviews": "Ni še ocen.",
+        "noReviews": "Ni še recenzij.",
         "noSearchResults": "Ni recenzij, ki ustrezajo vašemu iskanju.",
         "phone": "Telefon",
         "price": "Cena",
@@ -444,7 +445,7 @@
         "errorSubmit": "Težave pri prijavi težave.",
         "errorRequired": "Prosimo, izpolnite vsa obvezna polja.",
         "errorRestaurant": "Prosimo, izberite restavracijo.",
-        "errorReview": "Prosimo, navedite oceno.",
+        "errorReview": "Prosimo, navedite recenzijo.",
         "issueTypes": {
             "bugReport": "Nekaj ne deluje pravilno",
             "wrongInfo": "Napačni podatki o restavraciji",
@@ -470,8 +471,8 @@
     "owner": {
         "dashboardTitle": "Nadzorna plošča",
         "myRestaurants": "Moje restavracije",
-        "myReviews": "Upravljaj z ocenami",
-        "reviews": "Ocene"
+        "myReviews": "Upravljaj z recenzijami",
+        "reviews": "Recenzije"
     },
     "restaurantForm": {
         "labels": {
@@ -502,16 +503,16 @@
         "respectContent1": "Z vsemi člani skupnosti ravnajte prijazno. Diskriminacija, sovražni govor, grožnje ali osebni napadi so strogo prepovedani.",
         "respectContent2": "Praznujemo raznolikost kultur in izkušenj. Bodite spoštljivi in pozorni na svoj način izražanja.",
         "authenticTitle": "Avtentični Prispevki",
-        "authenticContent1": "Ocene naj odražajo vaše osebne izkušnje. Izogibajte se pretiravanju ali obrekovanju.",
-        "authenticContent2": "Če ste povezani z lokalom (lastnik, zaposleni, družina), se vzdržite pisanja ocen, da zagotovite poštenost.",
+        "authenticContent1": "Recenzije naj odražajo vaše osebne izkušnje. Izogibajte se pretiravanju ali obrekovanju.",
+        "authenticContent2": "Če ste povezani z lokalom (lastnik, zaposleni, družina), se vzdržite pisanja recenzij, da zagotovite poštenost.",
         "photosTitle": "Fotografije in Vsebina",
         "photosContent1": "Objavite samo fotografije, katerih pravice imate.",
         "photosContent2": "Ne objavljajte neprimerne, žaljive ali zavajajoče vsebine.",
-        "reviewsTitle": "Pisanje Ocen",
+        "reviewsTitle": "Pisanje recenzij",
         "reviewsContent1": "Vaše ocene morajo biti konstruktivne, jasne in povezane z izkušnjo.",
         "reviewsContent2": "Ne razkrivajte osebnih podatkov zaposlenih ali gostov.",
         "prohibitedTitle": "Prepovedana Vsebina",
-        "prohibitedContent1": "Prepovedan je vsakršni spam, lažne ocene, promocije ali poskusi manipulacije ocen.",
+        "prohibitedContent1": "Prepovedan je vsakršni spam, lažne recenzije, promocije ali poskusi manipulacije ocen.",
         "prohibitedContent2": "Kršenje pravil lahko vodi v začasno ali trajno blokado računa.",
         "reportingTitle": "Prijava Težav",
         "reportingContent": "Če opazite vsebino, ki krši ta pravila, jo prijavite ali nas kontaktirajte. Vsako prijavo skrbno pregledamo.",
@@ -559,5 +560,13 @@
         "error": "Napaka pri ponastavitvi gesla.",
         "unexpected": "Prišlo je do nepričakovane napake.",
         "success": "Geslo je bilo uspešno ponastavljeno! Preusmerjam na prijavo..."
+    },
+    "completeProfile": {
+        "title": "Dopolnite svoj profil",
+        "selectCountry": "Prosimo, izberite državo.",
+        "updateFailed": "Posodobitev ni uspela.",
+        "success": "Profil je bil uspešno posodobljen!",
+        "error": "Prišlo je do napake. Poskusite znova.",
+        "button": "Shrani in nadaljuj"
     }
 }

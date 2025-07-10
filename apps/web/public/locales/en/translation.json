@@ -280,6 +280,7 @@
         "showingResultsFor": "Showing results for"
     },
     "login": {
+        "googleLoginFailed": "Google login failed. Please try again.",
         "continueWithGoogle": "Continue with Google",
         "email": "Email",
         "forgotPassword": "Forgot password?",
@@ -565,5 +566,13 @@
         "error": "Error resetting password.",
         "unexpected": "An unexpected error occurred.",
         "success": "Password reset successfully! Redirecting to login..."
+    },
+    "completeProfile": {
+        "title": "Complete your profile",
+        "selectCountry": "Please select a country.",
+        "updateFailed": "Update failed.",
+        "success": "Profile updated successfully!",
+        "error": "Something went wrong. Please try again.",
+        "button": "Save and Continue"
     }
 }

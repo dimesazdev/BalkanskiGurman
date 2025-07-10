@@ -275,6 +275,7 @@
         "showingResultsFor": "Prikaz rezultata za"
     },
     "login": {
+        "googleLoginFailed": "Prijava putem Google-a nije uspela. Pokušajte ponovo.",
         "continueWithGoogle": "Nastavi sa Google",
         "email": "Email",
         "forgotPassword": "Zaboravili ste lozinku?",
@@ -557,5 +558,13 @@
         "error": "Greška prilikom resetovanja lozinke.",
         "unexpected": "Došlo je do neočekivane greške.",
         "success": "Lozinka je uspešno resetovana! Preusmeravam na prijavu..."
+    },
+    "completeProfile": {
+        "title": "Dovršite svoj profil",
+        "selectCountry": "Molimo vas da izaberete zemlju.",
+        "updateFailed": "Ažuriranje nije uspelo.",
+        "success": "Profil je uspešno ažuriran!",
+        "error": "Nešto je pošlo po zlu. Pokušajte ponovo.",
+        "button": "Sačuvaj i nastavi"
     }
 }

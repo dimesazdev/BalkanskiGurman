@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import logo from "../../public/dark-logo.svg";
 import { useAuth } from "../context/AuthContext";
@@ -19,6 +19,22 @@ const Login = () => {
   const navigate = useNavigate();
   const [rememberMe, setRememberMe] = useState(false);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const errorType = params.get("error");
+
+    if (errorType === "google") {
+      setPopup({
+        message: t("login.googleLoginFailed") || "Google login failed. Please try again.",
+        variant: "error",
+      });
+
+      const url = new URL(window.location.href);
+      url.searchParams.delete("error");
+      window.history.replaceState({}, document.title, url.toString());
+    }
+  }, [t]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -149,7 +165,7 @@ const Login = () => {
                   {t("login.login")}
                 </Button>
 
-                <button type="button" className="google-btn">
+                <button type="button" className="google-btn" onClick={() => window.location.href = 'http://localhost:3001/auth/google'}>
                   <svg className="google-icon" viewBox="0 0 24 24" width="20" height="20">
                     <path
                       fill="#4285F4"

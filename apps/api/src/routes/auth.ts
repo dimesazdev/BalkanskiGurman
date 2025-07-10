@@ -10,12 +10,110 @@ import { generateEmailTemplate } from "../utils/emailTemplates";
 import authenticate from '../middleware/authenticate';
 import requireRole from '../middleware/requireRole';
 
+import passport from 'passport';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+
 dotenv.config();
 const router = Router();
 const prisma = new PrismaClient();
 
 const JWT_SECRET = process.env.JWT_SECRET || 'defaultsecret';
 const SALT_ROUNDS = 10;
+
+// Passport Google Strategy
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID!,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+  callbackURL: process.env.GOOGLE_CALLBACK_URL || "http://localhost:3001/auth/google/callback"
+},
+  async (accessToken, refreshToken, profile, done) => {
+    try {
+      // Try find by GoogleId first
+      let user = await prisma.user.findUnique({
+        where: { GoogleId: profile.id }
+      });
+
+      // If not found by GoogleId, check if same email exists already
+      if (!user && profile.emails?.[0]?.value) {
+        const existingByEmail = await prisma.user.findUnique({
+          where: { Email: profile.emails[0].value }
+        });
+
+        if (existingByEmail) {
+          // ⚠️ Account exists but not linked to Google
+          return done(null, false, {
+            message: 'An account with this email already exists. Please log in with email/password first and link Google later.'
+          });
+        }
+      }
+
+      // If no user found at all — create
+      if (!user) {
+        user = await prisma.user.create({
+          data: {
+            GoogleId: profile.id,
+            Email: profile.emails?.[0]?.value || '',
+            Name: profile.name?.givenName || '',
+            Surname: profile.name?.familyName || '',
+            ProfilePictureUrl: profile.photos?.[0]?.value || '',
+            EmailConfirmed: true,
+            StatusId: 1,
+            BadgeLevel: 1,
+            userRoles: {
+              create: {
+                RoleId: (await prisma.role.findFirst({ where: { Name: 'User' } }))?.RoleId || 'User',
+              }
+            }
+          }
+        });
+      }
+
+      return done(null, user);
+    } catch (err) {
+      return done(err, undefined);
+    }
+  }
+));
+
+passport.serializeUser((user: any, done) => {
+  done(null, user.UserId);
+});
+
+passport.deserializeUser(async (id: string, done) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { UserId: id }
+    });
+    done(null, user);
+  } catch (err) {
+    done(err, undefined);
+  }
+});
+
+// 🟩 Google Auth Routes
+router.get('/google', passport.authenticate('google', {
+  scope: ['profile', 'email']
+}));
+
+router.get('/google/callback',
+  passport.authenticate('google', {
+    session: false,
+    failureRedirect: 'http://localhost:5173/auth/login?error=google'
+  }),
+  (req, res) => {
+    const user = req.user as any;
+    const token = jwt.sign({ userId: user.UserId }, process.env.JWT_SECRET!, { expiresIn: '7d' });
+
+    res.redirect(`http://localhost:5173/auth/google/callback?token=${token}`);
+  }
+);
+
+// 🟩 Logout
+router.get('/logout', (req, res) => {
+  req.logout(() => {
+    res.redirect('/');
+  });
+});
 
 // Register
 router.post('/register', async (req, res) => {

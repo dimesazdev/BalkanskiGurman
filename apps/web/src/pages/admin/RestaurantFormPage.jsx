@@ -18,6 +18,7 @@ import CountryPicker from "../../components/CountryPicker";
 import CityPicker from "../../components/CityPicker";
 import "../../styles/RestaurantForm.css";
 import { motion } from "framer-motion";
+import Loading from "../../components/Loading";
 
 const amenityOptions = [
     { code: "DELIV", label: "filters.delivery" },
@@ -393,14 +394,7 @@ const RestaurantFormPage = () => {
                     cancelText={t('buttons.cancel')}
                 />
             )}
-            {showAlert && (
-                <Alert
-                    message={isEdit ? t("alerts.savingRestaurant") : t("alerts.creatingRestaurant")}
-                    buttonText="Close"
-                    onButtonClick={() => setShowAlert(false)}
-                    showCancel={false}
-                />
-            )}
+            {showAlert && <Loading />}
             <form className="restaurant-form">
                 {/* Section 1: Details */}
                 <Title>{t("form.restaurantDetails")}</Title>
