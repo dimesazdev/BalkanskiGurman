@@ -104,6 +104,7 @@
         "VEGE": "Vegetarijanske opcije"
     },
     "buttons": {
+        "add": "Dodaj",
         "activate": "Aktiviraj",
         "addToFavorites": "Dodaj u omiljene",
         "backToRestaurants": "Nazad na restorane",
@@ -192,6 +193,8 @@
         "vegetarian": "Vegetarijanske opcije"
     },
     "form": {
+        "mediaGallery": "Galerija",
+        "youtubeVideoUrl": "YouTube video link",
         "address": "Adresa restorana",
         "amenities": "Pogodnosti",
         "city": "Grad",
@@ -225,7 +228,9 @@
         "imageRequired": "Morate dodati bar jednu sliku.",
         "noWorkingHoursConfirm": "Svi dani su označeni kao zatvoreni. Da li ste sigurni da želite da nastavite?",
         "phoneRequired": "Broj telefona je obavezan.",
-        "noAmenitiesConfirm": "Niste izabrali nijednu pogodnost. Da li ste sigurni da želite da nastavite?"
+        "noAmenitiesConfirm": "Niste izabrali nijednu pogodnost. Da li ste sigurni da želite da nastavite?",
+        "max3Videos": "Možete dodati najviše 3 video snimka.",
+        "invalidYoutubeLink": "Neispravan YouTube link"
     },
     "home": {
         "button": "Pogledaj restorane"

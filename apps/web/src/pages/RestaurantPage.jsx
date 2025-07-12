@@ -8,7 +8,7 @@ import WorkingHoursCard from "../components/WorkingHoursCard";
 import Popup from "../components/Popup";
 import { getAmenityIcon } from "../utils/getAmenityIcon";
 import Icon from "@mdi/react";
-import ImageGallery from "../components/ImageGallery";
+import MediaGallery from "../components/MediaGallery";
 import {
   mdiArrowLeft, mdiCheckCircle, mdiPhone, mdiWeb, mdiSilverwareForkKnife,
   mdiCashMultiple, mdiFileDocument, mdiStar, mdiStarHalfFull, mdiStarOutline,
@@ -247,7 +247,7 @@ function RestaurantPage() {
       </FadeInSection>
 
       <FadeInSection from="bottom">
-        <ImageGallery images={restaurant.images} />
+        <MediaGallery media={restaurant.images} />
       </FadeInSection>
 
       <FadeInSection from="left">

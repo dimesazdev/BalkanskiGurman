@@ -104,6 +104,7 @@
         "VEGE": "Vegetarian options"
     },
     "buttons": {
+        "add": "Add",
         "activate": "Activate",
         "addToFavorites": "Add to Favorites",
         "backToRestaurants": "Back to Restaurants",
@@ -196,6 +197,8 @@
         "vegetarian": "Vegetarian options"
     },
     "form": {
+        "mediaGallery": "Media Gallery",
+        "youtubeVideoUrl": "Youtube Video URL",
         "address": "Restaurant Address",
         "agree": "I agree to the",
         "amenities": "Amenities",
@@ -234,7 +237,9 @@
         "cuisineRequired": "You must select a cuisine.",
         "imageRequired": "You must add at least one image.",
         "noWorkingHoursConfirm": "All days are marked as closed. Are you sure you want to proceed?",
-        "noAmenitiesConfirm": "You have not selected any amenities. Are you sure you want to continue?"
+        "noAmenitiesConfirm": "You have not selected any amenities. Are you sure you want to continue?",
+        "max3Videos": "You can only add up to 3 videos.",
+        "invalidYoutubeLink": "Invalid YouTube link"
     },
     "home": {
         "button": "See restaurants"

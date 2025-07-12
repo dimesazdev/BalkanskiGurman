@@ -3,7 +3,7 @@ import Icon from "@mdi/react";
 import { mdiStar, mdiStarHalfFull, mdiStarOutline, mdiMedal, mdiDiamondStone, mdiTrashCan } from "@mdi/js";
 import "../styles/ReviewCard.css";
 import { useTranslation } from "react-i18next";
-import ImageGallery from "./ImageGallery";
+import MediaGallery from "./MediaGallery";
 import dayjs from "dayjs";
 import "dayjs/locale/en";
 import "dayjs/locale/mk";
@@ -205,13 +205,7 @@ const ReviewCard = ({ review, onDelete }) => {
 
                 <div className="review-images">
                     {reviewImages.length > 0 && (
-                        <div style={{ maxWidth: "100%", overflow: "hidden" }}>
-                            <ImageGallery
-                                images={reviewImages}
-                                arrowColor="var(--red)"
-                                arrowSize={1.5}
-                            />
-                        </div>
+                            <MediaGallery media={reviewImages} />
                     )}
                 </div>
 

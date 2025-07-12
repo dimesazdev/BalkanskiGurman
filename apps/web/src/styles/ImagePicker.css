@@ -36,13 +36,6 @@
   top: 35%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: var(--red);
-  color: white;
-  border: none;
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px;
-  font-weight: bold;
-  cursor: pointer;
   display: none;
 }
 

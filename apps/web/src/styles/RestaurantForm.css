@@ -14,7 +14,7 @@
     margin: 0 auto;
 }
 
-.restaurant-form #first-grid > * {
+.restaurant-form #first-grid>* {
     flex: 1 1 calc(50% - 0.75rem);
     min-width: 250px;
 }
@@ -31,7 +31,7 @@
     margin: 0 auto;
 }
 
-.restaurant-form .form-grid.two-col > * {
+.restaurant-form .form-grid.two-col>* {
     flex: 1 1 calc(50% - 0.75rem);
     box-sizing: border-box;
     min-width: 250px;
@@ -46,8 +46,43 @@
 }
 
 .restaurant-form .max-1000 {
-    max-width: 1000px;
+    max-width: 930px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     margin: 0 auto;
+    width: 100%;
+}
+
+.restaurant-form .video-inputs {
+    margin-top: 1rem;
+}
+
+.restaurant-form .video-input-row {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.restaurant-form .current-videos-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.restaurant-form .current-videos-preview .video-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.restaurant-form .current-videos-preview iframe {
+    border-radius: 8px;
+    width: 300px;
 }
 
 .restaurant-form .working-hours-header,

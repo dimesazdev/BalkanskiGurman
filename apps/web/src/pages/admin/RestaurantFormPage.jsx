@@ -71,6 +71,9 @@ const RestaurantFormPage = () => {
     });
 
     const [images, setImages] = useState([]);
+    const [videos, setVideos] = useState([]);
+    const [videoInput, setVideoInput] = useState("");
+
     const [popup, setPopup] = useState(null);
     const [showAlert, setShowAlert] = useState(false);
 
@@ -228,6 +231,10 @@ const RestaurantFormPage = () => {
             setPopup({ message: t("formErrors.imageRequired"), variant: "error" });
             return "error";
         }
+        if (videos.length > 3) {
+            setPopup({ message: t("formErrors.max3Videos"), variant: "error" });
+            return "error";
+        }
 
         const isEntryEmpty = (entry) => {
             return (
@@ -293,6 +300,7 @@ const RestaurantFormPage = () => {
         }));
         const imageUrls = await uploadImages();
         const imageData = imageUrls.map(url => ({ Url: url }));
+        const videoData = videos.map(url => ({ Url: url }));
         try {
             const payload = {
                 Name: formData.name,
@@ -304,7 +312,7 @@ const RestaurantFormPage = () => {
                 cuisines: relationWithOptionalDelete(cuisineData),
                 amenities: relationWithOptionalDelete(amenityData),
                 workingHours: relationWithOptionalDelete(workingHourData),
-                images: relationWithOptionalDelete(imageData),
+                images: relationWithOptionalDelete([...imageData, ...videoData]),
                 address: isEdit
                     ? {
                         update: {
@@ -458,10 +466,64 @@ const RestaurantFormPage = () => {
                     />
                 </div>
 
-                {/* Section 2: Image Gallery */}
-                <Title>{t("form.imageGallery")}</Title>
+                {/* Section 2: Media Gallery */}
+                <Title>{t("form.mediaGallery")}</Title>
                 <div className="max-1000">
                     <ImagePicker images={images} setImages={setImages} maxImages={10} />
+
+                    <div className="video-inputs">
+                        <div className="video-input-row">
+                            <div style={{ flex: 1 }}>
+                                <FormInput
+                                    id="video-url"
+                                    label={t("form.youtubeVideoUrl") || "YouTube Video URL"}
+                                    value={videoInput}
+                                    onChange={(e) => setVideoInput(e.target.value)}
+                                    placeholder="https://www.youtube.com/watch?v=..."
+                                />
+                            </div>
+                            <Button
+                                variant="red"
+                                onClick={() => {
+                                    if (videos.length >= 3) return;
+                                    const match = videoInput.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/);
+                                    if (match) {
+                                        const embedUrl = `https://www.youtube.com/embed/${match[1]}`;
+                                        if (!videos.includes(embedUrl)) {
+                                            setVideos(prev => [...prev, embedUrl]);
+                                        }
+                                        setVideoInput("");
+                                    } else {
+                                        setPopup({ message: t("formErrors.invalidYouTubeLink"), variant: "error" });
+                                    }
+                                }}
+                                disabled={!videoInput}
+                                style={{ height:"3.5rem" }}
+                            >
+                                {t("buttons.add") || "Add"}
+                            </Button>
+                        </div>
+
+                        <div className="current-videos-preview">
+                            {videos.map((v, i) => (
+                                <div key={i} className="video-wrapper">
+                                    <iframe
+                                        src={v}
+                                        title={`Video ${i + 1}`}
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    />
+                                    <Button
+                                        variant="red-small"
+                                        onClick={() => setVideos(prev => prev.filter((_, idx) => idx !== i))}
+                                        className="remove-button"
+                                    >
+                                        {t("buttons.remove") || "Remove"}
+                                    </Button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
 
                 {/* Section 3: Address */}

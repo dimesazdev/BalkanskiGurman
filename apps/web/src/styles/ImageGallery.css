@@ -1,47 +1,47 @@
 .image-gallery-wrapper {
     position: relative;
     align-items: center;
-}
 
-.image-gallery {
-    display: flex;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    gap: 8px;
-    padding: 8px 0;
-    scrollbar-width: none;
-    /* Firefox */
-}
+    .image-gallery {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        gap: 8px;
+        padding: 8px 0;
+        scrollbar-width: none;
+        /* Firefox */
+    }
 
-.image-gallery::-webkit-scrollbar {
-    display: none;
-    /* Chrome, Safari */
-}
+    .image-gallery::-webkit-scrollbar {
+        display: none;
+        /* Chrome, Safari */
+    }
 
-.gallery-image {
-    flex: 0 0 auto;
-    width: 100%;
-    max-width: 500px;
-    object-fit: cover;
-}
+    .gallery-image {
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 500px;
+        object-fit: cover;
+    }
 
-/* Arrow buttons */
-.gallery-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    z-index: 1;
-    transition: background-color 0.2s ease;
-    color: var(--beige);
-}
+    /* Arrow buttons */
+    .gallery-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        z-index: 1;
+        transition: background-color 0.2s ease;
+        color: var(--beige);
+    }
 
-.gallery-arrow.left {
-    left: -5px;
-}
+    .gallery-arrow.left {
+        left: -5px;
+    }
 
-.gallery-arrow.right {
-    right: -5px;
+    .gallery-arrow.right {
+        right: -5px;
+    }
 }
