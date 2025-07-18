@@ -11,7 +11,7 @@ const Popup = ({ message, onClose, variant = "error", duration = 5000 }) => {
     if (!hovering && visible) {
       timerRef.current = setTimeout(() => {
         setVisible(false);
-        setTimeout(() => onClose?.(), 300); // wait for exit animation
+        setTimeout(() => onClose?.(), 300);
       }, duration);
     }
 

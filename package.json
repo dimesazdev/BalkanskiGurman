@@ -23,5 +23,9 @@
   ],
   "prisma": {
     "seed": "ts-node ./apps/api/prisma/seed.ts"
+  },
+  "overrides": {
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
   }
 }

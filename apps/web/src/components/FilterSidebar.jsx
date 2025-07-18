@@ -14,13 +14,13 @@ import intl from "../images/int-flag-icon.svg";
 import { getAmenityIcon } from "../utils/getAmenityIcon";
 
 const cuisineOptions = [
-  { code: "MK", label: "filters.macedonian", icon: mk },
-  { code: "SR", label: "filters.serbian", icon: sr },
-  { code: "SL", label: "filters.slovenian", icon: sl },
-  { code: "BA", label: "filters.bosnian", icon: ba },
-  { code: "HR", label: "filters.croatian", icon: hr },
-  { code: "ME", label: "filters.montenegrin", icon: me },
-  { code: "INT", label: "filters.international", icon: intl }
+  { code: "MK", label: 'cuisines.MK', icon: mk },
+  { code: "SR", label: 'cuisines.SR', icon: sr },
+  { code: "SL", label: 'cuisines.SL', icon: sl },
+  { code: "BA", label: 'cuisines.BA', icon: ba },
+  { code: "HR", label: 'cuisines.HR', icon: hr },
+  { code: "ME", label: 'cuisines.ME', icon: me },
+  { code: "INT", label: 'cuisines.INT', icon: intl }
 ];
 
 const amenityOptions = [

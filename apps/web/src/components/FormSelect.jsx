@@ -10,7 +10,7 @@ const FormSelect = ({
 }) => {
   return (
     <div className="form-group">
-      <label htmlFor={name} className='text-white' >{label}</label>
+      <label htmlFor={name} className='text-white'>{label}</label>
       <select
         id={name}
         name={name}
