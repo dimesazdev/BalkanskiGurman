@@ -14,7 +14,7 @@ export function validateFields(data, t) {
     errors.email = t("register.errorEmail");
   }
 
-  const phoneRegex = /^\d*$/;
+  const phoneRegex = /^\+?\d*$/;
   if (data.phoneNumber !== undefined) {
     const cleanedPhone = data.phoneNumber.replace(/\s+/g, "");
     if (cleanedPhone && !phoneRegex.test(cleanedPhone)) {

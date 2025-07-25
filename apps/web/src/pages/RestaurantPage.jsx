@@ -349,45 +349,46 @@ function RestaurantPage() {
       <FadeInSection from="bottom">
         <Title>{t("restaurant.reviews")}</Title>
         <div className="review-bar">
-          <div className="review-cell left">
-            <SortBar
-              label={t("sort.label")}
-              sortOptions={["highestRating", "lowestRating", "latest"]}
-              selected={sortOption}
-              onSelect={setSortOption}
-              t={t}
-            />
-          </div>
-          <div className="review-cell center">
-            <Button
-              variant="red"
-              disabled={
-                user?.role === OWNER_ROLE_ID ||
-                userStatus === "suspended" ||
-                userStatus === "banned"
-              }
-              onClick={() => {
-                if (!user) {
-                  setShowLoginAlert(true);
-                } else if (user?.role !== OWNER_ROLE_ID && userStatus !== "suspended" && userStatus !== "banned") {
-                  navigate(`/restaurants/${id}/reviews`);
-                }
-              }}
-              data-tooltip-id="write-review-tooltip"
-              style={
-                user?.role === OWNER_ROLE_ID ||
+          <div className="review-group">
+            <div className="review-cell left">
+              <SortBar
+                label={t("sort.label")}
+                sortOptions={["highestRating", "lowestRating", "latest"]}
+                selected={sortOption}
+                onSelect={setSortOption}
+                t={t}
+              />
+            </div>
+            <div className="review-cell center">
+              <Button
+                variant="red"
+                disabled={
+                  user?.role === OWNER_ROLE_ID ||
                   userStatus === "suspended" ||
                   userStatus === "banned"
-                  ? { opacity: 0.5, cursor: "not-allowed" }
-                  : {}
-              }
-            >
-              {t("buttons.writeReview")}
-            </Button>
-
-            {(user?.role === OWNER_ROLE_ID || userStatus === "suspended" || userStatus === "banned") && (
-              <Tooltip id="write-review-tooltip" place="top" content={disabledReason} />
-            )}
+                }
+                onClick={() => {
+                  if (!user) {
+                    setShowLoginAlert(true);
+                  } else {
+                    navigate(`/restaurants/${id}/reviews`);
+                  }
+                }}
+                data-tooltip-id="write-review-tooltip"
+                style={
+                  user?.role === OWNER_ROLE_ID ||
+                    userStatus === "suspended" ||
+                    userStatus === "banned"
+                    ? { opacity: 0.5, cursor: "not-allowed" }
+                    : {}
+                }
+              >
+                {t("buttons.writeReview")}
+              </Button>
+              {(user?.role === OWNER_ROLE_ID || userStatus === "suspended" || userStatus === "banned") && (
+                <Tooltip id="write-review-tooltip" place="top" content={disabledReason} />
+              )}
+            </div>
           </div>
           <div className="review-cell right">
             <SearchBar

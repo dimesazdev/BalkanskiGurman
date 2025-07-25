@@ -282,7 +282,8 @@
         "searchByKeyword": "Search by keyword:",
         "by": "by",
         "reviewedRestaurant": "Reviewed restaurant",
-        "showingResultsFor": "Showing results for"
+        "showingResultsFor": "Showing results for",
+        "onDay": "on {{day}}"
     },
     "login": {
         "googleLoginFailed": "Google login failed. Please try again.",

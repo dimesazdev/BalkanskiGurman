@@ -280,7 +280,8 @@
         "workingHours": "Odpiralni čas",
         "by": "od",
         "reviewedRestaurant": "Ocenjena restavracija",
-        "showingResultsFor": "Prikaz rezultatov za"
+        "showingResultsFor": "Prikaz rezultatov za",
+        "onDay": "v {{day}}"
     },
     "login": {
         "googleLoginFailed": "Prijava z Googlom ni uspela. Poskusite znova.",

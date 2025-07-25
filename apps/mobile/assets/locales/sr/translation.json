@@ -277,7 +277,8 @@
         "writeReview": "Napiši recenziju",
         "by": "od",
         "reviewedRestaurant": "Recenzirani restoran",
-        "showingResultsFor": "Prikaz rezultata za"
+        "showingResultsFor": "Prikaz rezultata za",
+        "onDay": "u {{day}}"
     },
     "login": {
         "googleLoginFailed": "Prijava putem Google-a nije uspela. Pokušajte ponovo.",

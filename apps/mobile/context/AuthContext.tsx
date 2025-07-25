@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getApiBaseUrl } from '@/api/config';
 
 const AuthContext = createContext<any>(null);
 
@@ -45,7 +46,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (!user?.token) return;
 
     try {
-      const res = await fetch('http://localhost:3001/auth/me', {
+      const baseUrl = await getApiBaseUrl();
+      const res = await fetch(`${baseUrl}/auth/me`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

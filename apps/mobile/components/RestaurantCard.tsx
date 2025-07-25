@@ -12,6 +12,8 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import Colors from '@/constants/Colors';
 import { RootStackParamList } from '@/types/navigation';
 import { getAmenityIcon } from '@/utils/getAmenityIcon';
+import { getOpenCloseStatus, getNextOpeningTime } from '@/utils/openingHoursUtils';
+import dayjs from 'dayjs';
 
 type Restaurant = {
     RestaurantId: number;
@@ -87,33 +89,20 @@ const RestaurantCard: React.FC<RestaurantCardProps> = ({
         return <View style={styles.stars}>{stars}</View>;
     };
 
-    const now = new Date();
-    const todayDay = ((now.getDay() + 6) % 7) + 1;
+    const now = dayjs();
+    const todayDay = ((now.day() + 6) % 7) + 1;
     const todayHours = restaurant.workingHours?.find(h => h.DayOfWeek === todayDay);
 
-    const getFormattedTime = (h: number, m: number) => `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+    const getDayName = (d: number) => {
+        const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+        return t(`days.${days[d - 1]}`);
+    };
 
-    let openStatusText = '';
-    let isCurrentlyOpen = false;
-
-    if (todayHours && !todayHours.IsClosed) {
-        const nowMinutes = now.getHours() * 60 + now.getMinutes();
-        const open = (todayHours.OpenHour ?? 0) * 60 + (todayHours.OpenMinute ?? 0);
-        const close = (todayHours.CloseHour ?? 0) * 60 + (todayHours.CloseMinute ?? 0);
-
-        isCurrentlyOpen = close > open
-            ? nowMinutes >= open && nowMinutes < close
-            : nowMinutes >= open || nowMinutes < close;
-
-        if (isCurrentlyOpen) {
-            openStatusText = `${t('labels.openUntil')} ${getFormattedTime(todayHours.CloseHour, todayHours.CloseMinute)}`;
-        } else {
-            openStatusText = t('labels.closed');
-        }
-    }
+    const { isOpen, closeFormatted } = getOpenCloseStatus(todayHours, now, t);
+    const nextOpen = getNextOpeningTime(restaurant.workingHours || [], todayDay, getDayName, t);
 
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('RestaurantDetails', { id: RestaurantId })} style={styles.card}>
+        <TouchableOpacity onPress={() => navigation.navigate('RestaurantPage', { id: RestaurantId })} style={styles.card}>
             <View style={styles.imageWrap}>
                 <Image source={{ uri: image }} style={styles.image} />
                 <TouchableOpacity
@@ -144,11 +133,13 @@ const RestaurantCard: React.FC<RestaurantCardProps> = ({
                     {IsClaimed && <Icon name="check-circle" size={18} color="green" />}
                 </View>
 
-                {todayHours && !todayHours.IsClosed && (
+                {todayHours && (
                     <View style={styles.openStatusRow}>
-                        <Icon name="clock-outline" size={16} color={isCurrentlyOpen ? 'green' : Colors.red} />
-                        <Text style={[styles.openStatusText, { color: isCurrentlyOpen ? 'green' : Colors.red }]}>
-                            {openStatusText}
+                        <Icon name="clock-outline" size={16} color={isOpen ? 'green' : Colors.red} />
+                        <Text style={[styles.openStatusText, { color: isOpen ? 'green' : Colors.red }]}>
+                            {isOpen
+                                ? `${t('labels.openUntil')} ${closeFormatted}`
+                                : `${t('labels.closed')} · ${nextOpen}`}
                         </Text>
                     </View>
                 )}

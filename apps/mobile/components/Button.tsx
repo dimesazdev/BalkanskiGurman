@@ -1,3 +1,4 @@
+import Colors from '@/constants/Colors';
 import React from 'react';
 import {
     Text,
@@ -137,4 +138,5 @@ const textVariantMap: Record<string, TextStyle> = {
     'yellow-small': { color: '#FFF' },
     green: { color: '#FFF' },
     blue: { color: '#FFF' },
+    'beige-outline': { color: Colors.beige }
 };

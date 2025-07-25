@@ -124,6 +124,7 @@ router.post('/register', async (req, res) => {
       name,
       surname,
       phoneNumber,
+      countryIso,
       city,
       country,
       profilePictureUrl,
@@ -155,6 +156,7 @@ router.post('/register', async (req, res) => {
         Name: name,
         Surname: surname,
         PhoneNumber: phoneNumber || null,
+        CountryIso: countryIso || null,
         City: city || null,
         Country: country,
         ProfilePictureUrl: profilePictureUrl || '',
@@ -339,17 +341,35 @@ router.get('/me', authenticate, async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
       where: { UserId: req.user.userId },
-      include: {
+      select: {
+        UserId: true,
+        Name: true,
+        Surname: true,
+        Email: true,
+        PhoneNumber: true,
+        CountryIso: true,           
+        Country: true,
+        City: true,
+        ProfilePictureUrl: true,
         _count: {
           select: { reviews: true }
         },
-        userRoles: true
+        userRoles: {
+          select: {
+            RoleId: true,
+            role: {
+              select: {
+                Name: true,
+                NormalizedName: true
+              }
+            }
+          }
+        }
       }
     });
 
     if (!user) {
-      res.status(404).json({ error: 'User not found' });
-      return;
+      return res.status(404).json({ error: 'User not found' });
     }
 
     res.json(user);
@@ -361,18 +381,20 @@ router.get('/me', authenticate, async (req, res) => {
 
 // Update current user profile
 router.put('/me', authenticate, async (req, res) => {
+  console.log("✅ REACHED PUT /auth/me");
   try {
-    const { name, surname, phoneNumber, city, country, profilePictureUrl } = req.body;
+    const { Name, Surname, PhoneNumber, City, Country, ProfilePictureUrl, CountryIso } = req.body;
 
     const updatedUser = await prisma.user.update({
       where: { UserId: req.user.userId },
       data: {
-        Name: name,
-        Surname: surname,
-        PhoneNumber: phoneNumber,
-        City: city,
-        Country: country,
-        ProfilePictureUrl: profilePictureUrl
+        Name,
+        Surname,
+        PhoneNumber,
+        City,
+        Country,
+        ProfilePictureUrl,
+        CountryIso
       },
       include: {
         _count: {

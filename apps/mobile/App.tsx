@@ -15,6 +15,10 @@ import RegisterScreen from './screens/RegisterScreen';
 import RestaurantsScreen from './screens/RestaurantsScreen';
 import ExYuMapScreen from "./screens/ExYuMapScreen";
 import FavoritesScreen from './screens/FavoritesScreen';
+import RestaurantPageScreen from './screens/RestaurantPage';
+import WriteReviewScreen from './screens/WriteReviewScreen';
+import ManageProfileScreen from './screens/ManageProfileScreen';
+import ReportIssueScreen from './screens/ReportIssueScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -54,9 +58,13 @@ export default function App(): JSX.Element {
               <Stack.Screen name="Home" component={HomeScreen} />
               <Stack.Screen name="Login" component={LoginScreen} />
               <Stack.Screen name="Register" component={RegisterScreen} />
+              <Stack.Screen name="ManageProfile" component={ManageProfileScreen} />
               <Stack.Screen name="Restaurants" component={RestaurantsScreen} />
               <Stack.Screen name="Favorites" component={FavoritesScreen} />
               <Stack.Screen name="ExYuMap" component={ExYuMapScreen} />
+              <Stack.Screen name="RestaurantPage" component={RestaurantPageScreen} />
+              <Stack.Screen name="WriteReview" component={WriteReviewScreen} />
+              <Stack.Screen name="ReportIssue" component={ReportIssueScreen} />
             </Stack.Navigator>
             <Navbar />
           </NavigationContainer>

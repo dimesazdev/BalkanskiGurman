@@ -18,11 +18,13 @@ import CityPicker from '../components/CityPicker';
 import Button from '../components/Button';
 import Loading from '../components/Loading';
 import Popup from '../components/Popup';
+import { getApiBaseUrl } from '@/api/config';
 
 import Colors from '@/constants/Colors';
 import { validateFields } from '../utils/validators';
 import { RootStackParamList } from '../types/navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type PopupState = {
     message: string;
@@ -30,6 +32,7 @@ type PopupState = {
 } | null;
 
 const RegisterScreen = () => {
+    const insets = useSafeAreaInsets();
     const { t, i18n } = useTranslation();
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -38,12 +41,12 @@ const RegisterScreen = () => {
         surname: '',
         email: '',
         phoneNumber: '',
+        phoneCountryIso: 'MK',
         city: '',
         country: '',
         countryIso: '',
         password: '',
         retypePassword: '',
-        countryCode: '+389',
     });
 
     const [loading, setLoading] = useState(false);
@@ -63,25 +66,24 @@ const RegisterScreen = () => {
         setLoading(true);
 
         try {
-            const fullPhone = `${formData.countryCode}${formData.phoneNumber}`.replace(/\D/g, '');
-            const cleanedCode = formData.countryCode.replace(/\D/g, '');
             const phoneNumberToSend =
-                formData.phoneNumber.trim() === '' || fullPhone === cleanedCode
-                    ? null
-                    : `${formData.countryCode}${formData.phoneNumber}`;
+                formData.phoneNumber.trim() === '' ? null : formData.phoneNumber;
 
             const payload = {
                 name: formData.name,
                 surname: formData.surname,
                 email: formData.email,
                 phoneNumber: phoneNumberToSend,
+                countryIso: formData.phoneCountryIso || null,
                 city: formData.city.trim() === '' ? null : formData.city,
                 country: formData.country,
                 password: formData.password,
                 language: i18n.language,
             };
 
-            const res = await fetch('http://192.168.100.31:3001/auth/register', {
+            const baseUrl = await getApiBaseUrl();
+
+            const res = await fetch(`${baseUrl}/auth/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload),
@@ -136,7 +138,7 @@ const RegisterScreen = () => {
                 />
             )}
 
-            <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+            <ScrollView contentContainerStyle={[styles.container, { paddingTop: insets.top }]} keyboardShouldPersistTaps="handled">
                 <Animated.View entering={FadeInDown.duration(800)} style={styles.logoSection}>
                     <Image source={require('../assets/images/dark-logo.png')} style={styles.logo} />
                 </Animated.View>
@@ -146,7 +148,13 @@ const RegisterScreen = () => {
                         <FormInput id="name" label={t('register.name') + ' *'} value={formData.name} onChangeText={(val) => handleChange('name', val)} placeholder={t('register.namePlaceholder')} required />
                         <FormInput id="surname" label={t('register.surname') + ' *'} value={formData.surname} onChangeText={(val) => handleChange('surname', val)} placeholder={t('register.surnamePlaceholder')} required />
                         <FormInput id="email" label={t('register.email') + ' *'} value={formData.email} onChangeText={(val) => handleChange('email', val)} placeholder={t('register.emailPlaceholder')} required type="email-address" />
-                        <PhoneNumberPicker label={t('register.phone')} value={{ phoneNumber: formData.phoneNumber, countryCode: formData.countryCode }} onChange={({ phoneNumber, countryCode }) => setFormData((prev) => ({ ...prev, phoneNumber, countryCode }))} />
+                        <PhoneNumberPicker
+                            label={t('register.phone')}
+                            value={{ phoneNumber: formData.phoneNumber, countryIso: formData.phoneCountryIso }}
+                            onChange={({ phoneNumber, countryIso }) =>
+                                setFormData((prev) => ({ ...prev, phoneNumber, phoneCountryIso: countryIso }))
+                            }
+                        />
                         <CountryPicker value={formData.countryIso} onChange={({ countryIso, countryName }) => setFormData((prev) => ({ ...prev, countryIso, country: countryName, city: '' }))} />
                         <CityPicker countryIso={formData.countryIso} value={formData.city} onChange={(val) => handleChange('city', val)} disabled={!formData.countryIso} />
                         <FormInput id="password" label={t('register.password') + ' *'} value={formData.password} onChangeText={(val) => handleChange('password', val)} placeholder={t('register.passwordPlaceholder')} secure required />

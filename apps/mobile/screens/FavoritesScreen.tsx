@@ -19,6 +19,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '@/context/AuthContext';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types/navigation';
+import { getApiBaseUrl } from '@/api/config';
 
 const FavoritesScreen = () => {
     const insets = useSafeAreaInsets();
@@ -64,20 +65,28 @@ const FavoritesScreen = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (user) {
-            fetch('http://192.168.100.31:3001/favorites', {
-                headers: { Authorization: `Bearer ${user.token}` },
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    setRawFavorites(data);
-                    setFavorites(data.map((fav: { RestaurantId: any; }) => fav.RestaurantId));
-                    setLoading(false);
-                })
-                .catch(() => setLoading(false));
-        } else {
-            setLoading(false);
-        }
+        const fetchFavorites = async () => {
+            if (!user) {
+                setLoading(false);
+                return;
+            }
+
+            try {
+                const baseUrl = await getApiBaseUrl();
+                const res = await fetch(`${baseUrl}/favorites`, {
+                    headers: { Authorization: `Bearer ${user.token}` },
+                });
+                const data = await res.json();
+                setRawFavorites(data);
+                setFavorites(data.map((fav: { RestaurantId: any }) => fav.RestaurantId));
+            } catch (error) {
+                console.error('Failed to fetch favorites:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchFavorites();
     }, [user]);
 
     const showPopup = (message: string, variant: 'success' | 'warning' | 'error' = 'error') => {
@@ -89,14 +98,22 @@ const FavoritesScreen = () => {
         setConfirmDeleteId(restaurantId);
     };
 
-    const confirmDelete: () => Promise<void> = async () => {
+    const confirmDelete = async () => {
         try {
-            await fetch(`http://192.168.100.31:3001/favorites/by-restaurant/${confirmDeleteId}`, {
+            const baseUrl = await getApiBaseUrl();
+            await fetch(`${baseUrl}/favorites/by-restaurant/${confirmDeleteId}`, {
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${user.token}` },
             });
+
             setFavorites((prev) => prev.filter((id) => id !== confirmDeleteId));
-            setRawFavorites((prev) => prev.filter((f) => f.RestaurantId !== confirmDeleteId && f.restaurant.RestaurantId !== confirmDeleteId));
+            setRawFavorites((prev) =>
+                prev.filter(
+                    (f) =>
+                        f.RestaurantId !== confirmDeleteId &&
+                        f.restaurant.RestaurantId !== confirmDeleteId
+                )
+            );
             showPopup(t('alerts.favoriteRemoved'), 'success');
         } catch {
             showPopup(t('alerts.favoriteError'), 'error');
@@ -156,11 +173,11 @@ const FavoritesScreen = () => {
 
     return (
         <ScreenBackground>
-            <View style={[styles.container, { paddingTop: insets.top }]}>
-                {popup && (
-                    <Popup message={popup.message} variant={popup.variant} onClose={() => setPopup(null)} />
-                )}
+            {popup && (
+                <Popup message={popup.message} variant={popup.variant} onClose={() => setPopup(null)} />
+            )}
 
+            <View style={[styles.container, { paddingTop: insets.top }]}>
                 {confirmDeleteId && (
                     <Alert
                         visible={true}

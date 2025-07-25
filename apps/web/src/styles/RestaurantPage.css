@@ -182,23 +182,32 @@
         margin-bottom: 2rem;
     }
 
-    .review-bar>.review-cell {
-        display: flex;
-        align-items: center;
+    /* above 850px — 3 columns */
+    .review-bar>.review-cell,
+    .review-group {
         flex: 1 1 0;
         min-width: 200px;
-    }
-
-    .review-bar>.review-cell.left {
-        justify-content: flex-start;
-    }
-
-    .review-bar>.review-cell.center {
+        display: flex;
+        align-items: center;
         justify-content: center;
     }
 
-    .review-bar>.review-cell.right {
+    .review-cell.left {
+        justify-content: flex-start;
+    }
+
+    .review-cell.center {
+        justify-content: center;
+    }
+
+    .review-cell.right {
         justify-content: flex-end;
+    }
+
+    .review-group {
+        display: flex;
+        flex: 2 1 0;
+        gap: 1rem;
     }
 
     @media (max-width: 850px) {
@@ -206,9 +215,21 @@
             flex-direction: column;
         }
 
-        .review-bar>.review-cell {
-            flex: 1 1 100%;
-            justify-content: left;
+        .review-group {
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .review-bar>.review-cell.right {
+            justify-content: center;
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .review-cell.left label {
+            display: none;
         }
     }
 }

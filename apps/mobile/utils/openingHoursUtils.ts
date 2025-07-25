@@ -8,11 +8,15 @@ import { useTranslation } from "react-i18next";
  * @param {dayjs.Dayjs} now - The current time (defaults to dayjs())
  * @returns {Object} - { isOpen: boolean, closeFormatted: string }
  */
-export function getOpenCloseStatus(todayHours, now = dayjs(), t = (s) => s) {
+export function getOpenCloseStatus(
+  todayHours: any,
+  now = dayjs(),
+  t: (s: string) => string = (s) => s
+): { isOpen: boolean; closeFormatted: string | null } {
   if (!todayHours) {
     return { isOpen: false, closeFormatted: null };
   }
-  
+
   const { OpenHour, OpenMinute, CloseHour, CloseMinute } = todayHours;
 
   if (
@@ -35,20 +39,34 @@ export function getOpenCloseStatus(todayHours, now = dayjs(), t = (s) => s) {
   return { isOpen, closeFormatted };
 }
 
+type WorkingHour = {
+  DayOfWeek: number; // 1 = Mon, 7 = Sun
+  OpenHour?: number;
+  OpenMinute?: number;
+  CloseHour?: number;
+  CloseMinute?: number;
+  IsClosed?: boolean;
+};
+
 /**
  * Returns a translated string for the next opening time.
  * 
- * @param {Array} workingHours - Array of working hours for all days
- * @param {Number} todayDayOfWeek - The current day (1 = Mon, 7 = Sun)
- * @param {Function} getDayName - Function that maps 1-7 to a day label
- * @param {Function} t - Translation function from react-i18next
- * @returns {String} - Translated opening time or fallback
+ * @param workingHours Array of working hour entries
+ * @param todayDayOfWeek Current day of week (1–7)
+ * @param getDayName Function to translate day number to string label
+ * @param t Translation function
+ * @returns Translated string like "Opens at 09:00" or "Opens at 08:00 on Tuesday"
  */
-export function getNextOpeningTime(workingHours, todayDayOfWeek, getDayName, t = (s) => s) {
+export function getNextOpeningTime(
+  workingHours: WorkingHour[] = [],
+  todayDayOfWeek: number,
+  getDayName: (dayNum: number) => string,
+  t: (key: string, opts?: any) => string = (s) => s
+): string {
   const now = dayjs();
-  const todayHours = workingHours?.find(h => h.DayOfWeek === todayDayOfWeek);
+  const todayHours = workingHours.find(h => h.DayOfWeek === todayDayOfWeek);
 
-  // First check if it will open later today
+  // Check if will open later today
   if (
     todayHours &&
     !todayHours.IsClosed &&
@@ -67,10 +85,10 @@ export function getNextOpeningTime(workingHours, todayDayOfWeek, getDayName, t =
     }
   }
 
-  // Otherwise find the next open day
+  // Otherwise search next day
   for (let i = 1; i <= 7; i++) {
-    const nextDayIndex = (todayDayOfWeek + i - 1) % 7 + 1;
-    const nextDayHours = workingHours?.find(h => h.DayOfWeek === nextDayIndex);
+    const nextDayIndex = ((todayDayOfWeek + i - 1) % 7) + 1;
+    const nextDayHours = workingHours.find(h => h.DayOfWeek === nextDayIndex);
 
     if (
       nextDayHours &&
@@ -81,10 +99,17 @@ export function getNextOpeningTime(workingHours, todayDayOfWeek, getDayName, t =
       const openTime = dayjs()
         .set("hour", nextDayHours.OpenHour)
         .set("minute", nextDayHours.OpenMinute)
+        .set("second", 0)
+        .set("millisecond", 0)
         .format("HH:mm");
-      const dayName = getDayName(nextDayIndex);
 
-      return `${t("labels.opensAt")} ${openTime} ${t("labels.on")} ${dayName}`;
+      const isSameDay = nextDayIndex === todayDayOfWeek;
+      if (isSameDay) {
+        return `${t("labels.opensAt")} ${openTime}`;
+      } else {
+        const dayName = getDayName(nextDayIndex);
+        return `${t("labels.opensAt")} ${openTime} ${t("labels.on")} ${dayName}`;
+      }
     }
   }
 

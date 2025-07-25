@@ -30,7 +30,7 @@ const Popup = ({
   const opacity = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(-40)).current;
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const insets = useSafeAreaInsets(); 
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     Animated.timing(opacity, {
@@ -89,22 +89,24 @@ const Popup = ({
   if (!visible) return null;
 
   return (
-    <Animated.View
-      style={[
-        styles.popup,
-        {
-          backgroundColor: getBackgroundColor(),
-          top: insets.top + 12, 
-          opacity: opacity,
-          transform: [{ translateY }]
-        }
-      ]}
-    >
-      <Text style={styles.text}>{message}</Text>
-      <TouchableOpacity onPress={closePopup} style={styles.closeButton}>
-        <Text style={styles.closeText}>×</Text>
-      </TouchableOpacity>
-    </Animated.View>
+    <View pointerEvents="box-none" style={StyleSheet.absoluteFill}>
+      <Animated.View
+        style={[
+          styles.popup,
+          {
+            backgroundColor: getBackgroundColor(),
+            top: insets.top + 12,
+            opacity: opacity,
+            transform: [{ translateY }],
+          },
+        ]}
+      >
+        <Text style={styles.text}>{message}</Text>
+        <TouchableOpacity onPress={closePopup} style={styles.closeButton}>
+          <Text style={styles.closeText}>×</Text>
+        </TouchableOpacity>
+      </Animated.View>
+    </View>
   );
 };
 

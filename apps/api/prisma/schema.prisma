@@ -16,6 +16,7 @@ model User {
   PasswordHash         String?
   passwordResetToken        String?
   passwordResetExpiresAt    DateTime?
+  CountryIso           String?
   PhoneNumber          String?
   Name                 String
   Surname              String
@@ -29,7 +30,7 @@ model User {
   SuspendedUntil       DateTime?
   GoogleId             String?   @unique
 
-  status             Status       @relation(fields: [StatusId], references: [StatusId])
+  status             Status       @relation(fields: [StatusId], references: [StatusId], onDelete: Restrict)
   reviews            Review[]
   issues             Issue[]
   favorites          Favorite[]
@@ -48,7 +49,7 @@ model UserRole {
   UserId String
   RoleId String
 
-  user User @relation(fields: [UserId], references: [UserId])
+  user User @relation(fields: [UserId], references: [UserId], onDelete: Cascade)
   role Role @relation(fields: [RoleId], references: [RoleId])
 
   @@id([UserId, RoleId])
@@ -67,7 +68,7 @@ model Issue {
   CreatedAt    DateTime @default(now())
   StatusId     Int
 
-  user       User        @relation(fields: [UserId], references: [UserId])
+  user       User        @relation(fields: [UserId], references: [UserId], onDelete: Cascade)
   status     Status      @relation(fields: [StatusId], references: [StatusId])
   review     Review?     @relation("ReviewIssues", fields: [ReviewId], references: [ReviewId], onDelete: Cascade)
   restaurant Restaurant? @relation(fields: [RestaurantId], references: [RestaurantId], onDelete: Cascade)
@@ -99,7 +100,7 @@ model Restaurant {
   UpdatedAt       DateTime  @updatedAt
 
   address      Address             @relation(fields: [AddressId], references: [AddressId])
-  claimedBy    User?               @relation("ClaimedRestaurants", fields: [ClaimedByUserId], references: [UserId])
+  claimedBy    User?               @relation("ClaimedRestaurants", fields: [ClaimedByUserId], references: [UserId], onDelete: Cascade)
   cuisines     RestaurantCuisine[]
   images       Image[]
   workingHours WorkingHours[]
@@ -203,7 +204,7 @@ model Review {
   RecheckExplanation  String? 
 
   restaurant Restaurant @relation(fields: [RestaurantId], references: [RestaurantId])
-  user       User       @relation(fields: [UserId], references: [UserId])
+  user       User       @relation(fields: [UserId], references: [UserId], onDelete: Cascade)
   status     Status     @relation(fields: [StatusId], references: [StatusId])
   issues     Issue[]    @relation("ReviewIssues")
 }
@@ -214,6 +215,6 @@ model Favorite {
   RestaurantId Int
   CreatedAt    DateTime @default(now())
 
-  user       User       @relation(fields: [UserId], references: [UserId])
+  user       User       @relation(fields: [UserId], references: [UserId], onDelete: Cascade)
   restaurant Restaurant @relation(fields: [RestaurantId], references: [RestaurantId])
 }

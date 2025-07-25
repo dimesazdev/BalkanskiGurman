@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import CountryPicker, { Country } from 'react-native-country-picker-modal';
+import React, { useEffect, useState } from 'react';
+import {
+    View,
+    Text,
+    TextInput,
+    StyleSheet,
+    TouchableOpacity,
+} from 'react-native';
+import CountryPicker, {
+    Country,
+    getAllCountries,
+    FlagType,
+} from 'react-native-country-picker-modal';
 import Colors from '@/constants/Colors';
 
 type PhoneValue = {
     phoneNumber: string;
-    countryCode: string;
+    countryIso: string;
 };
 
 type Props = {
@@ -14,27 +24,56 @@ type Props = {
     label: string;
 };
 
+const DEFAULT_ISO = 'MK';
+const DEFAULT_CODE = '389';
+
 const PhoneNumberPicker: React.FC<Props> = ({ value, onChange, label }) => {
-    const defaultCountry: Country = {
-        cca2: 'MK',
-        callingCode: ['389'],
-        currency: ['MKD'],
-        name: 'North Macedonia',
-        region: 'Europe',
-        subregion: 'Southern Europe',
-        flag: 'flag-mk',
+    const [allCountries, setAllCountries] = useState<Country[]>([]);
+    const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+    const [visible, setVisible] = useState(false);
+    const [nationalNumber, setNationalNumber] = useState('');
+
+    useEffect(() => {
+        getAllCountries(FlagType.FLAT).then(setAllCountries);
+    }, []);
+
+    useEffect(() => {
+        if (allCountries.length === 0) return;
+
+        const iso = value.countryIso || DEFAULT_ISO;
+        const number = value.phoneNumber || '';
+
+        const country = allCountries.find((c) => c.cca2 === iso);
+        if (country) {
+            setSelectedCountry(country);
+            const dialCode = country.callingCode[0];
+
+            if (number.startsWith(`+${dialCode}`)) {
+                setNationalNumber(number.slice(dialCode.length + 1));
+            } else {
+                setNationalNumber(number);
+            }
+
+            if (!value.countryIso && !value.phoneNumber && country.cca2 === DEFAULT_ISO) {
+                onChange({ phoneNumber: `+${DEFAULT_CODE}`, countryIso: DEFAULT_ISO });
+            }
+        }
+    }, [value.countryIso, value.phoneNumber, allCountries]);
+
+    const handleSelect = (country: Country) => {
+        setSelectedCountry(country);
+        setVisible(false);
+        const fullNumber = `+${country.callingCode[0]}${nationalNumber}`;
+        onChange({ phoneNumber: fullNumber, countryIso: country.cca2 });
     };
 
-    const [country, setCountry] = useState<Country>(defaultCountry);
-    const [visible, setVisible] = useState(false);
-
-    const handleSelect = (selected: Country) => {
-        setCountry(selected);
-        setVisible(false);
-        onChange({
-            phoneNumber: value.phoneNumber,
-            countryCode: `+${selected.callingCode[0]}`,
-        });
+    const handleNumberChange = (text: string) => {
+        const cleaned = text.replace(/[^0-9]/g, '');
+        setNationalNumber(cleaned);
+        if (selectedCountry) {
+            const full = `+${selectedCountry.callingCode[0]}${cleaned}`;
+            onChange({ phoneNumber: full, countryIso: selectedCountry.cca2 });
+        }
     };
 
     return (
@@ -42,25 +81,24 @@ const PhoneNumberPicker: React.FC<Props> = ({ value, onChange, label }) => {
             <Text style={styles.label}>{label}</Text>
             <View style={styles.inputWrapper}>
                 <TouchableOpacity style={styles.flagButton} onPress={() => setVisible(true)}>
-                    <CountryPicker
-                        withCallingCode
-                        withFilter
-                        withFlag
-                        countryCode={country.cca2}
-                        visible={visible}
-                        onClose={() => setVisible(false)}
-                        onSelect={handleSelect}
-                    />
-                    <Text style={styles.code}>+{country.callingCode[0]}</Text>
+                    {selectedCountry && (
+                        <CountryPicker
+                            withCallingCode
+                            withFilter
+                            withFlag
+                            countryCode={selectedCountry.cca2}
+                            visible={visible}
+                            onClose={() => setVisible(false)}
+                            onSelect={handleSelect}
+                        />
+                    )}
+                    <Text style={styles.code}>
+                        {selectedCountry ? `+${selectedCountry.callingCode[0]}` : ''}
+                    </Text>
                 </TouchableOpacity>
                 <TextInput
-                    value={value.phoneNumber}
-                    onChangeText={(text) =>
-                        onChange({
-                            phoneNumber: text,
-                            countryCode: `+${country.callingCode[0]}`,
-                        })
-                    }
+                    value={nationalNumber}
+                    onChangeText={handleNumberChange}
                     keyboardType="phone-pad"
                     style={styles.textInput}
                     placeholder="70123456"

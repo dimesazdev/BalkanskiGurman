@@ -3,13 +3,12 @@ import {
     View,
     Text,
     StyleSheet,
-    TextInput,
-    TouchableOpacity,
     Image,
     Alert,
+    ScrollView,
     KeyboardAvoidingView,
     Platform,
-    ScrollView
+    TouchableOpacity,
 } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -18,8 +17,10 @@ import Button from '../components/Button';
 import Popup from '../components/Popup';
 import Colors from '../constants/Colors';
 import { RootStackParamList } from '../types/navigation';
-import ScreenBackground from '@/components/ScreenBackground';
 import FormInput from '@/components/FormInput';
+import { getApiBaseUrl } from '@/api/config';
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type PopupState = {
     message: string;
@@ -27,8 +28,7 @@ type PopupState = {
 } | null;
 
 const LoginScreen = () => {
-    const [selected, setSelected] = useState<string | number>('');
-
+    const insets = useSafeAreaInsets();
     const { t } = useTranslation();
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const { login } = useAuth();
@@ -40,11 +40,13 @@ const LoginScreen = () => {
 
     const handleSubmit = async () => {
         try {
-            const res = await fetch('http://192.168.100.31:3001/auth/login', {
+            const baseUrl = await getApiBaseUrl();
+            const res = await fetch(`${baseUrl}/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ email, password }),
             });
+
             const data = await res.json();
 
             if (!res.ok) {
@@ -74,131 +76,118 @@ const LoginScreen = () => {
     };
 
     return (
-        <ScreenBackground>
+        <View style={styles.wrapper}>
+            {popup && (
+                <Popup
+                    message={popup.message}
+                    variant={popup.variant}
+                    onClose={() => setPopup(null)}
+                />
+            )}
             <KeyboardAvoidingView
-                style={styles.container}
+                style={{ flex: 1 }}
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}
             >
-                <ScrollView contentContainerStyle={styles.scrollContainer}>
-                    {popup && (
-                        <Popup
-                            message={popup.message}
-                            variant={popup.variant}
-                            onClose={() => setPopup(null)}
-                        />
-                    )}
+                <ScrollView
+                    contentContainerStyle={[styles.container, { paddingTop: insets.top }]}
+                    keyboardShouldPersistTaps="handled"
+                >
+                    <Animated.View entering={FadeInDown.duration(800)} style={styles.logoSection}>
+                        <Image source={require('../assets/images/dark-logo.png')} style={styles.logo} />
+                    </Animated.View>
 
-                    <View style={styles.card}>
-                        <View style={styles.leftSide}>
-                            <Image source={require('../assets/images/dark-logo.png')} style={styles.logo} />
-                            <Text style={styles.registerText}>{t('login.noAccount')}</Text>
-                            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-                                <Text style={styles.registerLink}>{t('login.registerNow')}</Text>
+                    <Animated.View entering={FadeInUp.duration(1000)} style={styles.card}>
+                        <FormInput
+                            id="email"
+                            label={t('login.email')}
+                            value={email}
+                            onChangeText={setEmail}
+                            placeholder="john.doe@gmail.com"
+                            type="email-address"
+                        />
+
+                        <FormInput
+                            id="password"
+                            label={t('login.password')}
+                            value={password}
+                            onChangeText={setPassword}
+                            placeholder="••••••••"
+                            secure
+                        />
+
+                        <View style={styles.formOptions}>
+                            <TouchableOpacity
+                                style={styles.checkboxContainer}
+                                onPress={() => setRememberMe(!rememberMe)}
+                            >
+                                <View style={styles.checkbox}>
+                                    {rememberMe && <Text style={styles.checkmark}>✓</Text>}
+                                </View>
+                                <Text style={styles.checkboxLabel}>{t('login.rememberMe')}</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
+                                <Text style={styles.forgotPassword}>{t('login.forgotPassword')}</Text>
                             </TouchableOpacity>
                         </View>
 
-                        <View style={styles.rightSide}>
-                            <FormInput
-                                id="email"
-                                label={t('login.email')}
-                                value={email}
-                                onChangeText={setEmail}
-                                placeholder="john.doe@gmail.com"
-                                type="email-address"
-                            />
+                        <View style={styles.buttonGroup}>
+                            <Button variant="beige" onPress={handleSubmit}>
+                                {t('login.login')}
+                            </Button>
 
-                            <FormInput
-                                id="password"
-                                label={t('login.password')}
-                                value={password}
-                                onChangeText={setPassword}
-                                placeholder="••••••••"
-                                type="default"
-                                secure
-                            />
-
-                            <View style={styles.formOptions}>
-                                <TouchableOpacity
-                                    style={styles.checkboxContainer}
-                                    onPress={() => setRememberMe(!rememberMe)}
-                                >
-                                    <View style={styles.checkbox}>
-                                        {rememberMe && <Text style={styles.checkmark}>✓</Text>}
-                                    </View>
-                                    <Text style={styles.checkboxLabel}>{t('login.rememberMe')}</Text>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
-                                    <Text style={styles.forgotPassword}>{t('login.forgotPassword')}</Text>
-                                </TouchableOpacity>
-                            </View>
-
-                            <View style={styles.buttonGroup}>
-                                <Button variant="beige" onPress={handleSubmit}>
-                                    {t('login.login')}
-                                </Button>
-                                <TouchableOpacity
-                                    style={styles.googleBtn}
-                                    onPress={() => {
-                                        Alert.alert('Google auth not supported in native app');
-                                    }}
-                                >
-                                    <Text style={styles.googleBtnText}>{t('login.continueWithGoogle')}</Text>
-                                </TouchableOpacity>
-                            </View>
+                            <TouchableOpacity
+                                style={styles.googleBtn}
+                                onPress={() => Alert.alert('Google auth not supported in native app')}
+                            >
+                                <Text style={styles.googleBtnText}>{t('login.continueWithGoogle')}</Text>
+                            </TouchableOpacity>
                         </View>
-                    </View>
+
+                        <View style={styles.loginRow}>
+                            <Text style={styles.loginText}>{t('login.noAccount')}</Text>
+                            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                                <Text style={styles.loginLink}>{t('login.registerNow')}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </Animated.View>
                 </ScrollView>
             </KeyboardAvoidingView>
-        </ScreenBackground>
+        </View>
     );
 };
 
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    },
-    scrollContainer: {
-        flexGrow: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-    },
-    card: {
-        flexDirection: 'column',
-        backgroundColor: '#fff',
-        borderRadius: 24,
-        overflow: 'hidden',
-        width: '100%',
-        maxWidth: 500,
-    },
-    leftSide: {
+    wrapper: {
+        flex: 1,
         backgroundColor: Colors.beige,
-        alignItems: 'center',
+    },
+    container: {
         padding: 24,
+        alignItems: 'center',
+    },
+    logoSection: {
+        paddingVertical: 24,
+        alignItems: 'center',
     },
     logo: {
-        width: 180,
-        height: 60,
+        width: 150,
+        height: 100,
+        marginBottom: 15,
         resizeMode: 'contain',
-        marginBottom: 16,
     },
-    registerText: {
-        fontSize: 16,
-        fontFamily: 'CormorantGaramond-Regular',
-        color: '#000',
-    },
-    registerLink: {
-        fontSize: 16,
-        fontFamily: 'CormorantGaramond-Regular',
-        textDecorationLine: 'underline',
-        color: '#c94b4b',
-    },
-    rightSide: {
+    card: {
         backgroundColor: Colors.red,
+        borderRadius: 24,
         padding: 24,
+        width: '100%',
+        shadowColor: '#000',
+        shadowOpacity: 0.15,
+        shadowOffset: { width: 0, height: 8 },
+        shadowRadius: 20,
+        elevation: 10,
     },
     formOptions: {
         flexDirection: 'row',
@@ -224,9 +213,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         lineHeight: 20,
-    },
-    checkboxChecked: {
-        backgroundColor: '#c94b4b',
     },
     checkboxLabel: {
         fontSize: 16,
@@ -254,5 +240,22 @@ const styles = StyleSheet.create({
         color: '#000',
         fontFamily: 'CormorantGaramond-Regular',
         fontSize: 16,
+    },
+    loginRow: {
+        marginTop: 24,
+        alignItems: 'center',
+        gap: 4,
+    },
+    loginText: {
+        color: Colors.white,
+        fontSize: 16,
+        fontFamily: 'CormorantGaramond-Regular',
+    },
+    loginLink: {
+        fontSize: 18,
+        color: Colors.white,
+        fontWeight: '600',
+        fontFamily: 'CormorantGaramond-Regular',
+        textDecorationLine: 'underline',
     },
 });

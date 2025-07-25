@@ -9,7 +9,7 @@ import Button from './Button';
 import Colors from '../constants/Colors';
 
 type AlertProps = {
-    visible: boolean;
+    visible?: boolean;
     message: string;
     buttonText: string;
     onButtonClick: () => void;

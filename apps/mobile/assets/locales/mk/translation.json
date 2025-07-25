@@ -274,7 +274,8 @@
         "addPhotos": "Додај фотографии",
         "by": "од",
         "reviewedRestaurant": "Рецензиран ресторан",
-        "showingResultsFor": "Прикажани резултати за"
+        "showingResultsFor": "Прикажани резултати за",
+        "onDay": "во {{day}}"
     },
     "login": {
         "googleLoginFailed": "Најавата со Google не успеа. Обидете се повторно.",
