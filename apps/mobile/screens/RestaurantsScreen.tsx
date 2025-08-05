@@ -5,6 +5,7 @@ import {
     Text,
     FlatList,
     ActivityIndicator,
+    TouchableOpacity,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import ScreenBackground from '@/components/ScreenBackground';
@@ -16,18 +17,24 @@ import Popup from '@/components/Popup';
 import Alert from '@/components/Alert';
 import Colors from '@/constants/Colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import { useRoute, RouteProp, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { getApiBaseUrl } from '@/api/config';
+import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const RestaurantsScreen = () => {
     const insets = useSafeAreaInsets();
     const [sortOption, setSortOption] = useState('rating');
     const [loginAlert, setLoginAlert] = useState(false);
     const route = useRoute<RouteProp<RootStackParamList, 'Restaurants'>>();
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const { city, country, metro } = route.params;
     const { user } = useAuth();
+
+    const isAdmin = user?.role == "644f2db4-9bbb-40a2-8b7d-963623c0c64a";
+    const [confirmDeleteId, setConfirmDeleteId] = useState<number | string | null>(null);
 
     const { t } = useTranslation();
 
@@ -122,6 +129,32 @@ const RestaurantsScreen = () => {
             return b.AverageRating - a.AverageRating;
         });
 
+    const getAdminActions = () => {
+        if (!isAdmin) return undefined;
+
+        return {
+            onEdit: (id: number) => navigation.navigate('RestaurantForm', { id }),
+            onDelete: (id: number) => { setConfirmDeleteId(id) },
+        };
+    };
+
+    const handleConfirmDelete = async () => {
+        try {
+            const baseUrl = await getApiBaseUrl();
+            await fetch(`${baseUrl}/restaurants/${confirmDeleteId}`, {
+                method: 'DELETE',
+                headers: { Authorization: `Bearer ${user.token}` },
+            });
+            setRestaurants(prev => prev.filter(r => r.RestaurantId !== confirmDeleteId));
+            showPopup(t('alerts.deleted'), 'success');
+        } catch (err) {
+            console.error(err);
+            showPopup(t('alerts.deleteError'), 'error');
+        } finally {
+            setConfirmDeleteId(null);
+        }
+    };
+
     return (
         <ScreenBackground>
             {popup && (
@@ -131,7 +164,17 @@ const RestaurantsScreen = () => {
                     onClose={() => setPopup(null)}
                 />
             )}
-            <View style={[styles.container, { paddingTop: insets.top }]}>
+            {confirmDeleteId && (
+                <Alert
+                    visible={true}
+                    message={t("admin.confirmDelete")}
+                    buttonText={t("buttons.confirm")}
+                    cancelText={t("buttons.cancel")}
+                    onButtonClick={() => handleConfirmDelete()}
+                    onClose={() => setConfirmDeleteId(null)}
+                />
+            )}
+            <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom + 80 }]}>
                 {loginAlert && (
                     <Alert
                         visible={true}
@@ -141,6 +184,12 @@ const RestaurantsScreen = () => {
                         onClose={() => setLoginAlert(false)}
                     />
                 )}
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('ExYuMap', { country })} style={styles.back}
+                >
+                    <Icon name="arrow-left" size={22} color="#FFEEDB" />
+                    <Text style={styles.backText}>{t('buttons.backToMap')}</Text>
+                </TouchableOpacity>
 
                 <View style={styles.settingsBar}>
                     <View style={styles.searchRow}>
@@ -181,6 +230,7 @@ const RestaurantsScreen = () => {
                                 restaurant={item}
                                 isFavorite={favorites.includes(item.RestaurantId)}
                                 onToggleFavorite={toggleFavorite}
+                                adminActions={getAdminActions()}
                             />
                         )}
                         contentContainerStyle={styles.cards}
@@ -197,6 +247,18 @@ const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
         padding: 16,
+    },
+    back: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 16,
+        gap: 8,
+        marginTop: 15
+    },
+    backText: {
+        color: '#FFEEDB',
+        fontSize: 18,
+        fontFamily: 'CormorantGaramond-Regular',
     },
     settingsBar: {
         gap: 12,

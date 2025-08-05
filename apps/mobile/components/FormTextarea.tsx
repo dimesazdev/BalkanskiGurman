@@ -4,7 +4,7 @@ import Colors from '@/constants/Colors';
 
 type Props = {
     id: string;
-    label: string;
+    label?: string;
     value: string;
     onChange: (text: string) => void;
     placeholder?: string;
@@ -60,12 +60,12 @@ const styles = StyleSheet.create({
     },
     textarea: {
         minHeight: 160,
-        paddingVertical: 12,
-        paddingHorizontal: 24,
+        paddingVertical: 16,
+        paddingHorizontal: 18,
         borderRadius: 20,
         backgroundColor: Colors.beige,
         color: '#000',
-        fontSize: 18,
+        fontSize: 16,
         fontFamily: 'CormorantGaramond-Regular',
         textAlignVertical: 'top', 
     },

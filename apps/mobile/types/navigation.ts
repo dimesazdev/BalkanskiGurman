@@ -3,6 +3,7 @@ export type RootStackParamList = {
     Login: undefined;
     Register: undefined;
     ManageProfile: undefined;
+    HomeRedirect: undefined;
 
     Restaurants: {
         city: string;
@@ -17,6 +18,7 @@ export type RootStackParamList = {
     AdminReviews: undefined;
     AdminUsers: undefined;
     AdminIssues: undefined;
+    RestaurantForm: { id: number };
 
     OwnerHome: undefined;
     OwnerRestaurants: undefined;
@@ -24,7 +26,7 @@ export type RootStackParamList = {
 
     RestaurantPage: { id: number };
     WriteReview: { id: number };
-    ExYuMap: undefined;
+    ExYuMap: { country?: string };
     ReportIssue: {
         issueType?: string;
         restaurantId?: number;
@@ -32,4 +34,5 @@ export type RootStackParamList = {
     };
 
     ForgotPassword: undefined;
+    ChangePassword: undefined;
 };

@@ -24,6 +24,7 @@ type ButtonProps = {
     | 'red-small'
     | 'yellow-small';
     style?: ViewStyle;
+    disabled?: boolean;
 };
 
 const Button = ({
@@ -31,6 +32,7 @@ const Button = ({
     onPress,
     variant = 'beige',
     style = {},
+    disabled
 }: ButtonProps) => {
     const variantStyles = StyleSheet.flatten([
         styles.base,
@@ -44,7 +46,7 @@ const Button = ({
     ]);
 
     return (
-        <TouchableOpacity style={variantStyles} onPress={onPress}>
+        <TouchableOpacity style={[variantStyles, disabled && styles.disabled]} onPress={onPress} disabled={disabled}>
             <View style={styles.content}>
                 {React.Children.map(children, (child, index) => {
                     if (typeof child === 'string' || typeof child === 'number') {
@@ -89,6 +91,9 @@ const styles = StyleSheet.create({
     iconGap: {
         marginLeft: 10,
     },
+    disabled: {
+        opacity: 0.5
+    }
 });
 
 const variantMap: Record<string, ViewStyle> = {
@@ -138,5 +143,6 @@ const textVariantMap: Record<string, TextStyle> = {
     'yellow-small': { color: '#FFF' },
     green: { color: '#FFF' },
     blue: { color: '#FFF' },
-    'beige-outline': { color: Colors.beige }
+    'beige-outline': { color: Colors.beige },
+    'red-outline': { color: Colors.red }
 };

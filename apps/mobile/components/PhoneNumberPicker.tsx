@@ -12,6 +12,7 @@ import CountryPicker, {
     FlagType,
 } from 'react-native-country-picker-modal';
 import Colors from '@/constants/Colors';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 type PhoneValue = {
     phoneNumber: string;
@@ -22,43 +23,64 @@ type Props = {
     value: PhoneValue;
     onChange: (val: PhoneValue) => void;
     label: string;
+    required?: boolean;
+    allowedIsoCodes?: string[];
+    defaultIso?: string;
 };
 
 const DEFAULT_ISO = 'MK';
 const DEFAULT_CODE = '389';
 
-const PhoneNumberPicker: React.FC<Props> = ({ value, onChange, label }) => {
+const PhoneNumberPicker: React.FC<Props> = ({ value, onChange, label, required, allowedIsoCodes, defaultIso }) => {
     const [allCountries, setAllCountries] = useState<Country[]>([]);
     const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
     const [visible, setVisible] = useState(false);
     const [nationalNumber, setNationalNumber] = useState('');
 
     useEffect(() => {
-        getAllCountries(FlagType.FLAT).then(setAllCountries);
-    }, []);
+        getAllCountries(FlagType.FLAT).then((countries) => {
+            if (allowedIsoCodes) {
+                setAllCountries(
+                    countries.filter(c => allowedIsoCodes!.includes(c.cca2))
+                );
+            } else {
+                setAllCountries(countries);
+            }
+        });
+    }, [allowedIsoCodes]);
 
     useEffect(() => {
         if (allCountries.length === 0) return;
 
-        const iso = value.countryIso || DEFAULT_ISO;
-        const number = value.phoneNumber || '';
+        const parsed = parsePhoneNumberFromString(value.phoneNumber);
+        const detectedIso = parsed?.country || '';
 
-        const country = allCountries.find((c) => c.cca2 === iso);
-        if (country) {
-            setSelectedCountry(country);
-            const dialCode = country.callingCode[0];
+        // Try to find matching country from parsed code
+        let matchedCountry: Country | undefined;
 
-            if (number.startsWith(`+${dialCode}`)) {
-                setNationalNumber(number.slice(dialCode.length + 1));
-            } else {
-                setNationalNumber(number);
-            }
-
-            if (!value.countryIso && !value.phoneNumber && country.cca2 === DEFAULT_ISO) {
-                onChange({ phoneNumber: `+${DEFAULT_CODE}`, countryIso: DEFAULT_ISO });
-            }
+        if (detectedIso) {
+            matchedCountry = allCountries.find(c => c.cca2 === detectedIso);
         }
-    }, [value.countryIso, value.phoneNumber, allCountries]);
+
+        if (!matchedCountry) {
+            const fallbackIso = value.countryIso || defaultIso || DEFAULT_ISO;
+            matchedCountry = allCountries.find(c => c.cca2 === fallbackIso);
+        }
+
+        if (!matchedCountry) return;
+
+        setSelectedCountry(matchedCountry);
+
+        if (parsed?.isValid()) {
+            setNationalNumber(parsed.nationalNumber);
+        } else {
+            const dialCode = matchedCountry.callingCode[0];
+            const fallback = value.phoneNumber.startsWith(`+${dialCode}`)
+                ? value.phoneNumber.slice(dialCode.length + 1)
+                : value.phoneNumber.replace(/^\+/, '');
+            setNationalNumber(fallback);
+        }
+    }, [value.phoneNumber, value.countryIso, allCountries]);
 
     const handleSelect = (country: Country) => {
         setSelectedCountry(country);
@@ -71,14 +93,15 @@ const PhoneNumberPicker: React.FC<Props> = ({ value, onChange, label }) => {
         const cleaned = text.replace(/[^0-9]/g, '');
         setNationalNumber(cleaned);
         if (selectedCountry) {
-            const full = `+${selectedCountry.callingCode[0]}${cleaned}`;
+            const dialCode = selectedCountry.callingCode[0];
+            const full = `+${dialCode}${cleaned}`;
             onChange({ phoneNumber: full, countryIso: selectedCountry.cca2 });
         }
     };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.label}>{label}</Text>
+            <Text style={styles.label}>{label}{required && " *"}</Text>
             <View style={styles.inputWrapper}>
                 <TouchableOpacity style={styles.flagButton} onPress={() => setVisible(true)}>
                     {selectedCountry && (

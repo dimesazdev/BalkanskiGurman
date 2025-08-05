@@ -23,11 +23,16 @@ import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ScreenBackground from '@/components/ScreenBackground';
 import translatedCountries from '@/assets/locales/translatedCountries.json';
+import { TouchableOpacity } from 'react-native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '@/types/navigation';
+import { getApiBaseUrl } from '@/api/config';
 
 const ManageProfileScreen: React.FC = () => {
     const insets = useSafeAreaInsets();
     const { t } = useTranslation();
-    const { user, refreshUser } = useAuth();
+    const { user } = useAuth();
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
     const [userData, setUserData] = useState<any>(null);
     const [formData, setFormData] = useState({
@@ -42,9 +47,12 @@ const ManageProfileScreen: React.FC = () => {
     const [popup, setPopup] = useState<null | { message: string; variant: 'success' | 'warning' | 'error' }>(null);
     const [showAlert, setShowAlert] = useState(false);
 
+    const baseUrl = getApiBaseUrl();
+
     const fetchProfileData = async () => {
         try {
-            const res = await fetch('http://192.168.100.31:3001/auth/me', {
+            const baseUrl = await getApiBaseUrl();
+            const res = await fetch(`${baseUrl}/auth/me`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
             const data = await res.json();
@@ -96,7 +104,7 @@ const ManageProfileScreen: React.FC = () => {
                     name: 'profile.jpg',
                 } as any);
 
-                const uploadRes = await fetch('http://192.168.100.31:3001/upload/profile-picture', {
+                const uploadRes = await fetch(`${baseUrl}/upload/profile-picture`, {
                     method: 'POST',
                     body: form,
                 });
@@ -104,7 +112,7 @@ const ManageProfileScreen: React.FC = () => {
                 profilePictureUrl = uploadData.url;
             }
 
-            const saveRes = await fetch('http://192.168.100.31:3001/auth/me', {
+            const saveRes = await fetch(`${baseUrl}/auth/me`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -203,6 +211,12 @@ const ManageProfileScreen: React.FC = () => {
                     />
                 </View>
 
+                <TouchableOpacity onPress={() => navigation.navigate('ChangePassword')}>
+                    <Text style={styles.changePasswordLink}>
+                        {t('profile.changePassword')}
+                    </Text>
+                </TouchableOpacity>
+
                 <Button variant="red" onPress={handleSaveChanges}>
                     {isSaving ? t('buttons.saving') : t('buttons.saveChanges')}
                 </Button>
@@ -248,5 +262,13 @@ const styles = StyleSheet.create({
     },
     formGrid: {
         flexDirection: 'column'
+    },
+    changePasswordLink: {
+        fontSize: 18,
+        color: Colors.beige,
+        fontFamily: 'CormorantGaramond-Regular',
+        textDecorationLine: 'underline',
+        textAlign: 'center',
+        marginTop: -15
     },
 });

@@ -438,7 +438,10 @@ const RestaurantFormPage = () => {
                 </div>
 
                 <div className="form-grid two-col">
-                    <PhoneNumberPicker value={formData} onChange={handlePhoneChange} />
+                    <PhoneNumberPicker
+                        value={formData}
+                        onChange={handlePhoneChange}
+                    />
                     <FormSelect
                         name="cuisine"
                         label={t("restaurantForm.labels.cuisine")}
@@ -498,7 +501,7 @@ const RestaurantFormPage = () => {
                                     }
                                 }}
                                 disabled={!videoInput}
-                                style={{ height:"3.5rem" }}
+                                style={{ height: "3.5rem" }}
                             >
                                 {t("buttons.add") || "Add"}
                             </Button>
@@ -651,12 +654,11 @@ const RestaurantFormPage = () => {
                     </div>
                 ) : (
                     <div className="working-hours-grid">
-                        {/* Header row aligned with grid */}
                         <div className="working-hours-header">
-                            <div></div> {/* empty space for day label */}
+                            <div></div>
                             <label>{t("form.openTime")}</label>
                             <label>{t("form.closeTime")}</label>
-                            <div></div> {/* empty space for checkbox */}
+                            <div></div>
                         </div>
 
                         {[...Array(7)].map((_, i) => {

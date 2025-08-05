@@ -109,6 +109,7 @@
         "addToFavorites": "Dodaj med priljubljene",
         "backToRestaurants": "Nazaj na restavracije",
         "backToCountries": "Nazaj na države",
+        "backToMap": "Nazaj na mapo",
         "cancel": "Prekliči",
         "changeSelection": "Spremeni izbiro",
         "choosePhoto": "Izberi novo sliko",
@@ -227,6 +228,7 @@
         "imageRequired": "Dodati morate vsaj eno sliko.",
         "noWorkingHoursConfirm": "Vsi dnevi so označeni kot zaprti. Ali ste prepričani, da želite nadaljevati?",
         "phoneRequired": "Telefonska številka je obvezna.",
+        "phoneInvalid": "Telefonska številka ni veljavna.",
         "noAmenitiesConfirm": "Niste izbrali nobene storitve. Ste prepričani, da želite nadaljevati?",
         "max3Videos": "Dodate lahko največ 3 videoposnetke.",
         "invalidYoutubeLink": "Neveljavna YouTube povezava"

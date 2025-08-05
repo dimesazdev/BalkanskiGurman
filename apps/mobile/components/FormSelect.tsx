@@ -24,18 +24,20 @@ type FormSelectProps = {
     onChange: (val: string | number) => void;
     options: Option[];
     placeholder: string;
+    disabled?: boolean;
+    style?: any;
 };
 
-const FormSelect: React.FC<FormSelectProps> = ({ label, value, onChange, options, placeholder }) => {
+const FormSelect: React.FC<FormSelectProps> = ({ label, value, onChange, options, placeholder, disabled, style }) => {
     const [visible, setVisible] = useState(false);
 
     const selectedLabel = options.find(opt => opt.value === value)?.label;
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, style]}>
             {label && <Text style={styles.label}>{label}</Text>}
 
-            <Pressable style={styles.input} onPress={() => setVisible(true)}>
+            <Pressable style={[styles.input, disabled && styles.disabled]} onPress={() => setVisible(true)}>
                 <Text style={[styles.inputText, !selectedLabel && styles.placeholder]}>
                     {selectedLabel || placeholder}
                 </Text>
@@ -71,7 +73,7 @@ export default FormSelect;
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
+        width: "100%",
         marginBottom: 16,
     },
     label: {
@@ -120,4 +122,7 @@ const styles = StyleSheet.create({
         fontFamily: 'CormorantGaramond-Regular',
         color: '#000',
     },
+    disabled: {
+        opacity: 0.5
+    }
 });

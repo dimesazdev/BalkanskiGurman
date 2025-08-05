@@ -22,6 +22,7 @@ import ScreenBackground from '@/components/ScreenBackground';
 
 import { useAuth } from '@/context/AuthContext';
 import { RootStackParamList } from '@/types/navigation';
+import { getApiBaseUrl } from '@/api/config';
 
 type ImageType = {
     file: {
@@ -51,6 +52,8 @@ const ReportIssueScreen: React.FC = () => {
     const [loadingRestaurants, setLoadingRestaurants] = useState(false);
     const [selectedRestaurant, setSelectedRestaurant] = useState<any>(route.params?.restaurant || null);
 
+    const baseUrl = getApiBaseUrl();
+
     const issueOptions = [
         { value: 'Bug Report', label: t('report.issueTypes.bugReport') },
         { value: 'Wrong Info', label: t('report.issueTypes.wrongInfo') },
@@ -60,7 +63,7 @@ const ReportIssueScreen: React.FC = () => {
     useEffect(() => {
         if (issueType === 'Wrong Info') {
             setLoadingRestaurants(true);
-            fetch('http://192.168.100.31:3001/restaurants')
+            fetch(`${baseUrl}/restaurants`)
                 .then(res => res.json())
                 .then(data => {
                     setRestaurants(data);
@@ -87,7 +90,7 @@ const ReportIssueScreen: React.FC = () => {
             } as any);
         });
 
-        const res = await fetch('http://192.168.100.31:3001/upload/restaurant-photos', {
+        const res = await fetch(`${baseUrl}/upload/restaurant-photos`, {
             method: 'POST',
             body: formData,
         });
@@ -122,7 +125,7 @@ const ReportIssueScreen: React.FC = () => {
                 RestaurantId: selectedRestaurant?.RestaurantId || null,
             };
 
-            const res = await fetch('http://192.168.100.31:3001/issues', {
+            const res = await fetch(`${baseUrl}/issues`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

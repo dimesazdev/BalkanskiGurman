@@ -52,7 +52,7 @@ const Navbar = () => {
             style={styles.navItem}
             onPress={() => {
                 setShowMenu(false);
-                navigation.navigate(route);
+                navigation.navigate(route as any);
             }}
         >
             <MaterialCommunityIcons name={icon} size={26} color="#FFEEDB" />
@@ -127,7 +127,7 @@ const Navbar = () => {
                 ) : user.role === ADMIN_ROLE_ID ? (
                     <>
                         {renderNavItem('home-outline', 'AdminHome')}
-                        {renderNavItem('silverware-fork-knife', 'AdminRestaurants')}
+                        {renderNavItem('silverware-fork-knife', 'ExYuMap')}
                         {renderNavItem('message-draw', 'AdminReviews')}
                         {renderNavItem('account-group', 'AdminUsers')}
                         {renderNavItem('alert-circle-outline', 'AdminIssues')}
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     userInfo: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 8,
+        gap: 4,
     },
     avatar: {
         width: 28,
@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     },
     userText: {
         fontSize: 16,
-        fontFamily: 'CormorantGaramond',
+        fontFamily: 'CormorantGaramond-Bold',
         color: '#2f2f2f',
     },
     logoutContainer: {

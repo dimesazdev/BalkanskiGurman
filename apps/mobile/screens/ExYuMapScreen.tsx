@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, LatLng } from 'react-native-maps';
 import GeojsonLayer from '../components/GeojsonLayer';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
 import Button from '@/components/Button';
@@ -38,24 +38,41 @@ const translatedCities = require('../assets/locales/translatedCities.json');
 const ExYuMapScreen = () => {
     const [countryGeo, setCountryGeo] = useState<any>(null);
     const [regionGeo, setRegionGeo] = useState<any>(null);
-    const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
     const mapRef = useRef<MapView>(null);
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    const route = useRoute<RouteProp<RootStackParamList, 'ExYuMap'>>();
+    const country = route.params?.country || null;
+    const [selectedCountry, setSelectedCountry] = useState<string | null>(country);
     const { t } = useTranslation();
     const [mapRenderKey, setMapRenderKey] = useState(Date.now());
     const [loadingMap, setLoadingMap] = useState(false);
+
+    const zoomToCountryByName = (name: string) => {
+        if (!countryGeo?.features) return;
+
+        const match = countryGeo.features.find(
+            (f: any) => f.properties?.name_sort?.toLowerCase() === name.toLowerCase()
+        );
+
+        if (match) {
+            onCountryPress(match);
+        }
+    };
+
+    useEffect(() => {
+        if (country && countryGeo) {
+            zoomToCountryByName(country);
+        }
+    }, [country, countryGeo]);
 
     useEffect(() => {
         try {
             const data = require('../assets/geojson/ex-yu-countries.json');
             if (data?.features?.length) {
-                console.log('🌍 Loaded ex-yu-countries.json with', data.features.length, 'features');
                 setCountryGeo(data);
-            } else {
-                console.warn('⚠️ ex-yu-countries.json is empty or invalid');
             }
         } catch (err) {
-            console.error('❌ Failed to load ex-yu-countries.json', err);
+            console.error(err);
         }
     }, []);
 
@@ -83,7 +100,6 @@ const ExYuMapScreen = () => {
         const region = REGION_DATA_KEYS[safeKey];
 
         if (!region || !Array.isArray(region?.features)) {
-            console.warn('❌ Region data not found or invalid for', name);
             return;
         }
 
@@ -109,7 +125,7 @@ const ExYuMapScreen = () => {
                         animated: true,
                     });
                 } catch (e) {
-                    console.warn('⚠️ Error in fitToCoordinates:', e);
+                    console.warn(e);
                 }
             }, 300);
         }
@@ -134,8 +150,6 @@ const ExYuMapScreen = () => {
         const city = entry?.translations?.en || regionName;
         const metro = entry?.metro || null;
 
-        console.log('🚀 Navigating to Restaurants with', { city, country: countryName, metro });
-
         navigation.navigate('Restaurants', {
             city,
             country: countryName,
@@ -144,7 +158,6 @@ const ExYuMapScreen = () => {
     };
 
     const resetToCountries = () => {
-        console.log('🔙 Resetting to countries');
         setRegionGeo(null);
         setTimeout(() => {
             setSelectedCountry(null);

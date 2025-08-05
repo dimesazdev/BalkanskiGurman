@@ -1,5 +1,5 @@
-export function validateFields(data, t) {
-  const errors = {};
+export function validateFields(data: any, t: any): Record<string, string> {
+  const errors: Record<string, string> = {};
 
   const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿЀ-џășțćčđšžžĆČĐŠŽҐЄІЇЈЉЊЋЏабвгдѓежзийклљмнњопрстћуфхцчџшščž\s'-]+$/i;
   if (data.name !== undefined && !nameRegex.test(data.name.trim())) {

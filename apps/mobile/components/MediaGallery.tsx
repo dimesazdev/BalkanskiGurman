@@ -12,8 +12,9 @@ const extractYouTubeId = (url: string) => {
     return match ? match[1] : null;
 };
 
-type MediaItem = { Url: string | string[] };
-type MediaGalleryProps = {
+export type MediaItem = { Url: string | string[] };
+
+export type MediaGalleryProps = {
     media: MediaItem[];
     dotColor?: string;
     contentStyle?: object;
@@ -25,7 +26,8 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({ media, dotColor, contentSty
 
     const galleryItems = useMemo(() =>
         media.map((item) => {
-            let urlStr = Array.isArray(item.Url) ? item.Url[0] || '' : item.Url;
+            const rawUrl = Array.isArray(item.Url) ? item.Url[0] : item.Url;
+            const urlStr = typeof rawUrl === 'string' ? rawUrl : ''; 
             const isYouTube = urlStr.includes('youtube.com') || urlStr.includes('youtu.be');
             if (isYouTube) {
                 const videoId = extractYouTubeId(urlStr) || undefined;

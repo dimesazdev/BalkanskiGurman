@@ -69,7 +69,7 @@ const LoginScreen = () => {
             }
 
             login({ ...data.user, token: data.token });
-            navigation.navigate('Home');
+            navigation.navigate('HomeRedirect');
         } catch (err) {
             setPopup({ message: t('login.somethingWentWrong'), variant: 'error' });
         }

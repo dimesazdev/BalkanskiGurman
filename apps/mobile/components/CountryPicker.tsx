@@ -13,7 +13,7 @@ interface Country {
 }
 
 interface CountryPickerProps {
-    value: string;
+    value?: string;
     onChange: (country: { countryIso: string; countryName: string }) => void;
     required?: boolean;
     disabled?: boolean;
@@ -65,7 +65,7 @@ const CountryPicker: React.FC<CountryPickerProps> = ({
     return (
         <FormSelect
             label={t('register.country') + ' *'}
-            value={value}
+            value={(value ?? '') as string}
             onChange={handleChange}
             options={[{ label: t('register.countryPlaceholder'), value: '' }, ...countryList]}
             placeholder={t('register.countryPlaceholder')}

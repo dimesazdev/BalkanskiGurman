@@ -30,8 +30,8 @@ type Restaurant = {
 };
 
 type AdminActions = {
-    onEdit?: (id: number | string) => void;
-    onDelete?: (id: number | string) => void;
+    onEdit?: (id: number) => void;
+    onDelete?: (id: number) => void | Promise<void>;
 };
 
 type RestaurantCardProps = {
@@ -102,29 +102,35 @@ const RestaurantCard: React.FC<RestaurantCardProps> = ({
     const nextOpen = getNextOpeningTime(restaurant.workingHours || [], todayDay, getDayName, t);
 
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('RestaurantPage', { id: RestaurantId })} style={styles.card}>
+        <TouchableOpacity activeOpacity={1} onPress={() => navigation.navigate('RestaurantPage', { id: RestaurantId })} style={styles.card}>
             <View style={styles.imageWrap}>
                 <Image source={{ uri: image }} style={styles.image} />
-                <TouchableOpacity
-                    style={styles.favoriteBtn}
-                    onPress={() => onToggleFavorite(RestaurantId)}
-                >
-                    <Icon name={isFavorite ? 'heart' : 'heart-outline'} size={32} color={Colors.red} />
-                </TouchableOpacity>
-                {adminActions && (
-                    <View style={styles.adminBtns}>
-                        {adminActions.onEdit && (
-                            <TouchableOpacity onPress={() => adminActions.onEdit!(RestaurantId)}>
-                                <Icon name="pencil" size={24} color={Colors.red} />
-                            </TouchableOpacity>
-                        )}
-                        {adminActions.onDelete && (
-                            <TouchableOpacity onPress={() => adminActions.onDelete!(RestaurantId)}>
-                                <Icon name="delete" size={24} color={Colors.red} />
-                            </TouchableOpacity>
-                        )}
-                    </View>
-                )}
+                <View style={styles.actionBtns}>
+                    {!adminActions && (
+                        <TouchableOpacity
+                            style={styles.actionBtn}
+                            onPress={() => onToggleFavorite(RestaurantId)}
+                        >
+                            <Icon name={isFavorite ? 'heart' : 'heart-outline'} size={30} color={Colors.red} />
+                        </TouchableOpacity>
+                    )}
+                    {adminActions?.onEdit && (
+                        <TouchableOpacity
+                            style={styles.actionBtn}
+                            onPress={() => adminActions.onEdit!(RestaurantId)}
+                        >
+                            <Icon name="pencil" size={30} color={Colors.red} />
+                        </TouchableOpacity>
+                    )}
+                    {adminActions?.onDelete && (
+                        <TouchableOpacity
+                            style={styles.actionBtn}
+                            onPress={() => adminActions.onDelete!(RestaurantId)}
+                        >
+                            <Icon name="delete" size={30} color={Colors.red} />
+                        </TouchableOpacity>
+                    )}
+                </View>
             </View>
 
             <View style={styles.content}>
@@ -190,26 +196,25 @@ const styles = StyleSheet.create({
         height: '100%',
         resizeMode: 'cover',
     },
-    favoriteBtn: {
+    actionBtns: {
         position: 'absolute',
         top: 12,
         left: 12,
-        borderRadius: 50,
+        flexDirection: 'row',
+        gap: 10,
+        zIndex: 5,
+    },
+    actionBtn: {
         width: 50,
         height: 50,
-        justifyContent: 'center',
+        borderRadius: 25,
         backgroundColor: Colors.beige,
+        justifyContent: 'center',
         alignItems: 'center',
         shadowColor: '#000',
         shadowOpacity: 0.3,
         shadowRadius: 6,
         elevation: 4,
-    },
-    adminBtns: {
-        position: 'absolute',
-        top: 12,
-        right: 12,
-        gap: 12,
     },
     content: {
         padding: 16,

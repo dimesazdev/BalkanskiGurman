@@ -27,6 +27,7 @@ type ImagePickerProps = {
     setImages: React.Dispatch<React.SetStateAction<ImageType[]>>;
     maxImages?: number;
     onInvalid?: () => void;
+    style?: any;
 };
 
 const ImagePicker: React.FC<ImagePickerProps> = ({
@@ -34,6 +35,7 @@ const ImagePicker: React.FC<ImagePickerProps> = ({
     setImages,
     maxImages = 3,
     onInvalid,
+    style
 }) => {
     const { t } = useTranslation();
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -75,7 +77,7 @@ const ImagePicker: React.FC<ImagePickerProps> = ({
     };
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, style]}>
             {images.map((img, index) => (
                 <Pressable
                     key={index}
