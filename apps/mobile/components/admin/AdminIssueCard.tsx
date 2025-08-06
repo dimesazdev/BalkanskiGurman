@@ -121,7 +121,7 @@ const AdminIssueCard: React.FC<Props> = ({ issue, onManage }) => {
                 <Text style={styles.text}><Text style={styles.bold}>{t('adminUser.role')}:</Text> {t(`roles.${user.userRoles?.[0]?.role?.Name?.toLowerCase()}`)}</Text>
                 <Text style={styles.text}><Text style={styles.bold}>{t('adminUser.email')}:</Text> {user.Email}</Text>
                 <View style={{ flexDirection: 'row', gap: 5 }}>
-                    <Text style={styles.bold}>{t('adminIssue.status')}:</Text>{' '}
+                    <Text style={styles.bold}>{t('adminIssue.status')}:</Text>
                     <Text style={[styles.status, styles[`status_${statusLabel}`]]}>
                         {t(`issueStatus.${statusLabel}`)}
                     </Text>

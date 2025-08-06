@@ -161,7 +161,7 @@ const AdminReviewCard: React.FC<Props> = ({ review, onManage }) => {
                 <Text style={styles.text}><Text style={styles.bold}>{t('adminReview.forRestaurant')}:</Text> {restaurant.Name}</Text>
                 <Text style={styles.text}><Text style={styles.bold}>{t('adminReview.location')}:</Text> {restaurant.address?.City}, {restaurant.address?.Country}</Text>
                 <View style={{ flexDirection: 'row', gap: 5 }}>
-                    <Text style={styles.bold}>{t('adminReview.reviewStatus')}:</Text>{' '}
+                    <Text style={styles.bold}>{t('adminReview.reviewStatus')}:</Text>
                     <Text style={[
                         styles.status,
                         styles[`status_${statusLabel}`] ?? {}

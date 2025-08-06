@@ -102,23 +102,25 @@ const AdminIssuesScreen = () => {
                 <View style={styles.filterRow}>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.statusFilterRow}>
                         {statuses.map((status: StatusKey) => {
-                            const activeStyleKey = `active_${status}` as keyof typeof styles;
+                            const baseStyle = styles.statusButton;
+                            const bgStyle = status !== 'all' ? styles[status] : undefined;
+                            const activeStyle = status !== 'all' && statusFilter === status
+                                ? styles[`active_${status}` as keyof typeof styles]
+                                : undefined;
 
                             return (
                                 <TouchableOpacity
                                     key={status}
-                                    style={[
-                                        styles.statusButton,
-                                        styles[status],
-                                        status !== 'all' && statusFilter === status && styles[activeStyleKey],
-                                    ]}
+                                    style={[baseStyle, bgStyle, activeStyle] as any}
                                     onPress={() => setStatusFilter(status)}
                                 >
                                     <Text
                                         style={[
                                             styles.statusButtonText,
-                                            status !== 'all' && statusFilter === status && styles.activeStatusButtonText,
-                                        ]}
+                                            status !== 'all' && statusFilter === status
+                                                ? styles.activeStatusButtonText
+                                                : null,
+                                        ] as any}
                                     >
                                         {t(`issueStatus.${status}`)}
                                     </Text>

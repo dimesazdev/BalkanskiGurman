@@ -113,23 +113,25 @@ const AdminUsersScreen: React.FC = () => {
                         contentContainerStyle={styles.statusFilterRow}
                     >
                         {statuses.map((status: StatusKey) => {
-                            const activeStyleKey = `active_${status}` as keyof typeof styles;
+                            const baseStyle = styles.statusButton;
+                            const bgStyle = status !== 'all' ? styles[status] : undefined;
+                            const activeStyle = status !== 'all' && statusFilter === status
+                                ? styles[`active_${status}` as keyof typeof styles]
+                                : undefined;
 
                             return (
                                 <TouchableOpacity
                                     key={status}
-                                    style={[
-                                        styles.statusButton,
-                                        styles[status],
-                                        status !== 'all' && statusFilter === status ? styles[activeStyleKey] : undefined,
-                                    ]}
+                                    style={[baseStyle, bgStyle, activeStyle] as any}
                                     onPress={() => setStatusFilter(status)}
                                 >
                                     <Text
                                         style={[
                                             styles.statusButtonText,
-                                            status !== 'all' && statusFilter === status ? styles.activeStatusButtonText : undefined,
-                                        ]}
+                                            status !== 'all' && statusFilter === status
+                                                ? styles.activeStatusButtonText
+                                                : null,
+                                        ] as any}
                                     >
                                         {t(`userStatus.${status}`)}
                                     </Text>

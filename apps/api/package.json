@@ -6,7 +6,9 @@
     "dev": "ts-node-dev --respawn src/index.ts",
     "prisma": "prisma",
     "generate": "prisma generate",
-    "migrate": "prisma migrate dev"
+    "migrate": "prisma migrate dev",
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "@prisma/client": "^6.8.2",

@@ -137,7 +137,7 @@ const AdminUserCard: React.FC<Props> = ({ user, onManage }) => {
 
             <View style={styles.info}>
                 <View style={{ flexDirection: 'row', gap: 5 }}>
-                    <Text style={styles.bold}>{t('adminUser.status')}:</Text>{' '}
+                    <Text style={styles.bold}>{t('adminUser.status')}:</Text>
                     <Text style={[styles.status, styles[`status_${statusLabel}`]]}>
                         {statusLabel === 'suspended' && SuspendedUntil
                             ? `${t('adminUser.suspendedUntil')}: ${dayjs(SuspendedUntil).format('D MMMM YYYY')}`
