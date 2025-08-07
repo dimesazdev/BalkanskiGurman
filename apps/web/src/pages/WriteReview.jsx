@@ -31,10 +31,11 @@ function WriteReview() {
     const [popup, setPopup] = useState(null);
     const [showAlert, setShowAlert] = useState(null);
 
+    const baseUrl = getApiBaseUrl();
+
     useEffect(() => {
         const fetchRestaurant = async () => {
             try {
-                const baseUrl = getApiBaseUrl();
                 const res = await fetch(`${baseUrl}/restaurants/${id}`);
                 const data = await res.json();
                 setRestaurant(data);
@@ -72,7 +73,7 @@ function WriteReview() {
                 images.forEach(img => formData.append("files", img.file));
 
                 try {
-                    const uploadRes = await fetch("http://localhost:3001/upload/review-photos", {
+                    const uploadRes = await fetch(`${baseUrl}/upload/review-photos`, {
                         method: "POST",
                         body: formData,
                     });
@@ -80,7 +81,7 @@ function WriteReview() {
                     const uploadData = await uploadRes.json();
                     const urls = uploadData.urls || [];
 
-                    await fetch(`http://localhost:3001/restaurants/${id}/reviews`, {
+                    await fetch(`${baseUrl}/restaurants/${id}/reviews`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",

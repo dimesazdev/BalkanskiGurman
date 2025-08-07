@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
+import getApiBaseUrl from "../api/config";
 
 export const useAzureTranslation = (text) => {
   const { i18n } = useTranslation();
@@ -10,7 +11,8 @@ export const useAzureTranslation = (text) => {
 
     const fetchTranslation = async () => {
       try {
-        const res = await fetch("http://localhost:3001/translate", {
+        const baseUrl = getApiBaseUrl();
+        const res = await fetch(`${baseUrl}/translate`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text, to: i18n.language })
