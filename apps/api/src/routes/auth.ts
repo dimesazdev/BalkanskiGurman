@@ -6,9 +6,9 @@ import dotenv from 'dotenv';
 import crypto from "crypto";
 import { sendEmail } from "../utils/sendEmail";
 import { generateEmailTemplate } from "../utils/emailTemplates";
+import { getFrontendOrigin } from '../utils/origin'; 
 
 import authenticate from '../middleware/authenticate';
-import requireRole from '../middleware/requireRole';
 
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
@@ -98,13 +98,13 @@ router.get('/google', passport.authenticate('google', {
 router.get('/google/callback',
   passport.authenticate('google', {
     session: false,
-    failureRedirect: 'http://localhost:5173/auth/login?error=google'
+    failureRedirect: `${getFrontendOrigin()}/auth/login?error=google`
   }),
   (req, res) => {
     const user = req.user as any;
     const token = jwt.sign({ userId: user.UserId }, process.env.JWT_SECRET!, { expiresIn: '7d' });
 
-    res.redirect(`http://localhost:5173/auth/google/callback?token=${token}`);
+    res.redirect(`${getFrontendOrigin()}/auth/google/callback?token=${token}`);
   }
 );
 
@@ -206,7 +206,7 @@ router.post('/register', async (req, res) => {
 
     const t = translations[lang] || translations.en;
 
-    const link = `http://localhost:5173/verify-email?token=${verificationToken}`;
+    const link = `${getFrontendOrigin()}/verify-email?token=${verificationToken}`;
 
     const html = generateEmailTemplate({
       subject: t.subject,
@@ -518,7 +518,7 @@ router.post("/request-password-reset", async (req, res) => {
     subject: t.subject,
     body: t.body,
     buttonText: t.button,
-    buttonUrl: `http://localhost:5173/reset-password?token=${token}`,
+    buttonUrl: `${getFrontendOrigin()}/reset-password?token=${token}`,
     disclaimer: t.disclaimer,
     footerNote: t.footerNote,
   });
