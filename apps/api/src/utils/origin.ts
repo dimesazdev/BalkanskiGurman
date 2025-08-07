@@ -1,5 +1,3 @@
 export const getFrontendOrigin = () => {
-    return process.env.NODE_ENV === 'production'
-        ? 'https://balkanskigurman.vercel.app'
-        : 'http://localhost:5173';
+    return process.env.FRONTEND_URL || 'http://localhost:5173';
 };
