@@ -9,6 +9,7 @@ import Popup from "../../components/Popup";
 import { motion } from "framer-motion";
 import SortBar from "../../components/SortBar";
 import SearchBar from "../../components/SearchBar";
+import getApiBaseUrl from "../../api/config";
 
 const AdminUsers = () => {
     const { t } = useTranslation();
@@ -21,9 +22,11 @@ const AdminUsers = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [popup, setPopup] = useState(null);
 
+    const baseUrl = getApiBaseUrl();
+
     useEffect(() => {
         if (!user?.token) return;
-        fetch("http://localhost:3001/users", {
+        fetch(`${baseUrl}/users`, {
             headers: { Authorization: `Bearer ${user.token}` }
         })
             .then((res) => res.json())
@@ -49,7 +52,7 @@ const AdminUsers = () => {
 
     const handleStatusChange = async (userId, statusId) => {
         try {
-            const res = await fetch(`http://localhost:3001/users/${userId}/status`, {
+            const res = await fetch(`${baseUrl}/users/${userId}/status`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

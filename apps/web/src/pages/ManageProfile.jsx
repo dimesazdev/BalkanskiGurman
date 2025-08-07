@@ -18,6 +18,7 @@ import CountryPicker from "../components/CountryPicker";
 import CityPicker from "../components/CityPicker";
 import { motion } from "framer-motion";
 import Loading from "../components/Loading";
+import getApiBaseUrl from "../api/config";
 
 function ManageProfile() {
     const { t } = useTranslation();
@@ -41,9 +42,11 @@ function ManageProfile() {
     const [popup, setPopup] = useState(null);
     const [showAlert, setShowAlert] = useState(false);
 
+    const baseUrl = getApiBaseUrl();
+
     const fetchProfileData = async () => {
         try {
-            const res = await fetch("http://localhost:3001/auth/me", {
+            const res = await fetch(`${baseUrl}/auth/me`, {
                 headers: { Authorization: `Bearer ${user.token}` }
             });
             if (res.status === 401) throw new Error("Unauthorized");
@@ -102,7 +105,7 @@ function ManageProfile() {
             if (profilePhoto) {
                 const form = new FormData();
                 form.append("file", profilePhoto);
-                const res = await fetch("http://localhost:3001/upload/profile-picture", {
+                const res = await fetch(`${baseUrl}/upload/profile-picture`, {
                     method: "POST",
                     body: form
                 });
@@ -112,7 +115,7 @@ function ManageProfile() {
             }
 
             const selectedCountry = Country.getAllCountries().find(c => c.isoCode === formData.countryIso);
-            const response = await fetch("http://localhost:3001/auth/me", {
+            const response = await fetch(`${baseUrl}/auth/me`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

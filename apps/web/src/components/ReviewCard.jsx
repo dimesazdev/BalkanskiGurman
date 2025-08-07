@@ -13,6 +13,7 @@ import Alert from "./Alert";
 import { useAuth } from "../context/AuthContext";
 import Button from "./Button";
 import { useAzureTranslation } from "../hooks/useAzureTranslation";
+import getApiBaseUrl from "../api/config";
 
 const ReviewCard = ({ review, onDelete }) => {
     const {
@@ -118,7 +119,8 @@ const ReviewCard = ({ review, onDelete }) => {
 
     const performDelete = async () => {
         try {
-            const res = await fetch(`http://localhost:3001/reviews/${review.ReviewId}`, {
+            const baseUrl = getApiBaseUrl();
+            const res = await fetch(`${baseUrl}/reviews/${review.ReviewId}`, {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${currentUser.token}` }
             });

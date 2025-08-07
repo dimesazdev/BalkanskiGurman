@@ -11,6 +11,7 @@ import Loading from "../components/Loading";
 import Popup from "../components/Popup";
 import { useTranslation } from "react-i18next";
 import { motion, useInView } from "framer-motion";
+import getApiBaseUrl from "../api/config";
 
 const CompleteProfile = () => {
     const { user, refreshUser } = useAuth();
@@ -49,7 +50,8 @@ const CompleteProfile = () => {
         setPopup(null);
 
         try {
-            const res = await fetch("http://localhost:3001/auth/me", {
+            const baseUrl = getApiBaseUrl();
+            const res = await fetch(`${baseUrl}/auth/me`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

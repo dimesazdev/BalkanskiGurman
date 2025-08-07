@@ -11,6 +11,7 @@ import "../../styles/Restaurants.css";
 import "../../styles/General.css";
 import SortBar from "../../components/SortBar";
 import SearchBar from "../../components/SearchBar";
+import getApiBaseUrl from "../../api/config";
 
 const FadeInSection = ({ children, delay = 0 }) => {
   const ref = useRef(null);
@@ -55,8 +56,10 @@ const AdminRestaurants = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const baseUrl = getApiBaseUrl();
+
   useEffect(() => {
-    fetch("http://localhost:3001/restaurants")
+    fetch(`${baseUrl}/restaurants`)
       .then(res => res.json())
       .then(setRestaurants);
   }, []);
@@ -67,7 +70,7 @@ const AdminRestaurants = () => {
 
   const confirmDelete = async () => {
     try {
-      await fetch(`http://localhost:3001/restaurants/${confirmDeleteId}`, {
+      await fetch(`${baseUrl}/restaurants/${confirmDeleteId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${user.token}` },
       });

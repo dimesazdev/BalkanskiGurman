@@ -12,6 +12,7 @@ import Popup from "../components/Popup";
 import { motion } from "framer-motion";
 import ImagePicker from "../components/ImagePicker";
 import Loading from "../components/Loading";
+import getApiBaseUrl from "../api/config";
 
 function WriteReview() {
     const { id } = useParams();
@@ -33,7 +34,8 @@ function WriteReview() {
     useEffect(() => {
         const fetchRestaurant = async () => {
             try {
-                const res = await fetch(`http://localhost:3001/restaurants/${id}`);
+                const baseUrl = getApiBaseUrl();
+                const res = await fetch(`${baseUrl}/restaurants/${id}`);
                 const data = await res.json();
                 setRestaurant(data);
             } catch (err) {

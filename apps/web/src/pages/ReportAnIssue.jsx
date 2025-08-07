@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 import RestaurantSelector from "../components/RestaurantSelector";
 import { useLocation } from "react-router-dom";
+import getApiBaseUrl from "../api/config";
 
 const ReportAnIssue = () => {
     const { t } = useTranslation();
@@ -35,10 +36,12 @@ const ReportAnIssue = () => {
         { value: "Other", label: t("report.issueTypes.other") }
     ];
 
+    const baseUrl = getApiBaseUrl();
+
     useEffect(() => {
         if (issueType === "Wrong Info") {
             setLoadingRestaurants(true);
-            fetch("http://localhost:3001/restaurants")
+            fetch(`${baseUrl}/restaurants`)
                 .then(res => res.json())
                 .then(data => {
                     setRestaurants(data);
@@ -59,7 +62,7 @@ const ReportAnIssue = () => {
         const formData = new FormData();
         imageFiles.forEach(img => formData.append("files", img.file));
 
-        const res = await fetch("http://localhost:3001/upload/restaurant-photos", {
+        const res = await fetch(`${baseUrl}/upload/restaurant-photos`, {
             method: "POST",
             body: formData
         });
@@ -95,7 +98,7 @@ const ReportAnIssue = () => {
                 RestaurantId: selectedRestaurant?.RestaurantId || null
             };
 
-            const res = await fetch("http://localhost:3001/issues", {
+            const res = await fetch(`${baseUrl}/issues`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

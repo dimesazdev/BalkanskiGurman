@@ -9,6 +9,7 @@ import Popup from "../../components/Popup";
 import { motion } from "framer-motion";
 import SearchBar from "../../components/SearchBar";
 import SortBar from "../../components/SortBar";
+import getApiBaseUrl from "../../api/config";
 
 const OwnerReviews = () => {
   const { t } = useTranslation();
@@ -21,9 +22,11 @@ const OwnerReviews = () => {
   const [selectedReview, setSelectedReview] = useState(null);
   const [popup, setPopup] = useState(null);
 
+  const baseUrl = getApiBaseUrl();
+
   useEffect(() => {
     if (!user?.token) return;
-    fetch(`http://localhost:3001/restaurants`, {
+    fetch(`${baseUrl}/restaurants`, {
       headers: { Authorization: `Bearer ${user.token}` },
     })
       .then((res) => res.json())
@@ -31,7 +34,7 @@ const OwnerReviews = () => {
         const owned = restaurants.filter(r => r.ClaimedByUserId === user?.id);
         return Promise.all(
           owned.map(r =>
-            fetch(`http://localhost:3001/restaurants/${r.RestaurantId}/reviews/owner`, {
+            fetch(`${baseUrl}/restaurants/${r.RestaurantId}/reviews/owner`, {
               headers: { Authorization: `Bearer ${user.token}` },
             }).then(res => res.json())
           )
@@ -62,7 +65,7 @@ const OwnerReviews = () => {
 
   const handleRequestRecheck = async (reviewId) => {
     try {
-      const res = await fetch(`http://localhost:3001/reviews/${reviewId}/status`, {
+      const res = await fetch(`${baseUrl}/reviews/${reviewId}/status`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

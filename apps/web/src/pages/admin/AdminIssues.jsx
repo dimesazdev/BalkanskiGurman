@@ -9,6 +9,7 @@ import "../../styles/AdminIssues.css";
 import { motion } from "framer-motion";
 import SortBar from "../../components/SortBar";
 import SearchBar from "../../components/SearchBar";
+import getApiBaseUrl from "../../api/config";
 
 const AdminIssues = () => {
     const { t } = useTranslation();
@@ -21,9 +22,11 @@ const AdminIssues = () => {
     const [popup, setPopup] = useState(null);
     const [sortOption, setSortOption] = useState("newest");
 
+    const baseUrl = getApiBaseUrl();
+
     useEffect(() => {
         if (!user?.token) return;
-        fetch("http://localhost:3001/issues", {
+        fetch(`${baseUrl}/issues`, {
             headers: { Authorization: `Bearer ${user.token}` }
         })
             .then(res => res.json())
@@ -55,13 +58,13 @@ const AdminIssues = () => {
 
     const handleResolve = async (issueId) => {
         try {
-            const res = await fetch(`http://localhost:3001/issues/${issueId}`, {
+            const res = await fetch(`${baseUrl}/issues/${issueId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${user.token}`
                 },
-                body: JSON.stringify({ StatusId: 8 }) // resolved
+                body: JSON.stringify({ StatusId: 8 })
             });
 
             if (!res.ok) throw new Error();

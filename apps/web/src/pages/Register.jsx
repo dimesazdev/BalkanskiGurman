@@ -14,6 +14,7 @@ import { motion } from "framer-motion";
 import Loading from "../components/Loading";
 import Popup from "../components/Popup";
 import { validateFields } from "../utils/validators";
+import getApiBaseUrl from "../api/config";
 
 const Register = () => {
   const { t, i18n } = useTranslation();
@@ -69,7 +70,8 @@ const Register = () => {
         language: i18n.language
       };
 
-      const res = await fetch("http://localhost:3001/auth/register", {
+      const baseUrl = getApiBaseUrl();
+      const res = await fetch(`${baseUrl}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

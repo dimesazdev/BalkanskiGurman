@@ -13,6 +13,7 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import SortBar from "../components/SortBar";
 import SearchBar from "../components/SearchBar";
+import getApiBaseUrl from "../api/config";
 
 const FadeInSection = ({ children, delay = 0 }) => {
   const ref = useRef(null);
@@ -128,23 +129,24 @@ function Restaurants() {
     return `${translatedCity}, ${translatedCountry}`;
   };
 
+  const baseUrl = getApiBaseUrl();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const url =
           cityParam && countryParam
-            ? `http://localhost:3001/restaurants?city=${encodeURIComponent(cityParam)}&country=${encodeURIComponent(countryParam)}`
+            ? `${baseUrl}/restaurants?city=${encodeURIComponent(cityParam)}&country=${encodeURIComponent(countryParam)}`
             : cityParam
-              ? `http://localhost:3001/restaurants?city=${encodeURIComponent(cityParam)}`
-              : `http://localhost:3001/restaurants`;
-
+              ? `${baseUrl}/restaurants?city=${encodeURIComponent(cityParam)}`
+              : `${baseUrl}/restaurants`;
 
         const res = await fetch(url);
         const data = await res.json();
         setRestaurants(data);
 
         if (user) {
-          const favRes = await fetch("http://localhost:3001/favorites", {
+          const favRes = await fetch(`${baseUrl}/favorites`, {
             headers: { Authorization: `Bearer ${user.token}` },
           });
           const favData = await favRes.json();
@@ -169,14 +171,14 @@ function Restaurants() {
 
     try {
       if (isFav) {
-        await fetch(`http://localhost:3001/favorites/by-restaurant/${restaurantId}`, {
+        await fetch(`${baseUrl}/favorites/by-restaurant/${restaurantId}`, {
           method: "DELETE",
           headers: { Authorization: `Bearer ${user.token}` },
         });
         setFavorites(prev => prev.filter(id => id !== restaurantId));
         showPopup(t("alerts.favoriteRemoved"), "success");
       } else {
-        await fetch("http://localhost:3001/favorites", {
+        await fetch(`${baseUrl}/favorites`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

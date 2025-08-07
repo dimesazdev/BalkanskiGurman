@@ -26,6 +26,7 @@ import SearchBar from "../components/SearchBar";
 import Alert from "../components/Alert";
 import { Tooltip } from "react-tooltip";
 import ReviewCard from "../components/ReviewCard";
+import getApiBaseUrl from "../api/config";
 
 const FadeInSection = ({ children, from = "bottom" }) => {
   const ref = useRef(null);
@@ -78,19 +79,21 @@ function RestaurantPage() {
     : { isOpen: false, closeFormatted: null };
   const getNextOpenTime = () => getNextOpeningTime(restaurant?.workingHours, todayDayOfWeek, getDayName, t);
 
+  const baseUrl = getApiBaseUrl();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`http://localhost:3001/restaurants/${id}`);
+        const res = await fetch(`${baseUrl}/restaurants/${id}`);
         const data = await res.json();
         setRestaurant(data);
 
-        const revRes = await fetch(`http://localhost:3001/restaurants/${id}/reviews`);
+        const revRes = await fetch(`${baseUrl}/restaurants/${id}/reviews`);
         const revData = await revRes.json();
         setReviews(revData);
 
         if (user) {
-          const favRes = await fetch("http://localhost:3001/favorites", {
+          const favRes = await fetch(`${baseUrl}/favorites`, {
             headers: { Authorization: `Bearer ${user.token}` },
           });
           const favData = await favRes.json();
@@ -113,14 +116,14 @@ function RestaurantPage() {
     }
 
     if (isFavorite) {
-      await fetch(`http://localhost:3001/favorites/by-restaurant/${id}`, {
+      await fetch(`${baseUrl}/favorites/by-restaurant/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${user.token}` },
       });
       setIsFavorite(false);
       setPopup({ message: t("alerts.favoriteRemoved"), variant: "success" });
     } else {
-      await fetch("http://localhost:3001/favorites", {
+      await fetch(`${baseUrl}/favorites`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

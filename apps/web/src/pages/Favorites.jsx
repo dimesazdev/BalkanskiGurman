@@ -11,6 +11,7 @@ import "../styles/Restaurants.css";
 import "../styles/General.css";
 import SortBar from "../components/SortBar";
 import SearchBar from "../components/SearchBar";
+import getApiBaseUrl from "../api/config";
 
 const FadeIn = ({ children }) => {
   const ref = useRef(null);
@@ -56,9 +57,11 @@ function Favorites() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const baseUrl = getApiBaseUrl();
+
   useEffect(() => {
     if (user) {
-      fetch("http://localhost:3001/favorites", {
+      fetch(`${baseUrl}/favorites`, {
         headers: { Authorization: `Bearer ${user.token}` },
       })
         .then(res => res.json())
@@ -84,7 +87,7 @@ function Favorites() {
 
   const confirmDelete = async () => {
     try {
-      await fetch(`http://localhost:3001/favorites/by-restaurant/${confirmDeleteId}`, {
+      await fetch(`${baseUrl}/favorites/by-restaurant/${confirmDeleteId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${user.token}` },
       });

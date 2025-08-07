@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import "../styles/ChangePassword.css";
 import { validateFields } from "../utils/validators";
 import { motion } from "framer-motion";
+import getApiBaseUrl from "../api/config";
 
 const ChangePassword = () => {
     const { user } = useAuth();
@@ -42,7 +43,8 @@ const ChangePassword = () => {
 
         setLoading(true);
         try {
-            const res = await fetch("http://localhost:3001/auth/change-password", {
+            const baseUrl = getApiBaseUrl();
+            const res = await fetch(`${baseUrl}/auth/change-password`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

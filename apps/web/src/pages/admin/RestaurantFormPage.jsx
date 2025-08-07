@@ -19,6 +19,7 @@ import CityPicker from "../../components/CityPicker";
 import "../../styles/RestaurantForm.css";
 import { motion } from "framer-motion";
 import Loading from "../../components/Loading";
+import getApiBaseUrl from "../../api/config";
 
 const amenityOptions = [
     { code: "DELIV", label: "filters.delivery" },
@@ -77,8 +78,10 @@ const RestaurantFormPage = () => {
     const [popup, setPopup] = useState(null);
     const [showAlert, setShowAlert] = useState(false);
 
+    const baseUrl = getApiBaseUrl();
+
     useEffect(() => {
-        fetch("http://localhost:3001/cuisines")
+        fetch(`${baseUrl}/cuisines`)
             .then(res => res.json())
             .then(data => {
                 const cuisineOptions = data.map(c => ({
@@ -89,7 +92,7 @@ const RestaurantFormPage = () => {
             });
 
         if (isEdit) {
-            fetch(`http://localhost:3001/restaurants/${id}`)
+            fetch(`${baseUrl}/restaurants/${id}`)
                 .then(res => res.json())
                 .then(data => {
                     const normalizedWorkingHours = Array.from({ length: 7 }, (_, i) => {
@@ -192,7 +195,7 @@ const RestaurantFormPage = () => {
         const formDataObj = new FormData();
         imageFiles.forEach(img => formDataObj.append('files', img.file));
 
-        const res = await fetch('http://localhost:3001/upload/restaurant-photos', {
+        const res = await fetch(`${baseUrl}/upload/restaurant-photos`, {
             method: 'POST',
             body: formDataObj
         });
@@ -331,7 +334,8 @@ const RestaurantFormPage = () => {
                         }
                     }
             };
-            const res = await fetch(`http://localhost:3001/restaurants${isEdit ? `/${id}` : ""}`, {
+            
+            const res = await fetch(`${baseUrl}/restaurants${isEdit ? `/${id}` : ""}`, {
                 method: isEdit ? "PUT" : "POST",
                 headers: {
                     "Content-Type": "application/json",

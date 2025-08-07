@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Loading from "../components/Loading";
 import { useAuth } from "../context/AuthContext";
+import getApiBaseUrl from '../api/config';
 
 const GoogleCallback = () => {
     const navigate = useNavigate();
@@ -19,7 +20,8 @@ const GoogleCallback = () => {
         const fetchUser = async () => {
             try {
                 localStorage.setItem('token', token);
-                const res = await fetch('http://localhost:3001/auth/me', {
+                const baseUrl = getApiBaseUrl();
+                const res = await fetch(`${baseUrl}/auth/me`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

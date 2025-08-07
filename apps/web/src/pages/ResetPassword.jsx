@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import "../styles/ChangePassword.css";
 import { validateFields } from "../utils/validators";
 import { motion } from "framer-motion";
+import getApiBaseUrl from "../api/config";
 
 const ResetPassword = () => {
     const [newPassword, setNewPassword] = useState("");
@@ -59,8 +60,9 @@ const ResetPassword = () => {
                 newPassword,
                 confirmPassword: retypePassword
             });
-
-            const res = await fetch("http://localhost:3001/auth/reset-password", {
+            
+            const baseUrl = getApiBaseUrl();
+            const res = await fetch(`${baseUrl}/auth/reset-password`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

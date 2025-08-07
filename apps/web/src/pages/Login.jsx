@@ -9,6 +9,7 @@ import Button from "../components/Button";
 import Navbar from "../components/Navbar";
 import { motion } from "framer-motion";
 import Popup from "../components/Popup";
+import getApiBaseUrl from "../api/config";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -36,10 +37,12 @@ const Login = () => {
     }
   }, [t]);
 
+  const baseUrl = getApiBaseUrl();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:3001/auth/login", {
+      const res = await fetch(`${baseUrl}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -165,7 +168,7 @@ const Login = () => {
                   {t("login.login")}
                 </Button>
 
-                <button type="button" className="google-btn" onClick={() => window.location.href = 'http://localhost:3001/auth/google'}>
+                <button type="button" className="google-btn" onClick={() => window.location.href = `${baseUrl}/auth/google`}>
                   <svg className="google-icon" viewBox="0 0 24 24" width="20" height="20">
                     <path
                       fill="#4285F4"

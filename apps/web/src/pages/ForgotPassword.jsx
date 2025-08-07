@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import "../styles/ChangePassword.css";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import getApiBaseUrl from "../api/config";
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
@@ -19,7 +20,8 @@ const ForgotPassword = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const res = await fetch("http://localhost:3001/auth/request-password-reset", {
+            const baseUrl = getApiBaseUrl();
+            const res = await fetch(`${baseUrl}/auth/request-password-reset`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

@@ -19,6 +19,7 @@ import "dayjs/locale/sl";
 import { useAzureTranslation } from "../../hooks/useAzureTranslation";
 import FormTextarea from "../FormTextarea";
 import Popup from "../Popup";
+import getApiBaseUrl from "../../api/config";
 
 const countryNameToCode = {
   Macedonia: "MK",
@@ -133,7 +134,8 @@ const OwnerReviewPopup = ({ review, onClose, userToken, onRecheckSuccess }) => {
     }
 
     try {
-      const res = await fetch(`http://localhost:3001/reviews/${ReviewId}/status`, {
+      const baseUrl = getApiBaseUrl();
+      const res = await fetch(`${baseUrl}/reviews/${ReviewId}/status`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

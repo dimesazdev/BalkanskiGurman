@@ -7,6 +7,7 @@ import Popup from "../../components/Popup";
 import { useAuth } from "../../context/AuthContext";
 import Title from "../../components/Title";
 import "../../styles/Restaurants.css";
+import getApiBaseUrl from "../../api/config";
 
 function OwnerRestaurants() {
     const { t } = useTranslation();
@@ -19,7 +20,8 @@ function OwnerRestaurants() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await fetch("http://localhost:3001/restaurants");
+                const baseUrl = getApiBaseUrl();
+                const res = await fetch(`${baseUrl}/restaurants`);
                 const data = await res.json();
                 const owned = data.filter(r => r.ClaimedByUserId === user?.id);
                 setRestaurants(owned);

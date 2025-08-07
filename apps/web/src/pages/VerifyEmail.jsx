@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/ChangePassword.css"
+import getApiBaseUrl from "../api/config";
 
 const VerifyEmail = () => {
   const [status, setStatus] = useState("Verifying...");
@@ -16,7 +17,8 @@ const VerifyEmail = () => {
       return;
     }
 
-    fetch("http://localhost:3001/auth/verify-email", {
+    const baseUrl = getApiBaseUrl();
+    fetch(`${baseUrl}/auth/verify-email`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token }),
