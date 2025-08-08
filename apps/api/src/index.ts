@@ -115,5 +115,5 @@ app.post('/translate', async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`\u{1F680} API running on http://localhost:${port}`);
+  console.log(`\u{1F680} API is live and listening on port ${port}`);
 });
