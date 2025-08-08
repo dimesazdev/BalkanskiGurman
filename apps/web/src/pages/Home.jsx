@@ -9,16 +9,11 @@ import { motion } from "framer-motion"
 import Icon from '@mdi/react'
 import { mdiArrowRightThin } from '@mdi/js'
 import Button from "../components/Button";
-import ExYuMap from "../components/ExYuMap";
 
 const Home = () => {
 
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const handleCountrySelect = ({ name }) => {
-    console.log("Selected country:", name);
-    // Later, you will load cities here
-  };
 
   return (
     <>
@@ -47,7 +42,6 @@ const Home = () => {
           </div>
         </motion.div>
       </div>
-      <ExYuMap onCountrySelect={handleCountrySelect} />
     </>
   );
 };
