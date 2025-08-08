@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import { useTranslation } from "react-i18next";
 import Button from "./Button";
 import "../styles/ExYuMap.css";
+import { useNavigate } from "react-router-dom";
 
 window.translatedCities = translatedCities;
 window.__usedCityKeys = new Set();
@@ -116,6 +117,7 @@ const ExYuMap = ({ onCountrySelect }) => {
     const [selectedBounds, setSelectedBounds] = useState(null);
     const [activeCountry, setActiveCountry] = useState(null);
     const [activeRegion, setActiveRegion] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch("/ex-yu-countries.geojson")
@@ -139,7 +141,6 @@ const ExYuMap = ({ onCountrySelect }) => {
                 setSelectedBounds(bounds);
                 setActiveCountry(countryName);
                 setSelectedCountry(countryName);
-                onCountrySelect?.({ feature, name: countryName });
 
                 const filename = REGION_FILES[countryName];
                 if (filename) {

@@ -23,6 +23,8 @@ import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 import passport from 'passport';
 import session from 'express-session';
+import './jobs/unSuspendUsers';
+// import { runUnSuspendUsers } from './jobs/unSuspendUsers';
 
 const app = express();
 const prisma = new PrismaClient();
@@ -113,6 +115,15 @@ app.post('/translate', async (req, res) => {
     res.status(500).json({ error: 'Translation failed' });
   }
 });
+
+// app.get('/test-unsuspend', async (req, res) => {
+//   try {
+//     const count = await runUnSuspendUsers();
+//     res.json({ updated: count });
+//   } catch (err) {
+//     res.status(500).json({ error: 'Failed to run unsuspend job' });
+//   }
+// });
 
 app.listen(port, () => {
   console.log(`\u{1F680} API is live and listening on port ${port}`);

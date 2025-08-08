@@ -122,9 +122,16 @@ function ManageProfile() {
                     Authorization: `Bearer ${user.token}`
                 },
                 body: JSON.stringify({
-                    ...formData,
-                    country: selectedCountry?.name || "",
-                    profilePictureUrl
+                    Name: formData.name,
+                    Surname: formData.surname,
+                    Email: formData.email,
+                    PhoneNumber: formData.phoneNumber.startsWith('+')
+                        ? formData.phoneNumber
+                        : `+${formData.phoneNumber}`,
+                    Country: selectedCountry?.name || "",
+                    CountryIso: selectedCountry?.isoCode || "",
+                    City: formData.city,
+                    ProfilePictureUrl: profilePictureUrl,
                 })
             });
 
@@ -245,7 +252,7 @@ function ManageProfile() {
             >
                 <FormInput id="name" label={t("register.name")} value={formData.name} onChange={handleInputChange} name="name" placeholder={t("register.namePlaceholder")} />
                 <FormInput id="surname" label={t("register.surname")} value={formData.surname} onChange={handleInputChange} name="surname" placeholder={t("register.surnamePlaceholder")} />
-                <FormInput id="email" label={t("register.email")} type="email" value={formData.email} onChange={handleInputChange} name="email" placeholder={t("register.emailPlaceholder")} />
+                <FormInput disabled id="email" label={t("register.email")} type="email" value={formData.email} onChange={handleInputChange} name="email" placeholder={t("register.emailPlaceholder")} />
                 <PhoneNumberPicker
                     value={{ phoneNumber: formData.phoneNumber }}
                     onChange={({ phoneNumber, countryCode }) =>

@@ -14,6 +14,7 @@ import { useRef } from "react";
 import SortBar from "../components/SortBar";
 import SearchBar from "../components/SearchBar";
 import getApiBaseUrl from "../api/config";
+import ExYuMap from "../components/ExYuMap";
 
 const FadeInSection = ({ children, delay = 0 }) => {
   const ref = useRef(null);
@@ -88,6 +89,9 @@ function Restaurants() {
   const cityParam = query.get("city");
   const countryParam = query.get("country");
   const metroParam = query.get("metro");
+
+  const needsLocation = !cityParam || !countryParam;
+  const [showMapOverlay, setShowMapOverlay] = useState(needsLocation);
 
   const getTranslatedCountry = (countryName) => {
     const match = translatedCountries.find(
@@ -245,9 +249,53 @@ function Restaurants() {
       return b.AverageRating - a.AverageRating;
     });
 
+  useEffect(() => {
+    if (showMapOverlay) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [showMapOverlay]);
+
+  const handleCountryCitySelect = ({ feature, name }) => {
+    const field = "NAME_1";
+    const regionName = feature.properties?.[field] || "Unknown";
+
+    const iso = countryNameToCode[name] || name;
+
+    const normalize = (s) =>
+      s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+    const cityEntry = translatedCities.find(
+      (c) =>
+        c.countryCode === iso &&
+        normalize(c.name) === normalize(regionName)
+    );
+
+    const cityEn = cityEntry?.translations?.en || regionName;
+    const metroEn = cityEntry?.metro || "";
+
+    const redirectUrl = `/restaurants?city=${encodeURIComponent(
+      cityEn
+    )}&country=${encodeURIComponent(name)}${metroEn ? `&metro=${encodeURIComponent(metroEn)}` : ""
+      }`;
+
+    setShowMapOverlay(false);
+
+    navigate(redirectUrl);
+  };
+
   return (
     <>
       <div className="restaurants">
+        {showMapOverlay && (
+          <div className="map-overlay">
+            <div className="map-container-wrapper">
+              <ExYuMap onCountrySelect={handleCountryCitySelect} />
+              <h2>{t("form.selectCountry")} & {t("form.selectCity")}</h2>
+            </div>
+          </div>
+        )}
         {popup && <Popup message={popup.message} variant={popup.variant} onClose={() => setPopup(null)} />}
         {showLoginAlert && (
           <Alert

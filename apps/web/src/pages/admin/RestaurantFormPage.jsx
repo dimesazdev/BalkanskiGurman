@@ -139,7 +139,23 @@ const RestaurantFormPage = () => {
                         workingHours: normalizedWorkingHours
                     }));
 
-                    setImages(data.images.map(img => ({ file: null, url: img.Url })));
+                    const youtubeLinks = [];
+                    const imageLinks = [];
+
+                    data.images.forEach((item) => {
+                        const url = item.Url || item;
+                        if (url.includes("youtube.com/embed/") || url.includes("youtu.be/")) {
+                            youtubeLinks.push(url);
+                        } else {
+                            imageLinks.push({ file: null, url });
+                        }
+                    });
+
+                    setImages(imageLinks);
+                    setVideos([
+                        ...youtubeLinks,
+                        ...(data.videos?.map(v => v.Url) || [])
+                    ]);
                 });
         }
     }, [id, isEdit]);
@@ -189,7 +205,7 @@ const RestaurantFormPage = () => {
     };
 
     const uploadImages = async () => {
-        const imageFiles = images.filter(img => img.file);
+        const imageFiles = images.filter(img => img.file && !img.url.includes("youtube.com") && !img.url.includes("youtu.be"));
         if (imageFiles.length === 0) return [];
 
         const formDataObj = new FormData();
@@ -334,7 +350,7 @@ const RestaurantFormPage = () => {
                         }
                     }
             };
-            
+
             const res = await fetch(`${baseUrl}/restaurants${isEdit ? `/${id}` : ""}`, {
                 method: isEdit ? "PUT" : "POST",
                 headers: {

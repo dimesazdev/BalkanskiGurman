@@ -182,14 +182,11 @@
         margin-bottom: 2rem;
     }
 
-    /* above 850px — 3 columns */
-    .review-bar>.review-cell,
-    .review-group {
-        flex: 1 1 0;
+    .review-bar>.review-cell {
+        flex: 1;
         min-width: 200px;
         display: flex;
         align-items: center;
-        justify-content: center;
     }
 
     .review-cell.left {
