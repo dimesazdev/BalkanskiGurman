@@ -19,7 +19,6 @@ import { RootStackParamList } from '../types/navigation';
 import { getApiBaseUrl } from '@/api/config';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Loading from '@/components/Loading';
-import ScreenBackground from '@/components/ScreenBackground';
 
 type PopupState = {
     message: string;
@@ -71,49 +70,47 @@ const ForgotPasswordScreen = () => {
     };
 
     return (
-        <ScreenBackground>
-            <View style={[styles.wrapper, { paddingTop: insets.top }]}>
-                {popup && (
-                    <Popup
-                        message={popup.message}
-                        variant={popup.variant}
-                        onClose={() => setPopup(null)}
-                    />
-                )}
-                {loading && <Loading />}
-                <KeyboardAvoidingView
-                    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-                    style={{ flex: 1 }}
+        <View style={[styles.wrapper, { paddingTop: insets.top }]}>
+            {popup && (
+                <Popup
+                    message={popup.message}
+                    variant={popup.variant}
+                    onClose={() => setPopup(null)}
+                />
+            )}
+            {loading && <Loading />}
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+                style={{ flex: 1 }}
+            >
+                <ScrollView
+                    contentContainerStyle={styles.container}
+                    keyboardShouldPersistTaps="handled"
                 >
-                    <ScrollView
-                        contentContainerStyle={styles.container}
-                        keyboardShouldPersistTaps="handled"
-                    >
-                        <Title>{t('forgotPassword.title')}</Title>
+                    <Title>{t('forgotPassword.title')}</Title>
 
-                        <Animated.View
-                            entering={FadeInUp.duration(800)}
-                            style={styles.form}
+                    <Animated.View
+                        entering={FadeInUp.duration(800)}
+                        style={styles.form}
+                    >
+                        <FormInput
+                            id="email"
+                            label={t('forgotPassword.email')}
+                            value={email}
+                            onChangeText={setEmail}
+                            placeholder={t('forgotPassword.emailPlaceholder')}
+                            type="email-address"
+                        />
+                        <Button
+                            onPress={handleSubmit}
+                            variant="red"
                         >
-                            <FormInput
-                                id="email"
-                                label={t('forgotPassword.email')}
-                                value={email}
-                                onChangeText={setEmail}
-                                placeholder={t('forgotPassword.emailPlaceholder')}
-                                type="email-address"
-                            />
-                            <Button
-                                onPress={handleSubmit}
-                                variant="red"
-                            >
-                                {t('forgotPassword.button')}
-                            </Button>
-                        </Animated.View>
-                    </ScrollView>
-                </KeyboardAvoidingView>
-            </View>
-        </ScreenBackground>
+                            {t('forgotPassword.button')}
+                        </Button>
+                    </Animated.View>
+                </ScrollView>
+            </KeyboardAvoidingView>
+        </View>
     );
 };
 

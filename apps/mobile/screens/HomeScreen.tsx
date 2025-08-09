@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import Button from '../components/Button';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import ScreenBackground from '../components/ScreenBackground';
 
 const { width } = Dimensions.get('window');
 
@@ -12,39 +11,37 @@ const HomeScreen = () => {
     const { t } = useTranslation();
     const navigation = useNavigation();
     return (
-        <ScreenBackground>
-            <View style={styles.mainContent}>
-                <View style={styles.plateContainer}>
-                    <Image
-                        source={require('../assets/images/plate.png')}
-                        style={styles.plate}
-                        resizeMode="contain"
-                    />
-                </View>
+        <View style={styles.mainContent}>
+            <View style={styles.plateContainer}>
                 <Image
-                    source={require('../assets/images/light-logo.png')}
-                    style={styles.logo}
+                    source={require('../assets/images/plate.webp')}
+                    style={styles.plate}
                     resizeMode="contain"
                 />
-                <Button
-                    variant="red"
-                    onPress={() => navigation.navigate('ExYuMap' as never)}
-                    style={styles.button}
-                >
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ color: '#FFF', fontFamily: 'CormorantSC-Bold', fontSize: 16 }}>
-                            {t('home.button')}
-                        </Text>
-                        <MaterialCommunityIcons
-                            name="arrow-right-thin"
-                            size={22}
-                            color="#FFF"
-                            style={{ marginLeft: 10 }}
-                        />
-                    </View>
-                </Button>
             </View>
-        </ScreenBackground>
+            <Image
+                source={require('../assets/images/light-logo.png')}
+                style={styles.logo}
+                resizeMode="contain"
+            />
+            <Button
+                variant="red"
+                onPress={() => navigation.navigate('ExYuMap' as never)}
+                style={styles.button}
+            >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={{ color: '#FFF', fontFamily: 'CormorantSC-Bold', fontSize: 16 }}>
+                        {t('home.button')}
+                    </Text>
+                    <MaterialCommunityIcons
+                        name="arrow-right-thin"
+                        size={22}
+                        color="#FFF"
+                        style={{ marginLeft: 10 }}
+                    />
+                </View>
+            </Button>
+        </View>
     );
 };
 

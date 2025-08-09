@@ -21,7 +21,6 @@ import Colors from '@/constants/Colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import ScreenBackground from '@/components/ScreenBackground';
 import translatedCountries from '@/assets/locales/translatedCountries.json';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
@@ -147,7 +146,7 @@ const ManageProfileScreen: React.FC = () => {
     const reviewCount = userData?._count?.reviews || 0;
 
     return (
-        <ScreenBackground>
+        <>
             {popup && <Popup {...popup} onClose={() => setPopup(null)} />}
             <ScrollView contentContainerStyle={[styles.container, { paddingTop: insets.top }]}>
                 {showAlert && <Loading />}
@@ -221,7 +220,7 @@ const ManageProfileScreen: React.FC = () => {
                     {isSaving ? t('buttons.saving') : t('buttons.saveChanges')}
                 </Button>
             </ScrollView>
-        </ScreenBackground>
+        </>
     );
 };
 

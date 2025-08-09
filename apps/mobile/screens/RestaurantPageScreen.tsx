@@ -413,7 +413,6 @@ const styles = StyleSheet.create({
     back: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 16,
         gap: 8,
         marginTop: 15
     },

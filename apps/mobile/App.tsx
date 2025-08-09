@@ -1,4 +1,5 @@
-import React, { useState, useEffect, JSX } from 'react';
+import React, { JSX } from 'react';
+import { ImageBackground, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
@@ -10,7 +11,6 @@ import LoginScreen from './screens/LoginScreen';
 import Navbar from './components/Navbar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { LoadingProvider } from './context/LoadingContext';
-import MyPage from './screens/MyPage';
 import RegisterScreen from './screens/RegisterScreen';
 import RestaurantsScreen from './screens/RestaurantsScreen';
 import ExYuMapScreen from "./screens/ExYuMapScreen";
@@ -44,54 +44,50 @@ export default function App(): JSX.Element {
     'CormorantSC-Bold': require('./assets/fonts/CormorantSC-Bold.ttf'),
   });
 
-  const [appReady, setAppReady] = useState(false);
-
-  useEffect(() => {
-    const prepareApp = async () => {
-      await new Promise(resolve => setTimeout(resolve, 500));
-      setAppReady(true);
-    };
-    prepareApp();
-  }, []);
-
-  if (!fontsLoaded || !appReady) return <Loading />;
+  if (!fontsLoaded) return <Loading />;
 
   return (
     <LoadingProvider>
       <SafeAreaProvider>
         <AuthProvider>
           <NavigationContainer>
-            <Stack.Navigator
-              screenOptions={{
-                headerShown: false,
-              }}
+            <ImageBackground
+              source={require('./assets/images/background_dark.png')}
+              resizeMode="cover"
+              style={styles.background}
             >
-              <Stack.Screen name="Home" component={HomeScreen} />
-              <Stack.Screen name="Login" component={LoginScreen} />
-              <Stack.Screen name="Register" component={RegisterScreen} />
-              <Stack.Screen name="ManageProfile" component={ManageProfileScreen} />
-              <Stack.Screen name="Restaurants" component={RestaurantsScreen} />
-              <Stack.Screen name="Favorites" component={FavoritesScreen} />
-              <Stack.Screen name="ExYuMap" component={ExYuMapScreen} />
-              <Stack.Screen name="RestaurantPage" component={RestaurantPageScreen} />
-              <Stack.Screen name="WriteReview" component={WriteReviewScreen} />
-              <Stack.Screen name="ReportIssue" component={ReportIssueScreen} />
-              <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
-              <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
+              <Stack.Navigator
+                screenOptions={{
+                  headerShown: false,
+                  contentStyle: { backgroundColor: 'transparent' },
+                  animation: 'none'
+                }}
+              >
+                <Stack.Screen name="Home" component={HomeScreen} />
+                <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen name="Register" component={RegisterScreen} />
+                <Stack.Screen name="ManageProfile" component={ManageProfileScreen} />
+                <Stack.Screen name="Restaurants" component={RestaurantsScreen} />
+                <Stack.Screen name="Favorites" component={FavoritesScreen} />
+                <Stack.Screen name="ExYuMap" component={ExYuMapScreen} />
+                <Stack.Screen name="RestaurantPage" component={RestaurantPageScreen} />
+                <Stack.Screen name="WriteReview" component={WriteReviewScreen} />
+                <Stack.Screen name="ReportIssue" component={ReportIssueScreen} />
+                <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+                <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
+                <Stack.Screen name="RestaurantForm" component={RestaurantFormScreen} />
+                <Stack.Screen name="AdminHome" component={AdminHomeScreen} />
+                <Stack.Screen name="AdminReviews" component={AdminReviewsScreen} />
+                <Stack.Screen name="AdminUsers" component={AdminUsersScreen} />
+                <Stack.Screen name="AdminIssues" component={AdminIssuesScreen} />
+                <Stack.Screen name="OwnerHome" component={OwnerHomeScreen} />
+                <Stack.Screen name="OwnerRestaurants" component={OwnerRestaurantsScreen} />
+                <Stack.Screen name="OwnerReviews" component={OwnerReviewsScreen} />
+                <Stack.Screen name="HomeRedirect" component={HomeRedirect} />
+              </Stack.Navigator>
 
-              <Stack.Screen name="RestaurantForm" component={RestaurantFormScreen} />
-              <Stack.Screen name="AdminHome" component={AdminHomeScreen} />
-              <Stack.Screen name="AdminReviews" component={AdminReviewsScreen} />
-              <Stack.Screen name="AdminUsers" component={AdminUsersScreen} />
-              <Stack.Screen name="AdminIssues" component={AdminIssuesScreen} />
-
-              <Stack.Screen name="OwnerHome" component={OwnerHomeScreen} />
-              <Stack.Screen name="OwnerRestaurants" component={OwnerRestaurantsScreen} />
-              <Stack.Screen name="OwnerReviews" component={OwnerReviewsScreen} />
-
-              <Stack.Screen name="HomeRedirect" component={HomeRedirect} />
-            </Stack.Navigator>
-            <Navbar />
+              <Navbar />
+            </ImageBackground>
           </NavigationContainer>
         </AuthProvider>
       </SafeAreaProvider>
@@ -99,13 +95,10 @@ export default function App(): JSX.Element {
   );
 }
 
-const _consoleError = console.error;
-console.error = (...args) => {
-  if (
-    typeof args[0] === 'string' &&
-    args[0].includes('Text strings must be rendered within a <Text>')
-  ) {
-    console.trace('⚠️ Caught text rendering error');
-  }
-  _consoleError(...args);
-};
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+});

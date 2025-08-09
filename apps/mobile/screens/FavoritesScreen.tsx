@@ -7,7 +7,6 @@ import {
     ActivityIndicator,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import ScreenBackground from '@/components/ScreenBackground';
 import RestaurantCard from '@/components/RestaurantCard';
 import SearchBar from '@/components/SearchBar';
 import SortBar from '@/components/SortBar';
@@ -172,7 +171,7 @@ const FavoritesScreen = () => {
         });
 
     return (
-        <ScreenBackground>
+        <>
             {popup && (
                 <Popup message={popup.message} variant={popup.variant} onClose={() => setPopup(null)} />
             )}
@@ -195,7 +194,7 @@ const FavoritesScreen = () => {
                         buttonText={t('buttons.backToRestaurants')}
                         onButtonClick={() => {
                             setShowNoFavoritesAlert(false);
-                            navigation.navigate('ExYuMap');
+                            navigation.navigate('ExYuMap', {});
                         }}
                         showCancel={false}
                         onClose={() => setShowNoFavoritesAlert(false)}
@@ -240,7 +239,7 @@ const FavoritesScreen = () => {
                     />
                 )}
             </View>
-        </ScreenBackground>
+        </>
     );
 };
 

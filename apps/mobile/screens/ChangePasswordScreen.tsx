@@ -18,7 +18,6 @@ import Popup from '@/components/Popup';
 import Button from '@/components/Button';
 import Loading from '@/components/Loading';
 import { validateFields } from '@/utils/validators';
-import ScreenBackground from '@/components/ScreenBackground';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getApiBaseUrl } from '@/api/config';
@@ -95,7 +94,7 @@ const ChangePasswordScreen = () => {
     };
 
     return (
-        <ScreenBackground>
+        <>
             {popup && <Popup {...popup} onClose={() => setPopup(null)} />}
             {loading && <Loading />}
 
@@ -144,7 +143,7 @@ const ChangePasswordScreen = () => {
                     </Animated.View>
                 </ScrollView>
             </KeyboardAvoidingView>
-        </ScreenBackground>
+        </>
     );
 };
 

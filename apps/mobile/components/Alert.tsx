@@ -42,7 +42,7 @@ const Alert = ({
                             {buttonText}
                         </Button>
                         {showCancel && (
-                            <Button onPress={onClose}>{cancelText}</Button>
+                            <Button variant='red-outline' onPress={onClose}>{cancelText}</Button>
                         )}
                     </View>
                 </View>
@@ -84,5 +84,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         gap: 12,
+        flexWrap: 'wrap'
     }
 });

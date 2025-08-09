@@ -126,7 +126,7 @@ const AdminUserPopup: React.FC<Props> = ({ user, visible, onClose, onAction }) =
                                     </View>
                                     <Text style={styles.userLocation}>{getFormattedUserLocation()} · {user._count?.reviews || 0} {t('labels.reviews')}</Text>
                                     <View style={{ gap: 5, alignItems: 'center', flexDirection: 'row' }}>
-                                        <Text style={styles.userStatus}>{t('adminUser.status')}:</Text>{' '}
+                                        <Text style={styles.userStatus}>{t('adminUser.status')}:</Text>
                                         <Text style={[styles.status, styles[`status_${userStatus}`]]}>
                                             {userStatus === 'suspended' && user.SuspendedUntil
                                                 ? `${t('adminUser.suspendedUntil')}: ${dayjs(user.SuspendedUntil).format('D MMMM YYYY')}`

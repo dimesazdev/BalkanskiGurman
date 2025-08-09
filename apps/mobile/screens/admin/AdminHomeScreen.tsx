@@ -6,13 +6,12 @@ import { useTranslation } from 'react-i18next';
 import { MotiView } from 'moti';
 import { RootStackParamList } from '@/types/navigation';
 import Title from '@/components/Title';
-import ScreenBackground from '@/components/ScreenBackground';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const iconSize = 48;
 
 const AdminHomeScreen = () => {
-    const insets  = useSafeAreaInsets();
+    const insets = useSafeAreaInsets();
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const { t } = useTranslation();
 
@@ -26,43 +25,41 @@ const AdminHomeScreen = () => {
     const directions = ['left', 'bottom', 'right', 'top'];
 
     return (
-        <ScreenBackground>
-            <View style={[styles.container, { paddingTop: insets.top }]}>
-                <Title>{t('admin.dashboardTitle')}</Title>
-                <View style={styles.grid}>
-                    {sections.map(({ title, path, icon }, index) => {
-                        const from = directions[index % directions.length];
-                        const translate =
-                            from === 'left' ? { translateX: -50 } :
-                                from === 'right' ? { translateX: 50 } :
-                                    from === 'top' ? { translateY: -50 } :
-                                        { translateY: 50 };
+        <View style={[styles.container, { paddingTop: insets.top }]}>
+            <Title>{t('admin.dashboardTitle')}</Title>
+            <View style={styles.grid}>
+                {sections.map(({ title, path, icon }, index) => {
+                    const from = directions[index % directions.length];
+                    const translate =
+                        from === 'left' ? { translateX: -50 } :
+                            from === 'right' ? { translateX: 50 } :
+                                from === 'top' ? { translateY: -50 } :
+                                    { translateY: 50 };
 
-                        return (
-                            <MotiView
-                                key={title}
-                                from={{ opacity: 0, ...translate }}
-                                animate={{ opacity: 1, translateX: 0, translateY: 0 }}
-                                transition={{
-                                    delay: index * 200,
-                                    duration: 600,
-                                }}
-                                style={styles.boxWrapper}
+                    return (
+                        <MotiView
+                            key={title}
+                            from={{ opacity: 0, ...translate }}
+                            animate={{ opacity: 1, translateX: 0, translateY: 0 }}
+                            transition={{
+                                delay: index * 200,
+                                duration: 600,
+                            }}
+                            style={styles.boxWrapper}
+                        >
+                            <TouchableOpacity
+                                style={styles.box}
+                                activeOpacity={0.8}
+                                onPress={() => navigation.navigate(path as any)}
                             >
-                                <TouchableOpacity
-                                    style={styles.box}
-                                    activeOpacity={0.8}
-                                    onPress={() => navigation.navigate(path as any)}
-                                >
-                                    <Icon name={icon} size={iconSize} color="#C0392B" />
-                                    <Text style={styles.title}>{title}</Text>
-                                </TouchableOpacity>
-                            </MotiView>
-                        );
-                    })}
-                </View>
+                                <Icon name={icon} size={iconSize} color="#C0392B" />
+                                <Text style={styles.title}>{title}</Text>
+                            </TouchableOpacity>
+                        </MotiView>
+                    );
+                })}
             </View>
-        </ScreenBackground>
+        </View>
     );
 };
 

@@ -158,7 +158,7 @@ const AdminReviewPopup: React.FC<Props> = ({ review, visible, onClose, onAction 
                                         {`${getFormattedUserLocation()} · ${user._count?.reviews || 0} ${t('labels.reviews')}`}
                                     </Text>
                                     <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
-                                        <Text style={styles.userStatus}>{t('adminUser.status')}:</Text>{' '}
+                                        <Text style={styles.userStatus}>{t('adminUser.status')}:</Text>
                                         <Text style={[styles.status, styles[`status_${userStatus}`]]}>
                                             {userStatus === 'suspended' && user.SuspendedUntil
                                                 ? `${t('adminUser.suspendedUntil')}: ${dayjs(user.SuspendedUntil).format('D MMMM YYYY')}`
@@ -175,7 +175,7 @@ const AdminReviewPopup: React.FC<Props> = ({ review, visible, onClose, onAction 
 
                         <View style={styles.infoSection}>
                             <View style={{ flexDirection: 'row', gap: 5 }}>
-                                <Text style={styles.bold}>{t('adminReview.reviewStatus')}:</Text>{' '}
+                                <Text style={styles.bold}>{t('adminReview.reviewStatus')}:</Text>
                                 <Text style={[styles.status, styles[`status_${statusLabel}`]]}>
                                     {t(`reviewStatus.${statusLabel}`)}
                                 </Text>

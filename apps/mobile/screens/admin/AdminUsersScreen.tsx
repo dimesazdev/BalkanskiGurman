@@ -16,7 +16,6 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/context/AuthContext';
 import Colors from '@/constants/Colors';
 import { getApiBaseUrl } from '@/api/config';
-import ScreenBackground from '@/components/ScreenBackground';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const AdminUsersScreen: React.FC = () => {
@@ -101,9 +100,9 @@ const AdminUsersScreen: React.FC = () => {
     type StatusKey = typeof statuses[number];
 
     return (
-        <ScreenBackground>
+        <>
+            {popup && <Popup {...popup} onClose={() => setPopup(null)} />}
             <ScrollView contentContainerStyle={[styles.container, { paddingTop: insets.top }]}>
-                {popup && <Popup {...popup} onClose={() => setPopup(null)} />}
                 <Title>{t('labels.users')}</Title>
 
                 <View style={styles.filterRow}>
@@ -175,7 +174,7 @@ const AdminUsersScreen: React.FC = () => {
                     />
                 )}
             </ScrollView>
-        </ScreenBackground>
+        </>
     );
 };
 

@@ -14,6 +14,7 @@ import { RootStackParamList } from '@/types/navigation';
 import { getAmenityIcon } from '@/utils/getAmenityIcon';
 import { getOpenCloseStatus, getNextOpeningTime } from '@/utils/openingHoursUtils';
 import dayjs from 'dayjs';
+import { useAzureTranslation } from '@/hooks/useAzureTranslation';
 
 type Restaurant = {
     RestaurantId: number;
@@ -65,6 +66,8 @@ const RestaurantCard: React.FC<RestaurantCardProps> = ({
     } = restaurant;
 
     const image = images?.[0]?.Url || 'https://via.placeholder.com/400x300';
+
+    const { translatedText: translatedDetailsText } = useAzureTranslation(Details || '');
 
     const getPriceLabel = () => {
         switch (PriceRange) {
@@ -162,7 +165,9 @@ const RestaurantCard: React.FC<RestaurantCardProps> = ({
                     <Text style={styles.value}>{cuisines.map(c => t(`cuisines.${c.Code}`)).join(', ')}</Text>
                 </View>
 
-                <Text numberOfLines={2} ellipsizeMode="tail" style={styles.details}>{Details}</Text>
+                <Text numberOfLines={2} ellipsizeMode="tail" style={styles.details}>
+                    {translatedDetailsText}
+                </Text>
 
                 <View style={styles.amenities}>
                     {amenities.map(a => (

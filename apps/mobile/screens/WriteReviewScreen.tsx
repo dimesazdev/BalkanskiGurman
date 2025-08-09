@@ -158,6 +158,11 @@ const WriteReviewScreen = () => {
             {popup && <Popup message={popup.message} variant={popup.variant} onClose={() => setPopup(null)} />}
 
             <ScrollView contentContainerStyle={[styles.container, { paddingTop: insets.top }]}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.back}>
+                    <Icon name="arrow-left" size={22} color="#FFEEDB" />
+                    <Text style={styles.backText}>{t('buttons.goBack')}</Text>
+                </TouchableOpacity>
+
                 <Title style={styles.title}>{t('titles.writeReview')}</Title>
 
                 <View style={styles.card}>
@@ -242,7 +247,17 @@ export default WriteReviewScreen;
 const styles = StyleSheet.create({
     container: {
         padding: 16,
-        backgroundColor: '#1f1f1f',
+    },
+    back: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        marginTop: 15
+    },
+    backText: {
+        color: '#FFEEDB',
+        fontSize: 18,
+        fontFamily: 'CormorantGaramond-Regular',
     },
     title: {
         textAlign: 'center',

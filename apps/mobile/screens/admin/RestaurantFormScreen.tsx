@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-    ScrollView,
-    StyleSheet,
-    View,
-    Text,
-    Pressable,
-    Image
-} from 'react-native';
+import { ScrollView, StyleSheet, View, Text, Pressable, Image, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { RootStackParamList } from '@/types/navigation';
@@ -19,12 +12,8 @@ import Button from '@/components/Button';
 import CountryPicker from '@/components/CountryPicker';
 import CityPicker from '@/components/CityPicker';
 import FormTextarea from '@/components/FormTextarea';
-import MediaGallery from '@/components/MediaGallery';
-import ScreenBackground from '@/components/ScreenBackground';
 import Colors from '@/constants/Colors';
 import { getApiBaseUrl } from '@/api/config';
-import { getAmenityIcon } from '@/utils/getAmenityIcon';
-import { validateFields } from '@/utils/validators';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WorkingHoursCardList from '@/components/WorkingHoursCardList';
 import { getAllCountries, FlagType } from 'react-native-country-picker-modal';
@@ -34,6 +23,7 @@ import Popup from '@/components/Popup';
 import { parsePhoneNumberFromString, CountryCode } from 'libphonenumber-js';
 import { useAuth } from '@/context/AuthContext';
 import translatedCountries from '@/assets/locales/translatedCountries.json';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const AMENITY_OPTIONS = [
     { code: 'DELIV', label: 'filters.delivery' },
@@ -489,7 +479,7 @@ const RestaurantFormScreen: React.FC = () => {
     };
 
     return (
-        <ScreenBackground>
+        <>
             {currentPopup && (
                 <Popup
                     message={currentPopup}
@@ -522,6 +512,13 @@ const RestaurantFormScreen: React.FC = () => {
             )}
             {isSaving && <Loading />}
             <ScrollView contentContainerStyle={[styles.container, { paddingTop: insets.top }]}>
+                <TouchableOpacity
+                    onPress={() => navigation.goBack()}
+                    style={styles.back}
+                >
+                    <Icon name="arrow-left" size={22} color="#FFEEDB" />
+                    <Text style={styles.backText}>{t('buttons.goBack')}</Text>
+                </TouchableOpacity>
                 <Title>{t("form.restaurantDetails")}</Title>
                 <FormInput label={t('restaurantForm.labels.restaurantName')} value={formData.name} onChangeText={(val) => handleChange('name', val)} id={''} placeholder={t("placeholders.restaurantName")} />
                 <FormSelect label={t('restaurantForm.labels.priceRange')} value={formData.priceRange} onChange={(val) => handleChange('priceRange', val)} options={[{ label: '5–10€', value: '1' }, { label: '10–20€', value: '2' }, { label: '20€+', value: '3' }]} placeholder={t("form.selectPrice")} />
@@ -637,7 +634,7 @@ const RestaurantFormScreen: React.FC = () => {
                     {t('buttons.saveChanges')}
                 </Button>
             </ScrollView>
-        </ScreenBackground>
+        </>
     );
 };
 
@@ -645,6 +642,18 @@ const styles = StyleSheet.create({
     container: {
         padding: 20,
         paddingBottom: 50,
+    },
+    back: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 16,
+        gap: 8,
+        marginTop: 15,
+    },
+    backText: {
+        color: '#FFEEDB',
+        fontSize: 18,
+        fontFamily: 'CormorantGaramond-Regular',
     },
     videoList: {
         gap: 16,

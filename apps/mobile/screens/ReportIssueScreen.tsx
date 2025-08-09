@@ -18,7 +18,6 @@ import Button from '@/components/Button';
 import Popup from '@/components/Popup';
 import Loading from '@/components/Loading';
 import RestaurantSelector from '@/components/RestaurantSelector';
-import ScreenBackground from '@/components/ScreenBackground';
 
 import { useAuth } from '@/context/AuthContext';
 import { RootStackParamList } from '@/types/navigation';
@@ -154,7 +153,7 @@ const ReportIssueScreen: React.FC = () => {
     if (submitting) return <Loading />;
 
     return (
-        <ScreenBackground>
+        <>
             {popup && <Popup {...popup} onClose={() => setPopup(null)} />}
             <ScrollView contentContainerStyle={[styles.container, { paddingTop: insets.top }]}>
                 <Title style={styles.title}>{t('report.title')}</Title>
@@ -200,7 +199,7 @@ const ReportIssueScreen: React.FC = () => {
                     {submitting ? t('report.submitting') : t('report.submit')}
                 </Button>
             </ScrollView>
-        </ScreenBackground>
+        </>
     );
 };
 

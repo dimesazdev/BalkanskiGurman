@@ -18,7 +18,7 @@ export type RootStackParamList = {
     AdminReviews: undefined;
     AdminUsers: undefined;
     AdminIssues: undefined;
-    RestaurantForm: { id: number };
+    RestaurantForm: { id?: number };
 
     OwnerHome: undefined;
     OwnerRestaurants: undefined;

@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { MotiView } from 'moti';
 import Title from '@/components/Title';
 import Popup from '@/components/Popup';
-import ScreenBackground from '@/components/ScreenBackground';
 import RestaurantCard from '@/components/RestaurantCard';
 import { useAuth } from '@/context/AuthContext';
 import { getApiBaseUrl } from '@/api/config';
@@ -61,16 +60,15 @@ const OwnerRestaurantsScreen: React.FC = () => {
     }, [user]);
 
     return (
-        <ScreenBackground>
+        <>
+            {popup && (
+                <Popup
+                    message={popup.message}
+                    variant={popup.variant}
+                    onClose={() => setPopup(null)}
+                />
+            )}
             <ScrollView contentContainerStyle={[styles.container, { paddingTop: insets.top }]}>
-                {popup && (
-                    <Popup
-                        message={popup.message}
-                        variant={popup.variant}
-                        onClose={() => setPopup(null)}
-                    />
-                )}
-
                 <Title>{t('owner.myRestaurants')}</Title>
 
                 {restaurants.length === 0 ? (
@@ -96,7 +94,7 @@ const OwnerRestaurantsScreen: React.FC = () => {
                     ))
                 )}
             </ScrollView>
-        </ScreenBackground>
+        </>
     );
 };
 

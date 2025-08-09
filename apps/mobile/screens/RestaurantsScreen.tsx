@@ -8,7 +8,6 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import ScreenBackground from '@/components/ScreenBackground';
 import RestaurantCard from '@/components/RestaurantCard';
 import SearchBar from '@/components/SearchBar';
 import SortBar from '@/components/SortBar';
@@ -24,19 +23,61 @@ import { getApiBaseUrl } from '@/api/config';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import translatedCities from '@/assets/locales/translatedCities.json';
+import translatedCountries from '@/assets/locales/translatedCountries.json';
+
+const countryNameToCode: Record<string, string> = {
+    Macedonia: 'MK',
+    Slovenia: 'SI',
+    Croatia: 'HR',
+    Serbia: 'RS',
+    'Bosnia and Herzegovina': 'BA',
+    Montenegro: 'ME'
+};
+
+const supportedLocales = ['en', 'mk', 'sr', 'sl'] as const;
+type LocaleKey = typeof supportedLocales[number];
+
 const RestaurantsScreen = () => {
     const insets = useSafeAreaInsets();
     const [sortOption, setSortOption] = useState('rating');
     const [loginAlert, setLoginAlert] = useState(false);
+    const [showChoice, setShowChoice] = useState(true);
     const route = useRoute<RouteProp<RootStackParamList, 'Restaurants'>>();
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const { city, country, metro } = route.params;
     const { user } = useAuth();
 
+    const { t, i18n } = useTranslation();
+
+    const getTranslatedCountry = (name: string) => {
+        const match = translatedCountries.find(c => c.name.toLowerCase() === name?.toLowerCase());
+        const lang = supportedLocales.includes(i18n.language as any) ? i18n.language as LocaleKey : 'en';
+        return match?.translations?.[lang] || name;
+    };
+
+    const getFormattedLocation = () => {
+        if (!city) return getTranslatedCountry(country);
+        const iso = countryNameToCode[country?.trim()] || country?.trim();
+        const cityEntry = translatedCities.find(
+            c => c.countryCode === iso && c.name.toLowerCase() === city.toLowerCase()
+        );
+
+        const lang = supportedLocales.includes(i18n.language as any)
+            ? (i18n.language as LocaleKey)
+            : 'en';
+
+        const cityName = cityEntry?.translations?.[lang] || city;
+        const metroName = metro
+            ? cityEntry?.metroTranslations?.[lang] || metro
+            : null;
+        const countryName = getTranslatedCountry(country);
+
+        return metroName ? `${metroName} (${cityName}), ${countryName}` : `${cityName}, ${countryName}`;
+    };
+
     const isAdmin = user?.role == "644f2db4-9bbb-40a2-8b7d-963623c0c64a";
     const [confirmDeleteId, setConfirmDeleteId] = useState<number | string | null>(null);
-
-    const { t } = useTranslation();
 
     const [favorites, setFavorites] = useState<(string | number)[]>([]);
     const [popup, setPopup] = useState<{ message: string; variant: 'success' | 'error' | 'warning' } | null>(null);
@@ -156,7 +197,7 @@ const RestaurantsScreen = () => {
     };
 
     return (
-        <ScreenBackground>
+        <>
             {popup && (
                 <Popup
                     message={popup.message}
@@ -172,6 +213,18 @@ const RestaurantsScreen = () => {
                     cancelText={t("buttons.cancel")}
                     onButtonClick={() => handleConfirmDelete()}
                     onClose={() => setConfirmDeleteId(null)}
+                />
+            )}
+            {isAdmin && showChoice && (
+                <Alert
+                    message={t("admin.chooseRestaurantAction")}
+                    buttonText={t("admin.addRestaurant")}
+                    cancelText={t("admin.manageExisting")}
+                    onButtonClick={() => {
+                        setShowChoice(false);
+                        navigation.navigate('RestaurantForm', {});
+                    }}
+                    onClose={() => setShowChoice(false)}
                 />
             )}
             <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom + 80 }]}>
@@ -214,7 +267,7 @@ const RestaurantsScreen = () => {
                     <Text style={styles.resultsLabel}>
                         {t("labels.showingResultsFor")}{" "}
                         <Text style={styles.resultsStrong}>
-                            {metro ? `${metro} (${city}), ${country}` : `${city}, ${country}`}
+                            {getFormattedLocation()}
                         </Text>
                     </Text>
                 )}
@@ -237,7 +290,7 @@ const RestaurantsScreen = () => {
                     />
                 )}
             </View>
-        </ScreenBackground>
+        </>
     );
 };
 
