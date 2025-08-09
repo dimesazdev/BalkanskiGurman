@@ -49,7 +49,7 @@ function Favorites() {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 1070);
+  const [isMobileView, setIsMobileView] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobileView(window.innerWidth <= 1070);

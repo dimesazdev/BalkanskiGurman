@@ -1,8 +1,8 @@
 {
     "admin": {
-        "addRestaurant": "Dodaj nov restoran",
+        "addRestaurant": "Dodaj novo restavracijo",
         "chooseRestaurantAction": "Kaj želite narediti?",
-        "confirmDelete": "Ali ste prepričani, da želite izbrisati ta restoran?",
+        "confirmDelete": "Ali ste prepričani, da želite izbrisati to restavracijo?",
         "dashboardTitle": "Nadzorna plošča",
         "issues": "Upravljanje težav",
         "manageExisting": "Upravljaj z obstoječimi",
@@ -392,7 +392,7 @@
         "errorCity": "Mesto je obvezno.",
         "emailExists": "Račun s tem e-poštnim naslovom že obstaja.",
         "success": "Registracija je bila uspešna! Prosimo, preverite svoj e-poštni naslov, da potrdite račun, preden se prijavite.",
-        "suggestEdit": "Pogrešne podatke?",
+        "suggestEdit": "Napačne podatke?",
         "surname": "Priimek",
         "surnamePlaceholder": "Vnesite priimek..."
     },

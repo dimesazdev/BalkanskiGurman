@@ -35,7 +35,7 @@ const OWNER_ROLE_ID = "34fuihi4-5vj8-3v4e-43v5-3jfismy876s5";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(false);
   const [showLangDropdown, setShowLangDropdown] = useState(false);
   const { t, i18n } = useTranslation();
   const [language, setLanguage] = useState(i18n.language.toUpperCase());
@@ -53,6 +53,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);

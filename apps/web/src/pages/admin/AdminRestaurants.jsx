@@ -48,7 +48,7 @@ const AdminRestaurants = () => {
   const [sortOption, setSortOption] = useState("rating");
   const [showChoice, setShowChoice] = useState(true);
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
-  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 1070);
+  const [isMobileView, setIsMobileView] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobileView(window.innerWidth <= 1070);

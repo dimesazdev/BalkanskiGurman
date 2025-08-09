@@ -165,7 +165,7 @@ const RestaurantFormPage = () => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 850);
+    const [isMobile, setIsMobile] = useState(false);
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth <= 850);
         window.addEventListener("resize", handleResize);
