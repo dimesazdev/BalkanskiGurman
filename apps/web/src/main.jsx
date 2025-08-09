@@ -5,10 +5,15 @@ import App from './App.jsx'
 import './i18n'
 import { AuthProvider } from './context/AuthContext.jsx'; 
 
-createRoot(document.getElementById('root')).render(
-  <AuthProvider>
-    <StrictMode>
-      <App />
-    </StrictMode>
-  </AuthProvider>
-);
+if (typeof document !== 'undefined') {
+  const container = document.getElementById('root');
+  if (container) {
+    createRoot(container).render(
+      <AuthProvider>
+        <StrictMode>
+          <App />
+        </StrictMode>
+      </AuthProvider>
+    );
+  }
+}
