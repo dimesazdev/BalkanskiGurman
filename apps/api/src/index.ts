@@ -125,6 +125,8 @@ app.post('/translate', async (req, res) => {
 //   }
 // });
 
+app.get('/health', (_req, res) => res.status(200).send('OK'));
+
 app.listen(port, () => {
   console.log(`\u{1F680} API is live and listening on port ${port}`);
 });
