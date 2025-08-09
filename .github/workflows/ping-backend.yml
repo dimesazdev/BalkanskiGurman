@@ -2,12 +2,20 @@ name: Ping Render Backend
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # Every 5 minutes
+    - cron: '*/5 * * * *' 
   workflow_dispatch:
 
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Wake up backend
-        run: curl -m 10 https://balkanskigurman.onrender.com/restaurants
+      - name: Wake up backend (health)
+        run: |
+          curl -fsS -m 60 --connect-timeout 10 \
+               --retry 5 --retry-delay 5 --retry-connrefused \
+               https://balkanskigurman.onrender.com/health || true
+      - name: Warm common route (optional)
+        run: |
+          curl -fsS -m 60 --connect-timeout 10 \
+               --retry 3 --retry-delay 5 --retry-connrefused \
+               https://balkanskigurman.onrender.com/restaurants > /dev/null || true
