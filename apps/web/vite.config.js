@@ -7,5 +7,5 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: true
   },
-  base: process.env.VITE_BASE_URL || "/BalkanskiGurman"
+  base: process.env.VITE_BASE_URL || "/"
 })
