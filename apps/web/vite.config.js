@@ -5,6 +5,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'dist',
+    minify: false,
     sourcemap: true
   },
   base: process.env.VITE_BASE_URL || "/"
