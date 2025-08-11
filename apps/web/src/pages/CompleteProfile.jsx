@@ -51,17 +51,28 @@ const CompleteProfile = () => {
 
         try {
             const baseUrl = getApiBaseUrl();
+
+            const normalizedPhone =
+                formData.phoneNumber && formData.phoneNumber.trim().length > 0
+                    ? formData.phoneNumber.startsWith("+")
+                        ? formData.phoneNumber
+                        : `+${formData.phoneNumber}`
+                    : null;
+
+            const payload = {
+                Country: formData.country,
+                City: formData.city || "",
+                PhoneNumber: normalizedPhone,
+                CountryIso: formData.countryCode || "",
+            };
+
             const res = await fetch(`${baseUrl}/auth/me`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${user.token}`,
                 },
-                body: JSON.stringify({
-                    country: formData.country,
-                    city: formData.city || null,
-                    phoneNumber: formData.phoneNumber || null
-                }),
+                body: JSON.stringify(payload),
             });
 
             const data = await res.json();
@@ -75,18 +86,12 @@ const CompleteProfile = () => {
             }
 
             await refreshUser();
-            setPopup({
-                message: t("completeProfile.success"),
-                variant: "success",
-            });
+            setPopup({ message: t("completeProfile.success"), variant: "success" });
 
             setTimeout(() => navigate("/"), 2000);
         } catch (err) {
             console.error(err);
-            setPopup({
-                message: t("completeProfile.error"),
-                variant: "error",
-            });
+            setPopup({ message: t("completeProfile.error"), variant: "error" });
         } finally {
             setLoading(false);
         }
@@ -142,7 +147,7 @@ const CompleteProfile = () => {
                             setFormData((prev) => ({
                                 ...prev,
                                 phoneNumber,
-                                countryCode,
+                                countryCode, 
                             }))
                         }
                     />
