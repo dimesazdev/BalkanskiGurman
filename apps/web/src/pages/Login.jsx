@@ -10,19 +10,20 @@ import Navbar from "../components/Navbar";
 import { motion } from "framer-motion";
 import Popup from "../components/Popup";
 import getApiBaseUrl from "../api/config";
-import Icon from '@mdi/react';
-import { mdiEyeOutline } from '@mdi/js';
+import Icon from "@mdi/react";
+import { mdiEyeOutline } from "@mdi/js";
+import Loading from "../components/Loading";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [popup, setPopup] = useState(null);
   const { login } = useAuth();
   const navigate = useNavigate();
   const [rememberMe, setRememberMe] = useState(false);
   const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -30,7 +31,9 @@ const Login = () => {
 
     if (errorType === "google") {
       setPopup({
-        message: t("login.googleLoginFailed") || "Google login failed. Please try again.",
+        message:
+          t("login.googleLoginFailed") ||
+          "Google login failed. Please try again.",
         variant: "error",
       });
 
@@ -44,6 +47,8 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); 
+
     try {
       const res = await fetch(`${baseUrl}/auth/login`, {
         method: "POST",
@@ -53,15 +58,20 @@ const Login = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        let message = t("login.loginFailed"); // default
+        let message = t("login.loginFailed");
 
         if (res.status === 401) {
-          message = t("login.invalidCredentials") || "Invalid email or password.";
+          message =
+            t("login.invalidCredentials") || "Invalid email or password.";
         } else if (res.status === 403) {
           if (data.code === "BANNED_ACCOUNT") {
             message = t("login.banned");
-          } else if (data.error === "Please confirm your email before logging in.") {
-            message = t("login.emailNotConfirmed") || "Please confirm your email before logging in.";
+          } else if (
+            data.error === "Please confirm your email before logging in."
+          ) {
+            message =
+              t("login.emailNotConfirmed") ||
+              "Please confirm your email before logging in.";
           } else {
             message = data.error || t("login.loginFailed");
           }
@@ -73,6 +83,7 @@ const Login = () => {
           message,
           variant: "error",
         });
+        setLoading(false);
         return;
       }
 
@@ -84,12 +95,15 @@ const Login = () => {
         message: t("login.somethingWentWrong"),
         variant: "error",
       });
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <>
       <Navbar />
+
+      {loading && <Loading />}
 
       {popup && (
         <Popup
@@ -139,7 +153,7 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="john.doe@gmail.com"
-                autocomplete={"on"}
+                autoComplete="on"
                 required
               />
 
@@ -194,7 +208,14 @@ const Login = () => {
                   {t("login.login")}
                 </Button>
 
-                <button type="button" className="google-btn" onClick={() => window.location.href = `${baseUrl}/auth/google`}>
+                <button
+                  type="button"
+                  className="google-btn"
+                  onClick={() =>
+                    (window.location.href = `${baseUrl}/auth/google`)
+                  }
+                >
+                  {/* google icon */}
                   <svg className="google-icon" viewBox="0 0 24 24" width="20" height="20">
                     <path
                       fill="#4285F4"
