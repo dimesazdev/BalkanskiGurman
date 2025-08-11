@@ -33,6 +33,7 @@ dotenv.config();
 
 const allowedOrigins = [
   'http://localhost:5173',
+  'https://balkanski-gurman-web.vercel.app',
   'https://balkanski-gurman-web-app.vercel.app'
 ];
 
