@@ -32,7 +32,7 @@
   .form-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2rem;
+    gap: 1.5rem;
     width: 100%;
     max-width: 800px;
     align-items: center;
@@ -43,7 +43,7 @@
     flex-direction: column;
     gap: 24px;
   }
-  
+
   .login-redirect {
     text-align: center;
     margin-top: 24px;
@@ -65,7 +65,6 @@
   }
 }
 
-/* Custom select and input styles */
 .custom-select {
   height: 3.5rem;
   padding: 0 1.5rem;
@@ -103,6 +102,7 @@ select.custom-select {
   background-repeat: no-repeat;
   background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
 }
+
 @media (max-width: 768px) {
   .register-container {
     padding: 0 3rem;
@@ -126,6 +126,7 @@ select.custom-select {
   .register-container {
     padding: 5rem 3rem;
   }
+
   .register-container .form-grid {
     gap: 1.5rem;
   }

@@ -10,6 +10,8 @@ import "../styles/ChangePassword.css";
 import { validateFields } from "../utils/validators";
 import { motion } from "framer-motion";
 import getApiBaseUrl from "../api/config";
+import Icon from "@mdi/react";
+import { mdiEyeOutline } from "@mdi/js";
 
 const ChangePassword = () => {
     const { user } = useAuth();
@@ -21,6 +23,10 @@ const ChangePassword = () => {
     const [retypePassword, setRetypePassword] = useState("");
     const [popup, setPopup] = useState(null);
     const [loading, setLoading] = useState(false);
+
+    const [showCurrent, setShowCurrent] = useState(false);
+    const [showNew, setShowNew] = useState(false);
+    const [showRetype, setShowRetype] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -88,6 +94,38 @@ const ChangePassword = () => {
         }
     };
 
+    const renderPasswordField = (id, label, value, setValue, show, setShow, placeholder) => (
+        <div style={{ position: "relative" }}>
+            <FormInput
+                id={id}
+                label={label}
+                type={show ? "text" : "password"}
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                placeholder={placeholder}
+                eye
+                required
+            />
+            <Icon
+                path={mdiEyeOutline}
+                size={1}
+                color={"var(--red)"}
+                style={{
+                    position: "absolute",
+                    right: "20px",
+                    top: "70%",
+                    transform: "translateY(-50%)",
+                    cursor: "pointer",
+                }}
+                onMouseDown={() => setShow(true)}
+                onMouseUp={() => setShow(false)}
+                onMouseLeave={() => setShow(false)}
+                onTouchStart={() => setShow(true)}
+                onTouchEnd={() => setShow(false)}
+            />
+        </div>
+    );
+
     return (
         <div className="change-password-container">
             {popup && (
@@ -107,33 +145,33 @@ const ChangePassword = () => {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
             >
-                <FormInput
-                    id="currentPassword"
-                    label={t("changePassword.current")}
-                    type="password"
-                    value={currentPassword}
-                    onChange={(e) => setCurrentPassword(e.target.value)}
-                    placeholder={t("changePassword.currentPlaceholder")}
-                    required
-                />
-                <FormInput
-                    id="newPassword"
-                    label={t("changePassword.new")}
-                    type="password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder={t("changePassword.newPlaceholder")}
-                    required
-                />
-                <FormInput
-                    id="retypePassword"
-                    label={t("changePassword.retype")}
-                    type="password"
-                    value={retypePassword}
-                    onChange={(e) => setRetypePassword(e.target.value)}
-                    placeholder={t("changePassword.retypePlaceholder")}
-                    required
-                />
+                {renderPasswordField(
+                    "currentPassword",
+                    t("changePassword.current"),
+                    currentPassword,
+                    setCurrentPassword,
+                    showCurrent,
+                    setShowCurrent,
+                    t("changePassword.currentPlaceholder")
+                )}
+                {renderPasswordField(
+                    "newPassword",
+                    t("changePassword.new"),
+                    newPassword,
+                    setNewPassword,
+                    showNew,
+                    setShowNew,
+                    t("changePassword.newPlaceholder")
+                )}
+                {renderPasswordField(
+                    "retypePassword",
+                    t("changePassword.retype"),
+                    retypePassword,
+                    setRetypePassword,
+                    showRetype,
+                    setShowRetype,
+                    t("changePassword.retypePlaceholder")
+                )}
 
                 <div className="forgot-link">
                     <Link to="/forgot-password">{t("changePassword.forgot")}</Link>

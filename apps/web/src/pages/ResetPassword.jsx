@@ -9,6 +9,8 @@ import "../styles/ChangePassword.css";
 import { validateFields } from "../utils/validators";
 import { motion } from "framer-motion";
 import getApiBaseUrl from "../api/config";
+import Icon from "@mdi/react";
+import { mdiEyeOutline } from "@mdi/js";
 
 const ResetPassword = () => {
     const [newPassword, setNewPassword] = useState("");
@@ -18,8 +20,10 @@ const ResetPassword = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { search } = useLocation();
-
     const [token, setToken] = useState("");
+
+    const [showNew, setShowNew] = useState(false);
+    const [showRetype, setShowRetype] = useState(false);
 
     useEffect(() => {
         const params = new URLSearchParams(search);
@@ -55,12 +59,6 @@ const ResetPassword = () => {
 
         setLoading(true);
         try {
-            console.log({
-                token,
-                newPassword,
-                confirmPassword: retypePassword
-            });
-            
             const baseUrl = getApiBaseUrl();
             const res = await fetch(`${baseUrl}/auth/reset-password`, {
                 method: "POST",
@@ -98,6 +96,38 @@ const ResetPassword = () => {
         }
     };
 
+    const renderPasswordField = (id, label, value, setValue, show, setShow, placeholder) => (
+        <div style={{ position: "relative" }}>
+            <FormInput
+                id={id}
+                label={label}
+                type={show ? "text" : "password"}
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                placeholder={placeholder}
+                eye
+                required
+            />
+            <Icon
+                path={mdiEyeOutline}
+                size={1}
+                color={"var(--red)"}
+                style={{
+                    position: "absolute",
+                    right: "20px",
+                    top: "70%",
+                    transform: "translateY(-50%)",
+                    cursor: "pointer",
+                }}
+                onMouseDown={() => setShow(true)}
+                onMouseUp={() => setShow(false)}
+                onMouseLeave={() => setShow(false)}
+                onTouchStart={() => setShow(true)}
+                onTouchEnd={() => setShow(false)}
+            />
+        </div>
+    );
+
     return (
         <div className="change-password-container">
             {popup && (
@@ -115,24 +145,24 @@ const ResetPassword = () => {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
             >
-                <FormInput
-                    id="newPassword"
-                    label={t("resetPassword.new")}
-                    type="password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder={t("resetPassword.newPlaceholder")}
-                    required
-                />
-                <FormInput
-                    id="retypePassword"
-                    label={t("resetPassword.retype")}
-                    type="password"
-                    value={retypePassword}
-                    onChange={(e) => setRetypePassword(e.target.value)}
-                    placeholder={t("resetPassword.retypePlaceholder")}
-                    required
-                />
+                {renderPasswordField(
+                    "newPassword",
+                    t("resetPassword.new"),
+                    newPassword,
+                    setNewPassword,
+                    showNew,
+                    setShowNew,
+                    t("resetPassword.newPlaceholder")
+                )}
+                {renderPasswordField(
+                    "retypePassword",
+                    t("resetPassword.retype"),
+                    retypePassword,
+                    setRetypePassword,
+                    showRetype,
+                    setShowRetype,
+                    t("resetPassword.retypePlaceholder")
+                )}
                 <Button type="submit" variant="red" disabled={loading}>
                     {loading ? t("resetPassword.resetting") : t("resetPassword.button")}
                 </Button>

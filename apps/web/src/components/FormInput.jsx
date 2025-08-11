@@ -8,6 +8,7 @@ export default function FormInput({
   error,
   required = false,
   disabled = false,
+  eye
 }) {
   return (
     <div className={`form-group ${error ? "has-error" : ""}`}>
@@ -22,6 +23,7 @@ export default function FormInput({
         required={required}
         disabled={disabled}
         className="custom-input"
+        style={eye && { paddingRight: "50px" }}
       />
       {error && <div className="input-error">{error}</div>}
     </div>

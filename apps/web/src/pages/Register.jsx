@@ -15,6 +15,8 @@ import Loading from "../components/Loading";
 import Popup from "../components/Popup";
 import { validateFields } from "../utils/validators";
 import getApiBaseUrl from "../api/config";
+import Icon from '@mdi/react';
+import { mdiEyeOutline } from '@mdi/js';
 
 const Register = () => {
   const { t, i18n } = useTranslation();
@@ -35,6 +37,8 @@ const Register = () => {
 
   const [loading, setLoading] = useState(false);
   const [activePopup, setActivePopup] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRetypePassword, setShowRetypePassword] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -161,92 +165,134 @@ const Register = () => {
           >
             <form onSubmit={handleSubmit} className="register-form" noValidate>
               <div className="form-grid">
-                <div className="form-column">
-                  <FormInput
-                    id="name"
-                    label={t("register.name") + " *"}
-                    name="name"
-                    type="text"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    placeholder={t("register.namePlaceholder")}
-                    required
-                  />
-                  <FormInput
-                    id="email"
-                    label={t("register.email") + " *"}
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder={t("register.emailPlaceholder")}
-                    required
-                  />
-                  <CountryPicker
-                    value={formData.countryIso}
-                    onChange={({ countryIso, countryName }) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        countryIso,
-                        country: countryName,
-                        city: "",
-                      }))
-                    }
-                    required
-                  />
+                <FormInput
+                  id="name"
+                  label={t("register.name") + " *"}
+                  name="name"
+                  type="text"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  placeholder={t("register.namePlaceholder")}
+                  required
+                />
+
+                <FormInput
+                  id="surname"
+                  label={t("register.surname") + " *"}
+                  name="surname"
+                  type="text"
+                  value={formData.surname}
+                  onChange={handleInputChange}
+                  placeholder={t("register.surnamePlaceholder")}
+                  required
+                />
+
+                <FormInput
+                  id="email"
+                  label={t("register.email") + " *"}
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder={t("register.emailPlaceholder")}
+                  required
+                />
+
+                <PhoneNumberPicker
+                  value={{ phoneNumber: formData.phoneNumber }}
+                  onChange={({ phoneNumber, countryCode }) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      phoneNumber,
+                      countryCode,
+                    }))
+                  }
+                />
+
+                <CountryPicker
+                  value={formData.countryIso}
+                  onChange={({ countryIso, countryName }) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      countryIso,
+                      country: countryName,
+                      city: "",
+                    }))
+                  }
+                  required
+                />
+
+                <CityPicker
+                  countryIso={formData.countryIso}
+                  value={formData.city}
+                  onChange={(city) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      city,
+                    }))
+                  }
+                  disabled={!formData.countryIso}
+                />
+
+                <div style={{ position: "relative" }}>
                   <FormInput
                     id="password"
-                    label={t("register.password") + " *"}
                     name="password"
-                    type="password"
+                    label={t("register.password") + " *"}
+                    type={showPassword ? "text" : "password"}
                     value={formData.password}
                     onChange={handleInputChange}
                     placeholder={t("register.passwordPlaceholder")}
+                    eye
                     required
+                  />
+                  <Icon
+                    path={mdiEyeOutline}
+                    size={1}
+                    color={"var(--red)"}
+                    style={{
+                      position: "absolute",
+                      right: "20px",
+                      top: "70%",
+                      transform: "translateY(-50%)",
+                      cursor: "pointer",
+                    }}
+                    onMouseDown={() => setShowPassword(true)}
+                    onMouseUp={() => setShowPassword(false)}
+                    onMouseLeave={() => setShowPassword(false)}
+                    onTouchStart={() => setShowPassword(true)}
+                    onTouchEnd={() => setShowPassword(false)}
                   />
                 </div>
 
-                <div className="form-column">
-                  <FormInput
-                    id="surname"
-                    label={t("register.surname") + " *"}
-                    name="surname"
-                    type="text"
-                    value={formData.surname}
-                    onChange={handleInputChange}
-                    placeholder={t("register.surnamePlaceholder")}
-                    required
-                  />
-                  <PhoneNumberPicker
-                    value={{ phoneNumber: formData.phoneNumber }}
-                    onChange={({ phoneNumber, countryCode }) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        phoneNumber,
-                        countryCode,
-                      }))
-                    }
-                  />
-                  <CityPicker
-                    countryIso={formData.countryIso}
-                    value={formData.city}
-                    onChange={(city) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        city,
-                      }))
-                    }
-                    disabled={!formData.countryIso}
-                  />
+                <div style={{ position: "relative" }}>
                   <FormInput
                     id="retypePassword"
-                    label={t("register.retypePassword") + " *"}
                     name="retypePassword"
-                    type="password"
+                    label={t("register.retypePassword")  + " *"}
+                    type={showRetypePassword ? "text" : "password"}
                     value={formData.retypePassword}
                     onChange={handleInputChange}
                     placeholder={t("register.retypePasswordPlaceholder")}
+                    eye
                     required
+                  />
+                  <Icon
+                    path={mdiEyeOutline}
+                    size={1}
+                    color={"var(--red)"}
+                    style={{
+                      position: "absolute",
+                      right: "20px",
+                      top: "70%",
+                      transform: "translateY(-50%)",
+                      cursor: "pointer",
+                    }}
+                    onMouseDown={() => setShowRetypePassword(true)}
+                    onMouseUp={() => setShowRetypePassword(false)}
+                    onMouseLeave={() => setShowRetypePassword(false)}
+                    onTouchStart={() => setShowRetypePassword(true)}
+                    onTouchEnd={() => setShowRetypePassword(false)}
                   />
                 </div>
               </div>

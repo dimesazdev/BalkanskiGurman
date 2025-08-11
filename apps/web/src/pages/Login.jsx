@@ -10,6 +10,8 @@ import Navbar from "../components/Navbar";
 import { motion } from "framer-motion";
 import Popup from "../components/Popup";
 import getApiBaseUrl from "../api/config";
+import Icon from '@mdi/react';
+import { mdiEyeOutline } from '@mdi/js';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -20,6 +22,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [rememberMe, setRememberMe] = useState(false);
   const { t } = useTranslation();
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -139,15 +142,38 @@ const Login = () => {
                 autocomplete={"on"}
                 required
               />
-              <FormInput
-                id="password"
-                label={t("login.password")}
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••••••••"
-                required
-              />
+
+              <div style={{ position: "relative" }}>
+                <FormInput
+                  id="password"
+                  name="password"
+                  label={t("login.password")}
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••••••••"
+                  eye
+                  required
+                />
+                <Icon
+                  path={mdiEyeOutline}
+                  size={1}
+                  color={"var(--red)"}
+                  style={{
+                    position: "absolute",
+                    right: "20px",
+                    top: "70%",
+                    transform: "translateY(-50%)",
+                    cursor: "pointer",
+                  }}
+                  onMouseDown={() => setShowPassword(true)}
+                  onMouseUp={() => setShowPassword(false)}
+                  onMouseLeave={() => setShowPassword(false)}
+                  onTouchStart={() => setShowPassword(true)}
+                  onTouchEnd={() => setShowPassword(false)}
+                />
+              </div>
+
               <div className="form-options">
                 <div className="remember-me">
                   <input
