@@ -23,6 +23,7 @@ const CompleteProfile = () => {
 
     const [formData, setFormData] = useState({
         country: "",
+        countryIso: "",
         city: "",
         phoneNumber: "",
         phoneCountryCode: "",
@@ -44,6 +45,7 @@ const CompleteProfile = () => {
 
             setFormData({
                 country: freshUser.Country || "",
+                countryIso: freshUser.CountryIso || "",
                 city: freshUser.City || "",
                 phoneNumber: freshUser.PhoneNumber?.replace(/^\+/, "") || "",
                 phoneCountryCode: freshUser.CountryIso
@@ -151,10 +153,11 @@ const CompleteProfile = () => {
                     onSubmit={handleSubmit}
                 >
                     <CountryPicker
-                        value={formData.country}
+                        value={formData.countryIso}
                         onChange={({ countryIso, countryName }) => {
                             setFormData((prev) => ({
                                 ...prev,
+                                countryIso,
                                 country: countryName,
                                 city: "",
                             }));
@@ -162,12 +165,12 @@ const CompleteProfile = () => {
                     />
 
                     <CityPicker
-                        countryIso={Country.getAllCountries().find(c => c.name === formData.country)?.isoCode || ""}
+                        countryIso={formData.countryIso}
                         value={formData.city}
                         onChange={(city) => {
                             setFormData((prev) => ({ ...prev, city }));
                         }}
-                        disabled={!formData.country}
+                        disabled={!formData.countryIso}
                     />
 
                     <PhoneNumberPicker
