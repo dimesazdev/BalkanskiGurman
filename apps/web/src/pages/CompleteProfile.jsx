@@ -12,6 +12,7 @@ import Popup from "../components/Popup";
 import { useTranslation } from "react-i18next";
 import { motion, useInView } from "framer-motion";
 import getApiBaseUrl from "../api/config";
+import { Country } from "country-state-city";
 
 const CompleteProfile = () => {
     const { user, refreshUser } = useAuth();
@@ -21,15 +22,37 @@ const CompleteProfile = () => {
     const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
-        countryIso: "",
         country: "",
         city: "",
         phoneNumber: "",
-        countryCode: "",
+        phoneCountryCode: "",
     });
 
     useEffect(() => {
-        if (!user) navigate("/auth/login");
+        const fetchUser = async () => {
+            if (!user) {
+                navigate("/auth/login");
+                return;
+            }
+
+            const baseUrl = getApiBaseUrl();
+            const res = await fetch(`${baseUrl}/auth/me`, {
+                headers: { Authorization: `Bearer ${user.token}` }
+            });
+
+            const freshUser = await res.json();
+
+            setFormData({
+                country: freshUser.Country || "",
+                city: freshUser.City || "",
+                phoneNumber: freshUser.PhoneNumber?.replace(/^\+/, "") || "",
+                phoneCountryCode: freshUser.CountryIso
+                    ? `+${Country.getAllCountries().find(c => c.isoCode === freshUser.CountryIso)?.phonecode || ""}`
+                    : "",
+            });
+        };
+
+        fetchUser();
     }, [user, navigate]);
 
     const formRef = useRef(null);
@@ -38,9 +61,9 @@ const CompleteProfile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!formData.country) {
+        if (!formData.phoneNumber) {
             setPopup({
-                message: t("completeProfile.selectCountry"),
+                message: t("completeProfile.enterPhone"),
                 variant: "error",
             });
             return;
@@ -53,17 +76,24 @@ const CompleteProfile = () => {
             const baseUrl = getApiBaseUrl();
 
             const normalizedPhone =
-                formData.phoneNumber && formData.phoneNumber.trim().length > 0
+                formData.phoneNumber.trim().length > 0
                     ? formData.phoneNumber.startsWith("+")
                         ? formData.phoneNumber
                         : `+${formData.phoneNumber}`
                     : null;
 
+            const match = Country.getAllCountries().find(
+                c => `+${c.phonecode}` === formData.phoneCountryCode
+            );
+
+            const phoneCountryIso = match?.isoCode ||
+                formData.phoneCountryCode.replace("+", "").toUpperCase();
+
             const payload = {
                 Country: formData.country,
                 City: formData.city || "",
                 PhoneNumber: normalizedPhone,
-                CountryIso: formData.countryCode || "",
+                CountryIso: phoneCountryIso,
             };
 
             const res = await fetch(`${baseUrl}/auth/me`, {
@@ -76,6 +106,7 @@ const CompleteProfile = () => {
             });
 
             const data = await res.json();
+
             if (!res.ok) {
                 setPopup({
                     message: data.error || t("completeProfile.updateFailed"),
@@ -90,7 +121,6 @@ const CompleteProfile = () => {
 
             setTimeout(() => navigate("/"), 2000);
         } catch (err) {
-            console.error(err);
             setPopup({ message: t("completeProfile.error"), variant: "error" });
         } finally {
             setLoading(false);
@@ -121,35 +151,34 @@ const CompleteProfile = () => {
                     onSubmit={handleSubmit}
                 >
                     <CountryPicker
-                        value={formData.countryIso}
-                        onChange={({ countryIso, countryName }) =>
+                        value={formData.country}
+                        onChange={({ countryIso, countryName }) => {
                             setFormData((prev) => ({
                                 ...prev,
-                                countryIso,
                                 country: countryName,
                                 city: "",
-                            }))
-                        }
+                            }));
+                        }}
                     />
 
                     <CityPicker
-                        countryIso={formData.countryIso}
+                        countryIso={Country.getAllCountries().find(c => c.name === formData.country)?.isoCode || ""}
                         value={formData.city}
-                        onChange={(city) =>
-                            setFormData((prev) => ({ ...prev, city }))
-                        }
-                        disabled={!formData.countryIso}
+                        onChange={(city) => {
+                            setFormData((prev) => ({ ...prev, city }));
+                        }}
+                        disabled={!formData.country}
                     />
 
                     <PhoneNumberPicker
                         value={{ phoneNumber: formData.phoneNumber }}
-                        onChange={({ phoneNumber, countryCode }) =>
-                            setFormData((prev) => ({
+                        onChange={({ phoneNumber, countryCode }) => {
+                            setFormData(prev => ({
                                 ...prev,
                                 phoneNumber,
-                                countryCode, 
-                            }))
-                        }
+                                phoneCountryCode: countryCode || ""
+                            }));
+                        }}
                     />
 
                     <Button variant="red" type="submit" disabled={loading}>
