@@ -67,17 +67,15 @@
 
 .restaurants .map-container-wrapper {
     width: 90vw;
-    height: 90vh;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
     border-radius: 12px;
     overflow: hidden;
-    background-color: white;
     position: relative;
 }
 
 .restaurants .map-overlay h2 {
     position: absolute;
-    bottom: 20px;
+    bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10000;
@@ -87,4 +85,12 @@
     background-color: white;
     padding: 0.5rem 1rem;
     border-radius: 8px;
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .restaurants .map-overlay h2 {
+        font-size: 1.1rem;
+        bottom: 8%;
+    }
 }
