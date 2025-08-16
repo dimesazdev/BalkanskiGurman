@@ -1,0 +1,14 @@
+{
+  "link.title.Docs": {
+    "message": "Dokumentacija",
+    "description": "Naslov stolpca povezav v footer strani z naslovom=Dokumentacija"
+  },
+  "link.item.label.Guide": {
+    "message": "Vodnik",
+    "description": "Oznaka povezave v footer strani z oznako=Vodnik, ki vodi na /"
+  },
+  "copyright": {
+    "message": "© 2025 Balkanski Gurman. Vse pravice pridržane.",
+    "description": "Avtorske pravice v footer strani"
+  }
+}

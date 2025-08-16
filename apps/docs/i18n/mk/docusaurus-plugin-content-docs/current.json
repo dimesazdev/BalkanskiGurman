@@ -1,0 +1,18 @@
+{
+  "version.label": {
+    "message": "Следно",
+    "description": "Ознака за тековната верзија"
+  },
+  "sidebar.guide.category.Account & Profile": {
+    "message": "Сметка и Профил",
+    "description": "Ознака за категоријата Сметка и Профил во страничното мени на водичот"
+  },
+  "sidebar.guide.category.Finding & Browsing": {
+    "message": "Пребарување и Прелистување",
+    "description": "Ознака за категоријата Пребарување и Прелистување во страничното мени на водичот"
+  },
+  "sidebar.guide.category.Community": {
+    "message": "Заедница",
+    "description": "Ознака за категоријата Заедница во страничното мени на водичот"
+  }
+}

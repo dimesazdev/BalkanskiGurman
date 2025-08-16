@@ -1,0 +1,206 @@
+:root {
+  color-scheme: dark;
+  --ifm-color-primary: #BA3B46;
+  --ifm-color-primary-dark: #A7343F;
+  --ifm-color-primary-darker: #9E313C;
+  --ifm-color-primary-darkest: #832931;
+  --ifm-color-primary-light: #C2424E;
+  --ifm-color-primary-lighter: #C94A55;
+  --ifm-color-primary-lightest: #D3565F;
+  --ifm-code-font-size: 95%;
+  --ifm-font-family-base: 'Cormorant Garamond', serif;
+  --ifm-font-size-base: 18px;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-menu-link-sublist-icon-color: #ffffff;
+  --ifm-breadcrumb-separator-filter: brightness(0) invert(1);
+  --ifm-toc-border-color: #fff;
+  --ifm-menu-color: rgb(255, 255, 255);
+  --ifm-menu-color-active: #BA3B46;
+  --ifm-menu-color-background-active: transparent;
+  --ifm-menu-color-background-hover: rgba(255, 255, 255, 0.06);
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/CormorantGaramond-VariableFont_wght.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/CormorantGaramond-VariableFont_wght.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+html,
+body {
+  background: url('/img/background_dark.svg') no-repeat center center fixed;
+  background-size: cover;
+  color: #ffffff;
+}
+
+.main-wrapper {
+  background: transparent;
+}
+
+.navbar {
+  font-family: 'Cormorant Garamond', sans-serif;
+  color: #FFEEDB;
+  box-sizing: border-box;
+  background: rgb(30, 30, 30) !important;
+}
+
+.footer {
+  background: rgb(30, 30, 30) !important;
+}
+
+.navbar__logo {
+  margin-right: 1rem;
+}
+
+.navbar__item {
+  display: flex;
+  align-items: center;
+  color: #FFEEDB !important;
+  font-size: 1.3rem;
+  transition: color 0.3s;
+}
+
+.navbar__item:hover {
+  color: #BA3B46 !important;
+}
+
+.navbar__link--active {
+  color: #BA3B46 !important;
+}
+
+.navbar-language-dropdown .navbar__link {
+  background-color: #FFEEDB;
+  color: #2f2f2f !important;
+  padding: 0.3rem 0.6rem;
+  border-radius: 15px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.navbar-language-dropdown .dropdown__menu {
+  background-color: #FFEEDB;
+  border-radius: 0 0 15px 15px;
+}
+
+.navbar-language-dropdown .dropdown__link {
+  color: #2f2f2f !important;
+}
+
+.navbar-language-dropdown .dropdown__link:hover {
+  background-color: #BA3B46;
+  color: white !important;
+}
+
+.menu__caret::before,
+.menu__link--sublist-caret::after {
+  color: white !important;
+  background-color: var(--ifm-menu-link-sublist-icon-color) !important;
+  mask: var(--ifm-menu-link-sublist-icon) no-repeat center / 100% 100%;
+  -webkit-mask: var(--ifm-menu-link-sublist-icon) no-repeat center / 100% 100%;
+}
+
+.menu__link--active .menu__caret::before,
+.menu__link--active .menu__link--sublist-caret::after {
+  color: #BA3B46 !important;
+}
+
+.menu__link:hover,
+.menu__link--active {
+  --ifm-menu-link-sublist-icon-color: #BA3B46;
+  color: #BA3B46;
+}
+
+.table-of-contents__left-border {
+  border-left: 1px solid #fff;
+}
+
+.theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-1>.menu__list-item-collapsible--active {
+  border-left: 2px solid #BA3B46;
+}
+
+.pagination-nav__link svg {
+  color: #ffffff;
+  fill: currentColor;
+}
+
+.pagination-nav__link:hover svg {
+  color: #BA3B46;
+}
+
+.pagination-nav__sublabel {
+  color: #ffffff;
+}
+
+.DocSearch-Search-Icon {
+  stroke: white !important;
+  color: white !important;
+}
+
+.DocSearch-Button:hover .DocSearch-Search-Icon {
+  stroke: #BA3B46 !important;
+  color: #BA3B46 !important;
+}
+
+.breadcrumbs__item,
+.breadcrumbs__link,
+.breadcrumbs__link::before {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+.breadcrumbs__link::before {
+  background-color: #ffffff !important;
+}
+
+.navbar__link .icon,
+.navbar__item .icon {
+  color: #ffffff;
+  fill: currentColor;
+}
+
+.navbar__link:hover .icon,
+.navbar__item:hover .icon {
+  color: #BA3B46;
+}
+
+@media (max-width: 996px) {
+  .navbar {
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar__logo {
+    margin-left: 0.5rem;
+    margin-right: 1rem;
+  }
+
+  .navbar__item {
+    font-size: 1.1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+
+  .navbar-language-dropdown .navbar__link {
+    padding: 0.2rem 0.5rem;
+    font-size: 1rem;
+  }
+
+  .navbar__toggle,
+  .navbar__items .icon {
+    padding: 0.4rem;
+    margin-left: 0.4rem;
+  }
+}
+
+.tocCollapsibleButton_htYj::after {
+  background-color: #BA3B46 !important;
+  mask: var(--ifm-menu-link-sublist-icon) no-repeat center / contain;
+  -webkit-mask: var(--ifm-menu-link-sublist-icon) no-repeat center / contain;
+}

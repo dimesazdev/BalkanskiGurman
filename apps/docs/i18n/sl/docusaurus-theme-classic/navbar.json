@@ -1,0 +1,10 @@
+{
+  "logo.alt": {
+    "message": "BG",
+    "description": "Nadomestno besedilo logotipa v navigacijski vrstici"
+  },
+  "item.label.Guide": {
+    "message": "Vodnik",
+    "description": "Element v navigacijski vrstici z oznako Vodnik"
+  }
+}

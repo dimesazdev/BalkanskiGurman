@@ -1,0 +1,18 @@
+{
+  "version.label": {
+    "message": "Sledeće",
+    "description": "Oznaka za trenutnu verziju"
+  },
+  "sidebar.guide.category.Account & Profile": {
+    "message": "Nalog i profil",
+    "description": "Oznaka za kategoriju Nalog i profil u bočnom vodiču"
+  },
+  "sidebar.guide.category.Finding & Browsing": {
+    "message": "Pretraga i pregled",
+    "description": "Oznaka za kategoriju Pretraga i pregled u bočnom vodiču"
+  },
+  "sidebar.guide.category.Community": {
+    "message": "Zajednica",
+    "description": "Oznaka za kategoriju Zajednica u bočnom vodiču"
+  }
+}

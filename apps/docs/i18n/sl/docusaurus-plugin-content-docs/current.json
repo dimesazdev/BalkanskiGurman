@@ -1,0 +1,18 @@
+{
+  "version.label": {
+    "message": "Naslednje",
+    "description": "Oznaka za trenutno različico"
+  },
+  "sidebar.guide.category.Account & Profile": {
+    "message": "Račun in profil",
+    "description": "Oznaka za kategorijo Račun in profil v stranskem vodniku"
+  },
+  "sidebar.guide.category.Finding & Browsing": {
+    "message": "Iskanje in brskanje",
+    "description": "Oznaka za kategorijo Iskanje in brskanje v stranskem vodniku"
+  },
+  "sidebar.guide.category.Community": {
+    "message": "Skupnost",
+    "description": "Oznaka za kategorijo Skupnost v stranskem vodniku"
+  }
+}

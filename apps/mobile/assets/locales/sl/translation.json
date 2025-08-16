@@ -98,7 +98,7 @@
         "HALAL": "Halal opcije",
         "KIDS": "Prijazno za otroke",
         "PARK": "Parkirišče",
-        "PET": "Hišne ljubljenčke",
+        "PET": "Hišni ljubljenčki",
         "SMOK": "Prostor za kadilce",
         "VEGAN": "Veganske opcije",
         "VEGE": "Vegetarijanske opcije"
@@ -117,7 +117,7 @@
         "confirm": "Potrdi",
         "goBack": "Nazaj",
         "login": "Prijava",
-        "postReview": "Objavi recenzij",
+        "postReview": "Objavi recenzijo",
         "remove": "Odstrani",
         "removeFromFavorites": "Odstrani iz priljubljenih",
         "saveChanges": "Shrani spremembe",
@@ -165,10 +165,14 @@
         "wed": "sreda"
     },
     "filters": {
+        "10-20€": "10-20€",
+        "20€+": "20€+",
+        "5-10€": "5-10€",
         "afterMidnight": "Po polnoči",
         "amenities": "Ponudbe",
         "bosnian": "Bosanska",
         "card": "Plačilo s kartico",
+        "croatian": "Hrvaška",
         "cuisines": "Kuhinja",
         "delivery": "Dostava",
         "glutenfree": "Brez glutena",
@@ -243,8 +247,8 @@
         "chooseOrDrop": "Izberi ali spusti sliko tukaj",
         "clickToView": "Kliknite za ogled",
         "closed": "Zaprto",
-        "closedAllDay": "Zaprto cel dan",
-        "closedAllWeek": "Zaprto cel teden",
+        "closedAllDay": "Zaprto ves dan",
+        "closedAllWeek": "Zaprto ves teden",
         "cuisines": "Kuhinja",
         "dietary": "Dietne možnosti",
         "issues": "Prijave",
@@ -317,7 +321,7 @@
         "bronzeEarned": "Prejeli ste bronasto medaljo po {{count}} objavljeno recenzijo.",
         "bronzeMissing": "Objavite vsaj {{count}} recenzijo, da pridobite bronasto medaljo.",
         "diamondEarned": "Prejeli ste diamantno medaljo po {{count}} objavljenih recenzijah.",
-        "diamondMissing": "Objavite vsaj {{count}} recenzij, da pridobite diamantа.",
+        "diamondMissing": "Objavite vsaj {{count}} recenzij, da pridobite diamant.",
         "goldEarned": "Prejeli ste zlato medaljo po {{count}} objavljenih recenzijah.",
         "goldMissing": "Objavite vsaj {{count}} recenzij, da pridobite zlato medaljo.",
         "noReviews": "Še niste objavili nobene recenzije.",
@@ -392,7 +396,7 @@
         "errorCity": "Mesto je obvezno.",
         "emailExists": "Račun s tem e-poštnim naslovom že obstaja.",
         "success": "Registracija je bila uspešna! Prosimo, preverite svoj e-poštni naslov, da potrdite račun, preden se prijavite.",
-        "suggestEdit": "Napačne podatke?",
+        "suggestEdit": "Napačni podatki?",
         "surname": "Priimek",
         "surnamePlaceholder": "Vnesite priimek..."
     },
@@ -411,7 +415,8 @@
         "price": "Cena",
         "reviews": "Recenzije",
         "website": "Spletna stran",
-        "workingHours": "Delovni čas"
+        "workingHours": "Delovni čas",
+        "suggestEdit": "Napačni podatki?"
     },
     "search": "Poišči...",
     "sort": {

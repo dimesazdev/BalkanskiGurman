@@ -1,0 +1,10 @@
+{
+  "logo.alt": {
+    "message": "BG",
+    "description": "Alt tekst logotipa u navigacionoj traci"
+  },
+  "item.label.Guide": {
+    "message": "Vodič",
+    "description": "Stavka u navigacionoj traci sa oznakom Vodič"
+  }
+}

@@ -50,8 +50,8 @@
         "type": "Tip prijave",
         "explanation": "Objašnjenje",
         "images": "Slike",
-        "resolved": "Težava je označena kot rešena.",
-        "resolveFailed": "Ni bilo mogoče rešiti težave."
+        "resolved": "Prijava je označena kao rešena.",
+        "resolveFailed": "Nije bilo moguće rešiti prijavu."
     },
     "issueStatus": {
         "pending": "Na čekanju",
@@ -137,7 +137,7 @@
         "deleteReview": "Obriši recenziju"
     },
     "checkbox": {
-        "agree": "Slažem se sa smernicama za pisanje recenzije i razumem da kršenja mogu dovesti do suspenzije ili blokiranje mojeg računa *"
+        "agree": "Slažem se sa smernicama za pisanje recenzije i razumem da kršenja mogu dovesti do suspenzije ili blokiranje mog naloga *"
     },
     "cuisines": {
         "BA": "Bosanska",
@@ -165,6 +165,9 @@
         "wed": "sreda"
     },
     "filters": {
+        "10-20€": "10-20€",
+        "20€+": "20€+",
+        "5-10€": "5-10€",
         "afterMidnight": "Posle ponoći",
         "amenities": "Pogodnosti",
         "bosnian": "Bosanska",
@@ -244,8 +247,8 @@
         "chooseOrDrop": "Izaberi ili prevuci sliku ovde",
         "clickToView": "Kliknite za pregled",
         "closed": "Zatvoreno",
-        "closedAllDay": "Zatvoreno celi dan",
-        "closedAllWeek": "Zatvoreno celu sedmicu",
+        "closedAllDay": "Zatvoreno ceo dan",
+        "closedAllWeek": "Zatvoreno cele nedelje",
         "cuisines": "Kuhinja",
         "dietary": "Dijetalne opcije",
         "issues": "Prijave",
@@ -284,7 +287,7 @@
     },
     "login": {
         "googleLoginFailed": "Prijava putem Google-a nije uspela. Pokušajte ponovo.",
-        "continueWithGoogle": "Nastavi sa Google",
+        "continueWithGoogle": "Nastavi uz Google",
         "email": "Email",
         "forgotPassword": "Zaboravili ste lozinku?",
         "login": "Prijava",
@@ -315,7 +318,7 @@
         "bronzeEarned": "Osvojili ste bronzanu medalju nakon {{count}} recenzije.",
         "bronzeMissing": "Objavite najmanje {{count}} recenziju da biste osvojili bronzanu medalju.",
         "diamondEarned": "Osvojili ste dijamantsku medalju nakon {{count}} recenzija.",
-        "diamondMissing": "Objavite najmanje {{count}} recenzija da biste osvojili dijamantа.",
+        "diamondMissing": "Objavite najmanje {{count}} recenzija da biste osvojili dijamant.",
         "goldEarned": "Osvojili ste zlatnu medalju nakon {{count}} recenzija.",
         "goldMissing": "Objavite najmanje {{count}} recenzija da biste osvojili zlatnu medalju.",
         "noReviews": "Još niste objavili nijednu recenziju.",
@@ -407,7 +410,7 @@
         "phone": "Telefon",
         "price": "Cena",
         "reviews": "Recenzije",
-        "suggestEdit": "Napačne podatke?",
+        "suggestEdit": "Pogrešne informacije?",
         "website": "Veb sajt",
         "workingHours": "Radno vreme"
     },
